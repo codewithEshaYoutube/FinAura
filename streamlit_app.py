@@ -739,14 +739,28 @@ with tab4:
         """)
 
 # =============================================================================
-# VIBE CHECK SECTION (Original)
+# HERO VIBE CHECK SECTION (Gen Z Hero Feature)
 # =============================================================================
 
-st.markdown("## 🌈 Daily Vibe Check")
+st.markdown("""
+<div style='
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2.5rem 1rem 2rem 1rem;
+    border-radius: 25px;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    color: white;
+    box-shadow: 0 8px 32px rgba(102,126,234,0.15);
+'>
+    <h1 style='font-size: 2.8rem; margin-bottom: 0.5rem;'>🌈 Daily Vibe Check</h1>
+    <p style='font-size: 1.3rem; margin-bottom: 1.5rem; font-style: italic;'>How are you feeling about your money today?</p>
+</div>
+""", unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns(3)
+# Large, central vibe selector and sliders
+vibe_col, stress_col, conf_col = st.columns([2, 1, 1])
 
-with col1:
+with vibe_col:
     # Ensure current_vibe is always a valid VibeType
     try:
         vibe_index = list(VibeType).index(st.session_state.current_vibe)
@@ -754,25 +768,44 @@ with col1:
         st.session_state.current_vibe = VibeType.CHILL
         vibe_index = list(VibeType).index(VibeType.CHILL)
     current_vibe = st.selectbox(
-        "How are you feeling about money today?",
+        "",
         options=list(VibeType),
         format_func=lambda x: f"{x.value} {x.name.title()}",
-        index=vibe_index
+        index=vibe_index,
+        key="hero_vibe_selectbox"
     )
     st.session_state.current_vibe = current_vibe
 
-with col2:
-    stress_level = st.slider("Money stress level", 1, 10, 5)
+with stress_col:
+    stress_level = st.slider("Money stress level", 1, 10, 5, key="hero_stress_slider")
 
-with col3:
-    confidence_level = st.slider("Financial confidence", 1, 10, 6)
+with conf_col:
+    confidence_level = st.slider("Financial confidence", 1, 10, 6, key="hero_conf_slider")
 
-# AI Response based on vibe
+# AI Response based on vibe (big, animated card)
 vibe_response = st.session_state.agent.get_vibe_response(current_vibe)
 st.markdown(f"""
-<div class="chat-bubble">
-    <strong>FinBot says:</strong> {vibe_response}
+<div style='
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: 2rem;
+    border-radius: 20px;
+    margin: 1.5rem 0 2.5rem 0;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 4px 24px rgba(240,147,251,0.15);
+    transition: all 0.3s;
+    animation: heroFadeIn 1s;
+'>
+    <span style='font-size: 2.5rem; margin-right: 0.5rem;'>{current_vibe.value}</span>
+    {vibe_response}
 </div>
+<style>
+@keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
 """, unsafe_allow_html=True)
 
 # =============================================================================
