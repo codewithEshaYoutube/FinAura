@@ -1791,3 +1791,9 @@ st.markdown("""
 
 # Optional: Add some final spacing
 st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
+
+# Ensure months_to_payoff_display is defined for the summary card
+try:
+    months_to_payoff_display = f"{months_to_payoff:.1f} months" if 'months_to_payoff' in locals() and months_to_payoff != float('inf') else 'N/A'
+except Exception:
+    months_to_payoff_display = 'N/A'
