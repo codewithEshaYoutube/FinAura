@@ -1780,7 +1780,7 @@ st.markdown("""
   </div>
   
   <div style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 500; margin-top: 15px; display: inline-block;">
-    🏆 DevPost Girlies Hackathon Winner - Innovation in FinTech
+     For DevPost Girlies Hackathon  - Innovation in FinTech
   </div>
 </div>
 """, unsafe_allow_html=True)
