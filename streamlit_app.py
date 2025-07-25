@@ -14,6 +14,7 @@ import sqlite3
 import asyncio
 from enum import Enum
 import hashlib
+import math  # Added for debt calculations
 
 # Page config with Gen Z vibes
 st.set_page_config(
@@ -740,6 +741,10 @@ avg_daily = total_spent / 7
 joy_spending = sum(t.amount for t in transactions if t.category == SpendingCategory.JOY)
 essential_spending = sum(t.amount for t in transactions if t.category == SpendingCategory.ESSENTIAL)
 
+# Get monthly_income safely
+monthly_income = st.session_state.financial_profile.get('monthly_income', 0) if st.session_state.financial_profile else 0
+current_savings = st.session_state.financial_profile.get('current_savings', 0) if st.session_state.financial_profile else 0
+
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
@@ -760,8 +765,6 @@ with col2:
     </div>
     """, unsafe_allow_html=True)
 
-
-
 with col3:
     joy_ratio = (joy_spending / total_spent * 100) if total_spent > 0 else 0
     st.markdown(f"""
@@ -779,7 +782,7 @@ with col4:
         st.markdown(f"""
         <div class="money-card">
             <h3>💰 Budget Left</h3>
-            <h2>${budget_remaining:.0f}</h2>
+            <h2>PKR {budget_remaining:.0f}</h2>
             <p>This month</p>
         </div>
         """, unsafe_allow_html=True)
@@ -787,118 +790,78 @@ with col4:
         st.markdown(f"""
         <div class="money-card">
             <h3>✨ Joy Spending</h3>
-            <h2>${joy_spending:.2f}</h2>
+            <h2>PKR {joy_spending:.2f}</h2>
             <p>Self-care investments</p>
         </div>
         """, unsafe_allow_html=True)
 
-with col5:
-    if st.session_state.financial_profile.current_savings > 0:
-        savings_growth = st.session_state.financial_profile.current_savings
-        st.markdown(f"""
-        <div class="money-card">
-            <h3>📈 Savings</h3>
-            <h2>${savings_growth:.0f}</h2>
-            <p>Total saved</p>
-        </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown(f"""
-        <div class="money-card">
-            <h3>🏠 Essentials</h3>
-            <h2>${essential_spending:.2f}</h2>
-            <p>Responsible spending</p>
-        </div>
-        """, unsafe_allow_html=True)
+# Add a fifth column for savings/essentials if needed
+col5 = None
+if current_savings > 0 or essential_spending > 0:
+    cols = st.columns(5)
+    col5 = cols[4]
+    with col5:
+        if current_savings > 0:
+            savings_growth = current_savings
+            st.markdown(f"""
+            <div class="money-card">
+                <h3>📈 Savings</h3>
+                <h2>PKR {savings_growth:.0f}</h2>
+                <p>Total saved</p>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div class="money-card">
+                <h3>🏠 Essentials</h3>
+                <h2>PKR {essential_spending:.2f}</h2>
+                <p>Responsible spending</p>
+            </div>
+            """, unsafe_allow_html=True)
 
 # Budget vs Reality Check
 if monthly_income > 0:
     st.markdown("### 📊 Budget vs Reality Check")
-    budget = st.session_state.planner.calculate_comprehensive_budget(st.session_state.financial_profile)
-    
+    # Remove planner reference and use budget_plan if available
+    if st.session_state.budget_plan:
+        budget = {
+            'needs': st.session_state.budget_plan.needs_amount,
+            'wants': st.session_state.budget_plan.wants_amount
+        }
+    else:
+        budget = {'needs': 0, 'wants': 0}
+
     current_month_spending = total_spent * 4.33
     needs_budget = budget['needs']
     wants_budget = budget['wants']
-    
+
     current_needs = essential_spending * 4.33
     current_wants = joy_spending * 4.33
-    
+
     col1, col2, col3 = st.columns(3)
-    
+
     with col1:
         needs_progress = (current_needs / needs_budget * 100) if needs_budget > 0 else 0
-        st.markdown(f"**🏠 Needs: ${current_needs:.0f} / ${needs_budget:.0f}**")
+        st.markdown(f"**🏠 Needs: PKR {current_needs:.0f} / PKR {needs_budget:.0f}**")
         st.progress(min(needs_progress / 100, 1.0))
         if needs_progress > 100:
             st.markdown('<div class="warning-card">⚠️ Over budget on needs!</div>', unsafe_allow_html=True)
-        
+
     with col2:
         wants_progress = (current_wants / wants_budget * 100) if wants_budget > 0 else 0
-        st.markdown(f"**✨ Wants: ${current_wants:.0f} / ${wants_budget:.0f}**")
+        st.markdown(f"**✨ Wants: PKR {current_wants:.0f} / PKR {wants_budget:.0f}**")
         st.progress(min(wants_progress / 100, 1.0))
         if wants_progress > 100:
             st.markdown('<div class="warning-card">⚠️ Over budget on wants!</div>', unsafe_allow_html=True)
-    
+
     with col3:
         total_budget = needs_budget + wants_budget
         total_spent_month = current_needs + current_wants
         overall_progress = (total_spent_month / total_budget * 100) if total_budget > 0 else 0
-        st.markdown(f"**💰 Overall: ${total_spent_month:.0f} / ${total_budget:.0f}**")
+        st.markdown(f"**💰 Overall: PKR {total_spent_month:.0f} / PKR {total_budget:.0f}**")
         st.progress(min(overall_progress / 100, 1.0))
         if overall_progress < 80:
             st.markdown('<div class="success-card">🎉 Under budget! Great job!</div>', unsafe_allow_html=True)
-
-# =============================================================================
-# SPENDING ANALYSIS CHARTS
-# =============================================================================
-
-st.markdown("## 📊 Spending Vibes Analysis")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    category_data = {}
-    for transaction in transactions:
-        cat_name = transaction.category.value
-        category_data[cat_name] = category_data.get(cat_name, 0) + transaction.amount
-    
-    if category_data:
-        fig_pie = px.pie(
-            values=list(category_data.values()),
-            names=list(category_data.keys()),
-            title="💫 Spending by Vibe Category",
-            color_discrete_sequence=px.colors.qualitative.Pastel
-        )
-        fig_pie.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(size=14)
-        )
-        st.plotly_chart(fig_pie, use_container_width=True)
-
-with col2:
-    daily_spending = {}
-    for transaction in transactions:
-        date_str = transaction.date.strftime('%Y-%m-%d')
-        daily_spending[date_str] = daily_spending.get(date_str, 0) + transaction.amount
-    
-    if daily_spending:
-        df_daily = pd.DataFrame(list(daily_spending.items()), columns=['Date', 'Amount'])
-        df_daily['Date'] = pd.to_datetime(df_daily['Date'])
-        
-        fig_line = px.line(
-            df_daily,
-            x='Date',
-            y='Amount',
-            title='📈 Daily Spending Trend',
-            color_discrete_sequence=['#667eea']
-        )
-        fig_line.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(size=14)
-        )
-        st.plotly_chart(fig_line, use_container_width=True)
 
 # =============================================================================
 # TRANSACTION LOG & INTERACTIVE FEATURES
@@ -910,7 +873,7 @@ df_transactions = pd.DataFrame([
     {
         'Date': t.date.strftime('%m/%d'),
         'Vibe': t.category.value,
-        'Amount': f"${t.amount:.2f}",
+        'Amount': f"PKR {t.amount:.2f}",
         'Description': t.description,
         'Merchant': t.merchant,
         'Mood Impact': '😊' if t.vibe_impact > 0 else '😐' if t.vibe_impact == 0 else '😔'
@@ -918,25 +881,7 @@ df_transactions = pd.DataFrame([
     for t in sorted(transactions, key=lambda x: x.date, reverse=True)
 ])
 
-st.dataframe(df_transactions, use_container_width)
-with col3:
-    if st.session_state.financial_profile.current_savings > 0:
-        savings_growth = st.session_state.financial_profile.current_savings
-        st.markdown(f"""
-        <div class="money-card">
-            <h3>📈 Savings</h3>
-            <h2>${savings_growth:.0f}</h2>
-            <p>Total saved</p>
-        </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown(f"""
-        <div class="money-card">
-            <h3>🏠 Essentials</h3>
-            <h2>${essential_spending:.2f}</h2>
-            <p>Responsible spending</p>
-        </div>
-        """, unsafe_allow_html=True)
+st.dataframe(df_transactions, use_container_width=True)
 
 # =============================================================================
 # ENHANCED SALARY INPUT & FINANCIAL PLANNING CALCULATOR
