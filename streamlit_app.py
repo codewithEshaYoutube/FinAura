@@ -358,6 +358,39 @@ if 'financial_profile' not in st.session_state:
     st.session_state.financial_profile = {}
 
 # =============================================================================
+# GLOBAL CURRENCY SELECTION
+# =============================================================================
+
+# Add currency selection at the top of the sidebar
+if 'currency' not in st.session_state:
+    st.session_state.currency = 'USD'
+
+currency_symbols = {'USD': '$', 'PKR': 'PKR', 'EUR': '€'}
+currency_rates = {'USD': 1.0, 'PKR': 280.0, 'EUR': 0.92}  # Example rates, update as needed
+
+with st.sidebar:
+    st.markdown('### 🌍 Select Currency')
+    st.session_state.currency = st.selectbox(
+        'Currency',
+        options=['USD', 'PKR', 'EUR'],
+        format_func=lambda x: f"{currency_symbols[x]} {x}",
+        index=['USD', 'PKR', 'EUR'].index(st.session_state.currency)
+    )
+
+# Helper to convert and format currency
+
+def format_currency(amount, decimals=2):
+    symbol = currency_symbols[st.session_state.currency]
+    rate = currency_rates[st.session_state.currency]
+    value = amount * rate
+    if symbol == 'PKR':
+        return f"PKR {value:,.{decimals}f}"
+    elif symbol == '€':
+        return f"€{value:,.{decimals}f}"
+    else:
+        return f"${value:,.{decimals}f}"
+
+# =============================================================================
 # MAIN APP INTERFACE
 # =============================================================================
 
@@ -459,7 +492,7 @@ if st.session_state.budget_plan:
         st.markdown(f"""
         <div class="budget-card">
             <h3>💰 Monthly Income</h3>
-            <h2>PKR {budget.monthly_income:,.0f}</h2>
+            <h2>{format_currency(budget.monthly_income, 0)}</h2>
             <p>Your total hustle</p>
         </div>
         """, unsafe_allow_html=True)
@@ -468,7 +501,7 @@ if st.session_state.budget_plan:
         st.markdown(f"""
         <div class="budget-card">
             <h3>🏠 Needs ({budget.needs_percentage}%)</h3>
-            <h2>PKR {budget.needs_amount:,.0f}</h2>
+            <h2>{format_currency(budget.needs_amount, 0)}</h2>
             <p>Rent, food, transport</p>
         </div>
         """, unsafe_allow_html=True)
@@ -477,7 +510,7 @@ if st.session_state.budget_plan:
         st.markdown(f"""
         <div class="budget-card">
             <h3>✨ Wants ({budget.wants_percentage}%)</h3>
-            <h2>PKR {budget.wants_amount:,.0f}</h2>
+            <h2>{format_currency(budget.wants_amount, 0)}</h2>
             <p>Fun, joy, self-care</p>
         </div>
         """, unsafe_allow_html=True)
@@ -486,7 +519,7 @@ if st.session_state.budget_plan:
         st.markdown(f"""
         <div class="budget-card">
             <h3>📈 Savings ({budget.savings_percentage}%)</h3>
-            <h2>PKR {budget.savings_amount:,.0f}</h2>
+            <h2>{format_currency(budget.savings_amount, 0)}</h2>
             <p>Future you fund</p>
         </div>
         """, unsafe_allow_html=True)
@@ -559,7 +592,7 @@ if st.session_state.financial_profile:
             <div class="financial-goal-card">
                 <h4>Priority {item['priority']}: {item['goal']}</h4>
                 <p>{item['description']}</p>
-                <p><strong>Target:</strong> PKR {item['target']:,.0f}</p>
+                <p><strong>Target:</strong> {format_currency(item['target'], 0)}</p>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: {progress}%"></div>
                 </div>
@@ -643,7 +676,7 @@ with tab3:
     
     with col1:
         st.markdown(f"""
-        **🎯 Your Emergency Fund Goal: PKR {emergency_target:,.0f}**
+        **🎯 Your Emergency Fund Goal: {format_currency(emergency_target, 0)}**
         
         **Why You Need It:**
         - Job loss protection
@@ -751,7 +784,7 @@ with col1:
     st.markdown(f"""
     <div class="money-card">
         <h3>💸 Total Spent</h3>
-        <h2>PKR {total_spent:,.2f}</h2>
+        <h2>{format_currency(total_spent, 2)}</h2>
         <p>Last 7 days</p>
     </div>
     """, unsafe_allow_html=True)
@@ -760,7 +793,7 @@ with col2:
     st.markdown(f"""
     <div class="money-card">
         <h3>📅 Daily Average</h3>
-        <h2>PKR {avg_daily:,.2f}</h2>
+        <h2>{format_currency(avg_daily, 2)}</h2>
         <p>Per day</p>
     </div>
     """, unsafe_allow_html=True)
@@ -782,7 +815,7 @@ with col4:
         st.markdown(f"""
         <div class="money-card">
             <h3>💰 Budget Left</h3>
-            <h2>PKR {budget_remaining:.0f}</h2>
+            <h2>{format_currency(budget_remaining, 0)}</h2>
             <p>This month</p>
         </div>
         """, unsafe_allow_html=True)
@@ -790,7 +823,7 @@ with col4:
         st.markdown(f"""
         <div class="money-card">
             <h3>✨ Joy Spending</h3>
-            <h2>PKR {joy_spending:.2f}</h2>
+            <h2>{format_currency(joy_spending, 2)}</h2>
             <p>Self-care investments</p>
         </div>
         """, unsafe_allow_html=True)
@@ -806,7 +839,7 @@ if current_savings > 0 or essential_spending > 0:
             st.markdown(f"""
             <div class="money-card">
                 <h3>📈 Savings</h3>
-                <h2>PKR {savings_growth:.0f}</h2>
+                <h2>{format_currency(savings_growth, 0)}</h2>
                 <p>Total saved</p>
             </div>
             """, unsafe_allow_html=True)
@@ -814,7 +847,7 @@ if current_savings > 0 or essential_spending > 0:
             st.markdown(f"""
             <div class="money-card">
                 <h3>🏠 Essentials</h3>
-                <h2>PKR {essential_spending:.2f}</h2>
+                <h2>{format_currency(essential_spending, 2)}</h2>
                 <p>Responsible spending</p>
             </div>
             """, unsafe_allow_html=True)
@@ -842,14 +875,14 @@ if monthly_income > 0:
 
     with col1:
         needs_progress = (current_needs / needs_budget * 100) if needs_budget > 0 else 0
-        st.markdown(f"**🏠 Needs: PKR {current_needs:.0f} / PKR {needs_budget:.0f}**")
+        st.markdown(f"**🏠 Needs: {format_currency(current_needs, 0)} / {format_currency(needs_budget, 0)}**")
         st.progress(min(needs_progress / 100, 1.0))
         if needs_progress > 100:
             st.markdown('<div class="warning-card">⚠️ Over budget on needs!</div>', unsafe_allow_html=True)
 
     with col2:
         wants_progress = (current_wants / wants_budget * 100) if wants_budget > 0 else 0
-        st.markdown(f"**✨ Wants: PKR {current_wants:.0f} / PKR {wants_budget:.0f}**")
+        st.markdown(f"**✨ Wants: {format_currency(current_wants, 0)} / {format_currency(wants_budget, 0)}**")
         st.progress(min(wants_progress / 100, 1.0))
         if wants_progress > 100:
             st.markdown('<div class="warning-card">⚠️ Over budget on wants!</div>', unsafe_allow_html=True)
@@ -858,7 +891,7 @@ if monthly_income > 0:
         total_budget = needs_budget + wants_budget
         total_spent_month = current_needs + current_wants
         overall_progress = (total_spent_month / total_budget * 100) if total_budget > 0 else 0
-        st.markdown(f"**💰 Overall: PKR {total_spent_month:.0f} / PKR {total_budget:.0f}**")
+        st.markdown(f"**💰 Overall: {format_currency(total_spent_month, 0)} / {format_currency(total_budget, 0)}**")
         st.progress(min(overall_progress / 100, 1.0))
         if overall_progress < 80:
             st.markdown('<div class="success-card">🎉 Under budget! Great job!</div>', unsafe_allow_html=True)
@@ -873,7 +906,7 @@ df_transactions = pd.DataFrame([
     {
         'Date': t.date.strftime('%m/%d'),
         'Vibe': t.category.value,
-        'Amount': f"PKR {t.amount:.2f}",
+        'Amount': f"{format_currency(t.amount)}",
         'Description': t.description,
         'Merchant': t.merchant,
         'Mood Impact': '😊' if t.vibe_impact > 0 else '😐' if t.vibe_impact == 0 else '😔'
@@ -1014,7 +1047,7 @@ if total_monthly_income > 0:
     <div class="main-header">
         <h2>{mode_emoji} {lifestyle_mode.split('(')[0]} Budget Breakdown</h2>
         <p><em>{mode_description}</em></p>
-        <h3>Total Monthly Income: ${total_monthly_income:,.2f}</h3>
+        <h3>Total Monthly Income: {format_currency(total_monthly_income, 2)}</h3>
     </div>
     """, unsafe_allow_html=True)
     
@@ -1024,7 +1057,7 @@ if total_monthly_income > 0:
         st.markdown(f"""
         <div class="survival-card">
             <h3>🏠 NEEDS ({needs_percent}%)</h3>
-            <h2>${needs_amount:,.0f}</h2>
+            <h2>{format_currency(needs_amount, 0)}</h2>
             <div style="font-size: 0.9em; margin-top: 10px;">
                 <strong>Includes:</strong><br>
                 • Rent/Mortgage<br>
@@ -1040,7 +1073,7 @@ if total_monthly_income > 0:
         st.markdown(f"""
         <div class="comfort-card">
             <h3>✨ WANTS ({wants_percent}%)</h3>
-            <h2>${wants_amount:,.0f}</h2>
+            <h2>{format_currency(wants_amount, 0)}</h2>
             <div style="font-size: 0.9em; margin-top: 10px;">
                 <strong>Includes:</strong><br>
                 • Dining Out & Entertainment<br>
@@ -1056,7 +1089,7 @@ if total_monthly_income > 0:
         st.markdown(f"""
         <div class="slay-card">
             <h3>💰 SAVINGS ({savings_percent}%)</h3>
-            <h2>${adjusted_savings:,.0f}</h2>
+            <h2>{format_currency(adjusted_savings, 0)}</h2>
             <div style="font-size: 0.9em; margin-top: 10px;">
                 <strong>Breakdown:</strong><br>
                 • Emergency Fund<br>
@@ -1074,11 +1107,11 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="investment-card">
                 <h3>💳 DEBT PAYOFF</h3>
-                <h2>${total_debt_focus:,.0f}</h2>
+                <h2>{format_currency(total_debt_focus, 0)}</h2>
                 <div style="font-size: 0.9em; margin-top: 10px;">
                     <strong>Strategy:</strong><br>
-                    • Minimum: ${monthly_debt_payment:,.0f}<br>
-                    • Extra: ${debt_payoff_extra:,.0f}<br>
+                    • Minimum: {format_currency(monthly_debt_payment, 0)}<br>
+                    • Extra: {format_currency(debt_payoff_extra, 0)}<br>
                     • Total Focus<br>
                     • Avalanche Method
                 </div>
@@ -1088,7 +1121,7 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="investment-card">
                 <h3>🚀 BONUS POWER</h3>
-                <h2>${adjusted_savings:,.0f}</h2>
+                <h2>{format_currency(adjusted_savings, 0)}</h2>
                 <div style="font-size: 0.9em; margin-top: 10px;">
                     <strong>Opportunity:</strong><br>
                     • Full Savings Potential<br>
@@ -1115,7 +1148,7 @@ if total_monthly_income > 0:
         st.markdown(f"""
         <div class="goal-tracker">
             <h4>🎯 Emergency Fund Goal</h4>
-            <h2>${emergency_target:,.0f}</h2>
+            <h2>{format_currency(emergency_target, 0)}</h2>
             <p>{emergency_months} months of expenses</p>
         </div>
         """, unsafe_allow_html=True)
@@ -1124,7 +1157,7 @@ if total_monthly_income > 0:
         st.markdown(f"""
         <div class="goal-tracker">
             <h4>💰 Current Progress</h4>
-            <h2>${current_savings_amount:,.0f}</h2>
+            <h2>{format_currency(current_savings_amount, 0)}</h2>
             <p>{emergency_progress:.1f}% Complete</p>
         </div>
         """, unsafe_allow_html=True)
@@ -1186,7 +1219,7 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="investment-card">
                 <h4>📊 Total Monthly Investment</h4>
-                <h2>${available_for_investment:,.0f}</h2>
+                <h2>{format_currency(available_for_investment, 0)}</h2>
                 <p>Available after emergency fund</p>
             </div>
             """, unsafe_allow_html=True)
@@ -1195,7 +1228,7 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="investment-card">
                 <h4>📈 Stocks/ETFs ({stock_percent}%)</h4>
-                <h2>${stock_amount:,.0f}</h2>
+                <h2>{format_currency(stock_amount, 0)}</h2>
                 <p>VTI, VXUS, Growth funds</p>
             </div>
             """, unsafe_allow_html=True)
@@ -1204,7 +1237,7 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="investment-card">
                 <h4>🏛️ Bonds ({bond_percent}%)</h4>
-                <h2>${bond_amount:,.0f}</h2>
+                <h2>{format_currency(bond_amount, 0)}</h2>
                 <p>BND, Treasury bonds</p>
             </div>
             """, unsafe_allow_html=True)
@@ -1213,7 +1246,7 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="investment-card">
                 <h4>💵 Cash/HYSA ({cash_percent}%)</h4>
-                <h2>${cash_amount:,.0f}</h2>
+                <h2>{format_currency(cash_amount, 0)}</h2>
                 <p>High-yield savings, CDs</p>
             </div>
             """, unsafe_allow_html=True)
@@ -1252,7 +1285,7 @@ if total_monthly_income > 0:
                 • Betterment (Auto-rebalancing)<br>
                 • Wealthfront (Tax-loss harvesting)<br>
                 • M1 Finance (Pie investing)<br><br>
-                <strong>Monthly Investment:</strong> ${available_for_investment:,.0f}
+                <strong>Monthly Investment:</strong> {format_currency(available_for_investment, 0)}
             </div>
             """, unsafe_allow_html=True)
     
@@ -1299,15 +1332,15 @@ if total_monthly_income > 0:
                 <div class="goal-tracker">
                     <h4>⏰ Payoff Timeline</h4>
                     <h2>{months_to_payoff:.1f} months</h2>
-                    <p>Total Payment: ${total_debt_payment:,.0f}/month</p>
+                    <p>Total Payment: {format_currency(total_debt_payment, 0)}/month</p>
                 </div>
                 """, unsafe_allow_html=True)
                 
                 st.markdown(f"""
                 <div class="survival-card">
                     <h4>💰 Total Interest Saved</h4>
-                    <p>By paying ${total_debt_payment:,.0f}/month instead of minimums:</p>
-                    <h3>Interest: ${total_interest:,.0f}</h3>
+                    <p>By paying {format_currency(total_debt_payment, 0)}/month instead of minimums:</p>
+                    <h3>Interest: {format_currency(total_interest, 0)}</h3>
                     <p>vs paying minimums for years!</p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -1333,9 +1366,9 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="investment-card">
                 <h4>🚀 Post-Debt Monthly Boost</h4>
-                <h2>${future_monthly_boost:,.0f}</h2>
+                <h2>{format_currency(future_monthly_boost, 0)}</h2>
                 <p>Extra for investments/goals</p>
-                <small>Annual boost: ${annual_boost:,.0f}</small>
+                <small>Annual boost: {format_currency(annual_boost, 0)}</small>
             </div>
             """, unsafe_allow_html=True)
 
@@ -1392,7 +1425,7 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="goal-tracker">
                 <h4>🎯 {goal_name}</h4>
-                <h2>${goal_amount:,.0f}</h2>
+                <h2>{format_currency(goal_amount, 0)}</h2>
                 <p>Target in {goal_timeline}</p>
             </div>
             """, unsafe_allow_html=True)
@@ -1401,7 +1434,7 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="goal-tracker">
                 <h4>💰 Required Monthly</h4>
-                <h2>${required_monthly:,.0f}</h2>
+                <h2>{format_currency(required_monthly, 0)}</h2>
                 <p>To reach your goal</p>
             </div>
             """, unsafe_allow_html=True)
@@ -1412,7 +1445,7 @@ if total_monthly_income > 0:
             <div class="goal-tracker">
                 <h4>📊 Feasibility</h4>
                 <h2>{feasibility}</h2>
-                <p>Available: ${available_for_goal:,.0f}</p>
+                <p>Available: {format_currency(available_for_goal, 0)}</p>
             </div>
             """, unsafe_allow_html=True)
         
@@ -1421,7 +1454,7 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="success-card">
                 <h4>🎉 Goal Strategy Approved!</h4>
-                <p><strong>Monthly Allocation:</strong> ${required_monthly:,.0f} from your ${adjusted_savings:,.0f} savings budget</p>
+                <p><strong>Monthly Allocation:</strong> {format_currency(required_monthly, 0)} from your {format_currency(adjusted_savings, 0)} savings budget</p>
                 <p><strong>Timeline:</strong> {goal_timeline} | <strong>Achievement Date:</strong> {(datetime.now() + timedelta(days=months*30)).strftime('%B %Y')}</p>
             </div>
             """, unsafe_allow_html=True)
@@ -1432,7 +1465,7 @@ if total_monthly_income > 0:
             <div class="warning-card">
                 <h4>💡 Alternative Suggestions</h4>
                 <p><strong>Option 1:</strong> Extend timeline to {realistic_timeline:.1f} months</p>
-                <p><strong>Option 2:</strong> Reduce goal to ${available_for_goal * months:,.0f}</p>
+                <p><strong>Option 2:</strong> Reduce goal to {format_currency(available_for_goal * months, 0)}</p>
                 <p><strong>Option 3:</strong> Increase income or reduce other expenses</p>
             </div>
             """, unsafe_allow_html=True)
@@ -1466,11 +1499,11 @@ if total_monthly_income > 0:
                 st.markdown(f"""
                 <div class="slay-card">
                     <h4>💰 {years} Year Projection</h4>
-                    <h2>${future_value:,.0f}</h2>
+                    <h2>{format_currency(future_value, 0)}</h2>
                     <div style="font-size: 0.8em; margin-top: 10px;">
-                        <p>Contributions: ${total_contributions:,.0f}</p>
-                        <p>Growth: ${investment_growth:,.0f}</p>
-                        <p>Monthly: ${monthly_investment:,.0f}</p>
+                        <p>Contributions: {format_currency(total_contributions, 0)}</p>
+                        <p>Growth: {format_currency(investment_growth, 0)}</p>
+                        <p>Monthly: {format_currency(monthly_investment, 0)}</p>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -1508,7 +1541,7 @@ if total_monthly_income > 0:
             st.markdown(f"""
             <div class="milestone-badge" style="display: block; margin: 10px 0; padding: 15px;">
                 <h4>Age {target_age} Goal</h4>
-                <h3>${target_net_worth:,.0f}</h3>
+                <h3>{format_currency(target_net_worth, 0)}</h3>
                 <p>{target_multiplier}x Annual Income</p>
                 <small>{achievement_status}</small>
             </div>
@@ -1549,13 +1582,13 @@ if total_monthly_income > 0:
         monthly_goals = []
         
         if emergency_progress < 100:
-            monthly_goals.append(f"🛡️ Save ${emergency_monthly_need:,.0f} for emergency fund")
+            monthly_goals.append(f"🛡️ Save {format_currency(emergency_monthly_need, 0)} for emergency fund")
         
-        monthly_goals.append(f"📊 Track all expenses and stay within ${wants_amount:,.0f} fun budget")
-        monthly_goals.append(f"💰 Automate ${adjusted_savings:,.0f} monthly savings")
+        monthly_goals.append(f"📊 Track all expenses and stay within {format_currency(wants_amount, 0)} fun budget")
+        monthly_goals.append(f"💰 Automate {format_currency(adjusted_savings, 0)} monthly savings")
         
         if current_debt > 0:
-            monthly_goals.append(f"💳 Pay ${total_debt_payment:,.0f} toward debt elimination")
+            monthly_goals.append(f"💳 Pay {format_currency(total_debt_payment, 0)} toward debt elimination")
         
         monthly_goals.append("📚 Read one personal finance book or take online course")
         monthly_goals.append("🎯 Set up goal tracking for your biggest financial priority")
@@ -1570,7 +1603,7 @@ st.markdown(f"""
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
         <div style="text-align: center;">
             <h3>💰 Monthly Power</h3>
-            <h2>${total_monthly_income:,.0f}</h2>
+            <h2>{format_currency(total_monthly_income, 0)}</h2>
             <p>Total Income</p>
         </div>
         <div style="text-align: center;">
@@ -1580,12 +1613,12 @@ st.markdown(f"""
         </div>
         <div style="text-align: center;">
             <h3>🚀 Investment Ready</h3>
-            <h2>${available_for_investment:,.0f}</h2>
+            <h2>{format_currency(available_for_investment, 0)}</h2>
             <p>Monthly Growth</p>
         </div>
         <div style="text-align: center;">
             <h3>⏰ Debt Freedom</h3>
-            <h2>{months_to_payoff:.1f if 'months_to_payoff' in locals() and months_to_payoff != float('inf') else 'N/A'}</h2>
+            <h2>{months_to_payoff_display}</h2>
             <p>Months to Freedom</p>
         </div>
     </div>
@@ -1622,7 +1655,7 @@ st.markdown(f"""
 <div class="success-card">
     <h3>✨ You're Already Winning!</h3>
     <p>Just by using this calculator and thinking about your financial future, you're ahead of 70% of people your age. 
-    Your {lifestyle_mode.split('(')[0]} approach with ${total_monthly_income:,.0f} monthly income puts you on track for 
+    Your {lifestyle_mode.split('(')[0]} approach with {format_currency(total_monthly_income, 0)} monthly income puts you on track for 
     serious wealth building. Remember: every dollar you save in your 20s becomes $10+ in your future. 
     You've got this! 🚀</p>
 </div>
