@@ -1679,24 +1679,6 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 
-
-<style>
-@keyframes heartbeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-.footer-icon {
-    animation: float 3s ease-in-out infinite;
-}
-</style>
 """, unsafe_allow_html=True)
 
 # Optional: Add some final spacing
