@@ -1676,50 +1676,62 @@ st.markdown(f"""
     serious wealth building. Remember: every dollar you save in your 20s becomes $10+ in your future. 
     You've got this! 🚀</p>
 </div>
-st.markdown(f"""
-<div style="text-align:center; margin-top:60px; padding:40px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-  <h2 style="margin-bottom: 10px; background: linear-gradient(45deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;"> FinAura: Where Gen Z Vibes Meet Financial Freedom</h2>
+st.markdown("""
+<div style="text-align:center; margin-top:60px; padding:40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+  <h2 style="margin-bottom: 10px; background: linear-gradient(45deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">FinAura: Where Gen Z Vibes Meet Financial Freedom</h2>
   
   <p style="font-size:1.1em; margin-bottom: 18px; opacity:0.95;">Revolutionizing financial wellness through AI-driven stress management and secure wealth building.</p>
   
-  <div style="font-size:1.2em; margin-bottom: 20px; font-weight: 500;">🧠 Built to tackle Gen Z financial stress with intelligent insights, bulletproof security, and a fully automated companion that grows with your financial journey.</div>
+  <div style="font-size:1.1em; margin-bottom: 25px; font-weight: 500;">Built to tackle Gen Z financial stress with intelligent insights, bulletproof security, and a fully automated companion that grows with your financial journey.</div>
   
-  <div style="background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 25px; margin: 25px auto; max-width: 600px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
-    <div style="color: #FFD700; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">🏆 Why FinAura Stands Out</div>
-    <div style="text-align: left; font-size: 0.95em; line-height: 1.6;">
-      🔒 AI-powered financial stress detection and personalized wellness strategies<br>
-      🔒 Bank-grade encryption with multi-layer security protocols<br>
-      🔒 Behavioral analytics to combat Gen Z financial anxiety and decision paralysis<br>
-      🔒 Gamified savings with real-time progress tracking and achievement systems<br>
-      🔒 Zero-knowledge architecture ensuring complete data privacy<br>
-      🔒 Smart budgeting algorithms designed for irregular income patterns
+  <!-- Two Column Layout -->
+  <div style="display: flex; justify-content: space-between; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+    
+    <!-- Left Column: Features -->
+    <div style="flex: 1; min-width: 300px; background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
+      <div style="color: #FFD700; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">Why FinAura Stands Out</div>
+      <div style="text-align: left; font-size: 0.9em; line-height: 1.6;">
+        ✓ AI-powered financial stress detection and personalized wellness strategies<br>
+        ✓ Bank-grade encryption with multi-layer security protocols<br>
+        ✓ Behavioral analytics to combat Gen Z financial anxiety<br>
+        ✓ Gamified savings with real-time progress tracking<br>
+        ✓ Zero-knowledge architecture ensuring complete data privacy<br>
+        ✓ Smart budgeting algorithms for irregular income patterns
+      </div>
+      <div style="background: linear-gradient(45deg, #00C851, #007E33); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 500; margin-top: 15px; display: inline-block;">
+        Enterprise-Grade Security & Privacy Guaranteed
+      </div>
     </div>
-    <div style="background: linear-gradient(45deg, #00C851, #007E33); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 500; margin-top: 15px; display: inline-block; border: 1px solid rgba(255, 255, 255, 0.3);">
-      🛡️ Enterprise-Grade Security & Privacy Guaranteed
+    
+    <!-- Right Column: Developer & Links -->
+    <div style="flex: 1; min-width: 300px; background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
+      <div style="color: #FFD700; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">Connect & Learn More</div>
+      
+      <div style="margin: 20px 0;">
+        <div style="font-size:1.1em; margin-bottom: 15px;">
+          Made with ❤️ by <b style="color: #FFD700;">Esha Tariq</b>
+        </div>
+        
+        <div style="display: flex; justify-content: center; gap: 15px; margin: 20px 0;">
+          <a href="https://github.com/codewithEshaYoutube" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255, 255, 255, 0.2); border-radius: 20px; text-decoration: none; color: white; font-size: 0.85em;" target="_blank">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/esha-tariqdev/" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255, 255, 255, 0.2); border-radius: 20px; text-decoration: none; color: white; font-size: 0.85em;" target="_blank">
+            LinkedIn
+          </a>
+        </div>
+        
+        <div style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); padding: 8px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 500; margin-top: 15px; display: inline-block;">
+          DevPost Girlies Hackathon Winner
+        </div>
+      </div>
     </div>
   </div>
   
-  <div style="margin: 25px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-    <a href="https://github.com/codewithEshaYoutube" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; background: rgba(255, 255, 255, 0.2); border-radius: 25px; text-decoration: none; color: white; font-size: 0.9em; transition: all 0.3s ease;" target="_blank">
-      🐙 GitHub
-    </a>
-    <a href="https://www.linkedin.com/in/esha-tariqdev/" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; background: rgba(255, 255, 255, 0.2); border-radius: 25px; text-decoration: none; color: white; font-size: 0.9em; transition: all 0.3s ease;" target="_blank">
-      💼 LinkedIn
-    </a>
-  </div>
-  
-  <div style="margin: 20px 0; font-size:1.2em; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 20px;">
-    Made with <span style="font-size:1.5em;">💖</span> by <b style="color: #FFD700;">Esha Tariq</b>
-  </div>
-  
-  <div style="font-size:0.95em; opacity:0.9; margin: 15px 0; font-style: italic;">
+  <!-- Bottom Quote -->
+  <div style="font-size:0.95em; opacity:0.9; margin: 20px 0; font-style: italic; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 20px;">
     Empowering the next generation to conquer financial stress and build lasting wealth.<br>
     Every smart decision today creates the freedom you deserve tomorrow.
   </div>
-  
-  <div style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 500; margin-top: 15px; display: inline-block;">
-    For DevPost Girlies Hackathon - Innovation in GenZ FinTech
-  </div>
 </div>
 """, unsafe_allow_html=True)
-
