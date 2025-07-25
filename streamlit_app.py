@@ -796,49 +796,16 @@ st.markdown(f"""
     box-shadow: 0 4px 24px rgba(240,147,251,0.15);
     transition: all 0.3s;
     animation: heroFadeIn 1s;
-```
-</div>
-""", unsafe_allow_html=True)
-
-# Ensure months_to_payoff_display is defined for the summary card
-try:
-    months_to_payoff_display = f"{months_to_payoff:.1f} months" if 'months_to_payoff' in locals() and months_to_payoff != float('inf') else 'N/A'
-except Exception:
-    months_to_payoff_display = 'N/A'
-
-st.markdown(f"""
-<div class="main-header">
-    <h2>🎉 Your Financial Power Summary</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
-        <div style="text-align: center;">
-            <h3>💰 Monthly Power</h3>
-            <h2>{format_currency(total_monthly_income, 0)}</h2>
-            <p>Total Income</p>
-        </div>
-        <div style="text-align: center;">
-            <h3>🎯 Savings Rate</h3>
-            <h2>{(adjusted_savings/total_monthly_income*100):.1f}%</h2>
-            <p>Wealth Building</p>
-        </div>
-        <div style="text-align: center;">
-            <h3>🚀 Investment Ready</h3>
-            <h2>{format_currency(available_for_investment, 0)}</h2>
-            <p>Monthly Growth</p>
-        </div>
-        <div style="text-align: center;">
-            <h3>⏰ Debt Freedom</h3>
-            <h2>{months_to_payoff_display}</h2>
-            <p>Months to Freedom</p>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-# ... (rest of the code remains unchanged)
 '>
     <span style='font-size: 2.5rem; margin-right: 0.5rem;'>{{current_vibe.value}}</span>
     {{vibe_response}}
 </div>
+<style>
+@keyframes heroFadeIn {{
+    from {{ opacity: 0; transform: translateY(0); }}
+    to {{ opacity: 1; transform: translateY(0); }}
+}}
+</style>
 """, unsafe_allow_html=True)
 
 # =============================================================================
@@ -1824,3 +1791,9 @@ st.markdown("""
 
 # Optional: Add some final spacing
 st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
+
+# Ensure months_to_payoff_display is defined for the summary card
+try:
+    months_to_payoff_display = f"{months_to_payoff:.1f} months" if 'months_to_payoff' in locals() and months_to_payoff != float('inf') else 'N/A'
+except Exception:
+    months_to_payoff_display = 'N/A'
