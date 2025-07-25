@@ -1678,7 +1678,7 @@ st.markdown(f"""
 </div>
 st.markdown(f"""
 <div style="text-align:center; margin-top:60px; padding:40px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-  <h2 style="margin-bottom: 10px; background: linear-gradient(45deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">💸 FinAura: Where Gen Z Vibes Meet Financial Freedom</h2>
+  <h2 style="margin-bottom: 10px; background: linear-gradient(45deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;"> FinAura: Where Gen Z Vibes Meet Financial Freedom</h2>
   
   <p style="font-size:1.1em; margin-bottom: 18px; opacity:0.95;">Revolutionizing financial wellness through AI-driven stress management and secure wealth building.</p>
   
