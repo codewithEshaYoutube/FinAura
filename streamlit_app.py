@@ -797,14 +797,14 @@ st.markdown(f"""
     transition: all 0.3s;
     animation: heroFadeIn 1s;
 '>
-    <span style='font-size: 2.5rem; margin-right: 0.5rem;'>{current_vibe.value}</span>
-    {vibe_response}
+    <span style='font-size: 2.5rem; margin-right: 0.5rem;'>{{current_vibe.value}}</span>
+    {{vibe_response}}
 </div>
 <style>
-@keyframes heroFadeIn {
-    from { opacity: 0; transform: translateY(0); }
-    to { opacity: 1; transform: translateY(0); }
-}
+@keyframes heroFadeIn {{
+    from {{ opacity: 0; transform: translateY(0); }}
+    to {{ opacity: 1; transform: translateY(0); }}
+}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -1791,4 +1791,3 @@ st.markdown("""
 
 # Optional: Add some final spacing
 st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
-  
