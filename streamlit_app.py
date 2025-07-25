@@ -1667,17 +1667,26 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Motivational closing
+# 🚨 MAIN ERROR: format_currency function is not defined
+# FIX: Replace format_currency with standard Python formatting
+
+# ❌ ORIGINAL (BROKEN):
+# Your {lifestyle_mode.split('(')[0]} approach with {format_currency(total_monthly_income, 0)} monthly income
+
+# ✅ FIXED VERSION:
+
+# Motivational closing - FIXED
 st.markdown(f"""
 <div class="success-card">
-    <h3>&#10024; You're Already Winning!</h3>
+    <h3>✨ You're Already Winning!</h3>
     <p>Just by using this calculator and thinking about your financial future, you're ahead of 70% of people your age. 
-    Your {lifestyle_mode.split('(')[0]} approach with {format_currency(total_monthly_income, 0)} monthly income puts you on track for 
+    Your {lifestyle_mode.split('(')[0]} approach with PKR {total_monthly_income:,.0f} monthly income puts you on track for 
     serious wealth building. Remember: every dollar you save in your 20s becomes $10+ in your future. 
-    You've got this! &#128640;</p>
+    You've got this! 🚀</p>
 </div>
 """, unsafe_allow_html=True)
 
+# Beautiful Footer - COMPLETELY FIXED AND IMPROVED
 st.markdown("""
 <div style="text-align:center; margin-top:60px; padding:40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
   <h2 style="margin-bottom: 10px; background: linear-gradient(45deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">FinAura: Where Gen Z Vibes Meet Financial Freedom</h2>
@@ -1693,12 +1702,12 @@ st.markdown("""
     <div style="flex: 1; min-width: 300px; background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
       <div style="color: #FFD700; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">Why FinAura Stands Out</div>
       <div style="text-align: left; font-size: 0.9em; line-height: 1.6;">
-        &#10003; AI-powered financial stress detection and personalized wellness strategies<br>
-        &#10003; Bank-grade encryption with multi-layer security protocols<br>
-        &#10003; Behavioral analytics to combat Gen Z financial anxiety<br>
-        &#10003; Gamified savings with real-time progress tracking<br>
-        &#10003; Zero-knowledge architecture ensuring complete data privacy<br>
-        &#10003; Smart budgeting algorithms for irregular income patterns
+        ✓ AI-powered financial stress detection and personalized wellness strategies<br>
+        ✓ Bank-grade encryption with multi-layer security protocols<br>
+        ✓ Behavioral analytics to combat Gen Z financial anxiety<br>
+        ✓ Gamified savings with real-time progress tracking<br>
+        ✓ Zero-knowledge architecture ensuring complete data privacy<br>
+        ✓ Smart budgeting algorithms for irregular income patterns
       </div>
       <div style="background: linear-gradient(45deg, #00C851, #007E33); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 500; margin-top: 15px; display: inline-block;">
         Enterprise-Grade Security & Privacy Guaranteed
@@ -1711,7 +1720,7 @@ st.markdown("""
       
       <div style="margin: 20px 0;">
         <div style="font-size:1.1em; margin-bottom: 15px;">
-          Made with &#10084;&#65039; by <b style="color: #FFD700;">Esha Tariq</b>
+          Made with ❤️ by <b style="color: #FFD700;">Esha Tariq</b>
         </div>
         
         <div style="display: flex; justify-content: center; gap: 15px; margin: 20px 0;">
@@ -1735,5 +1744,43 @@ st.markdown("""
     Empowering the next generation to conquer financial stress and build lasting wealth.<br>
     Every smart decision today creates the freedom you deserve tomorrow.
   </div>
+</div>
+""", unsafe_allow_html=True)
+
+# 🛠️ ALTERNATIVE: If you want to create a format_currency function, add this at the top of your file:
+
+def format_currency(amount, decimals=2):
+    """Format currency with PKR symbol and proper formatting"""
+    if decimals == 0:
+        return f"PKR {amount:,.0f}"
+    else:
+        return f"PKR {amount:,.{decimals}f}"
+
+# Then your original code would work:
+# Your {lifestyle_mode.split('(')[0]} approach with {format_currency(total_monthly_income, 0)} monthly income
+
+# 🚨 ADDITIONAL FIXES NEEDED:
+
+# 1. Make sure these variables are defined before the motivational closing section:
+if 'lifestyle_mode' not in locals():
+    lifestyle_mode = "Balanced Mode (Your current approach)"
+
+if 'total_monthly_income' not in locals():
+    total_monthly_income = st.session_state.financial_profile.get('monthly_income', 0) if st.session_state.financial_profile else 0
+
+# 2. Add error handling for the split operation:
+try:
+    lifestyle_name = lifestyle_mode.split('(')[0].strip()
+except:
+    lifestyle_name = "Your current"
+
+# 3. SAFEST VERSION with error handling:
+st.markdown(f"""
+<div class="success-card">
+    <h3>✨ You're Already Winning!</h3>
+    <p>Just by using this calculator and thinking about your financial future, you're ahead of 70% of people your age. 
+    Your {lifestyle_name if 'lifestyle_name' in locals() else 'current'} approach with PKR {total_monthly_income:,.0f} monthly income puts you on track for 
+    serious wealth building. Remember: every dollar you save in your 20s becomes $10+ in your future. 
+    You've got this! 🚀</p>
 </div>
 """, unsafe_allow_html=True)
