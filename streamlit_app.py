@@ -365,7 +365,7 @@ if 'financial_profile' not in st.session_state:
 if 'currency' not in st.session_state:
     st.session_state.currency = 'USD'
 
-currency_symbols = {'USD': '$', 'PKR': 'PKR', 'EUR': '€'}
+currency_symbols = {'USD': '$', 'PKR': 'Rs', 'EUR': '€'}
 currency_rates = {'USD': 1.0, 'PKR': 280.0, 'EUR': 0.92}  # Example rates, update as needed
 
 with st.sidebar:
