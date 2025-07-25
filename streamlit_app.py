@@ -390,6 +390,13 @@ def format_currency(amount, decimals=2):
     else:
         return f"${value:,.{decimals}f}"
 
+# Helper to get currency label for headings
+
+def get_currency_label():
+    symbol = currency_symbols[st.session_state.currency]
+    code = st.session_state.currency
+    return f"{symbol} ({code})"
+
 # =============================================================================
 # MAIN APP INTERFACE
 # =============================================================================
@@ -414,7 +421,7 @@ with st.expander("🚀 Set Up Your Financial Profile (Click to expand)", expande
     
     with col1:
         monthly_income = st.number_input(
-            "💰 Monthly Income/Allowance (PKR)",
+            f"💰 Monthly Income/Allowance {get_currency_label()}",
             min_value=0.0,
             value=st.session_state.financial_profile.get('monthly_income', 50000.0),
             step=1000.0,
@@ -740,11 +747,17 @@ st.markdown("## 🌈 Daily Vibe Check")
 col1, col2, col3 = st.columns(3)
 
 with col1:
+    # Ensure current_vibe is always a valid VibeType
+    try:
+        vibe_index = list(VibeType).index(st.session_state.current_vibe)
+    except Exception:
+        st.session_state.current_vibe = VibeType.CHILL
+        vibe_index = list(VibeType).index(VibeType.CHILL)
     current_vibe = st.selectbox(
         "How are you feeling about money today?",
         options=list(VibeType),
         format_func=lambda x: f"{x.value} {x.name.title()}",
-        index=list(VibeType).index(st.session_state.current_vibe)
+        index=vibe_index
     )
     st.session_state.current_vibe = current_vibe
 
@@ -1691,7 +1704,7 @@ st.markdown("""
             <span style="font-size: 1.1rem;">by</span>
             <span style="font-size: 1.3rem; font-weight: bold; background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
                 Eesha Tariq
-            </span> 
+            </span>
         </div>
         
         <div style="display: flex; justify-content: center; gap: 20px; margin: 25px 0; flex-wrap: wrap;">
