@@ -821,6 +821,263 @@ with vibe_col:
         """, unsafe_allow_html=True)
         st.session_state.previous_vibe = current_vibe
     
+    # =============================================================================
+    # DYNAMIC AURA SYSTEM - CHANGES WEBSITE COLORS BASED ON MOOD
+    # =============================================================================
+    
+    # Define mood-based color schemes and auras
+    vibe_auras = {
+        VibeType.STRESSED: {
+            "primary": "#FF6B6B",
+            "secondary": "#FF8E8E", 
+            "accent": "#FFB3B3",
+            "bg_start": "#FF4757",
+            "bg_end": "#FF6B6B",
+            "card_bg": "linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%)",
+            "text_glow": "#FF6B6B",
+            "particle_color": "#FF8E8E",
+            "aura_name": "Stress Relief Aura",
+            "description": "Calming reds to acknowledge stress while promoting healing"
+        },
+        VibeType.CONFIDENT: {
+            "primary": "#4ECDC4",
+            "secondary": "#45B7D1",
+            "accent": "#96CEB4",
+            "bg_start": "#667eea",
+            "bg_end": "#764ba2",
+            "card_bg": "linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%)",
+            "text_glow": "#4ECDC4",
+            "particle_color": "#45B7D1",
+            "aura_name": "Confidence Power Aura",
+            "description": "Bold blues and teals radiating success energy"
+        },
+        VibeType.CONFUSED: {
+            "primary": "#A8A8A8",
+            "secondary": "#B8B8B8",
+            "accent": "#D3D3D3",
+            "bg_start": "#74b9ff",
+            "bg_end": "#0984e3",
+            "card_bg": "linear-gradient(135deg, #A8A8A8 0%, #74b9ff 100%)",
+            "text_glow": "#74b9ff",
+            "particle_color": "#B8B8B8",
+            "aura_name": "Clarity Seeking Aura",
+            "description": "Cool grays and blues to promote mental clarity"
+        },
+        VibeType.EXCITED: {
+            "primary": "#FFD93D",
+            "secondary": "#FF6B35",
+            "accent": "#FF8B94",
+            "bg_start": "#FFD93D",
+            "bg_end": "#FF6B35",
+            "card_bg": "linear-gradient(135deg, #FFD93D 0%, #FF6B35 100%)",
+            "text_glow": "#FFD93D",
+            "particle_color": "#FF8B94",
+            "aura_name": "High Energy Excitement Aura",
+            "description": "Vibrant yellows and oranges bursting with excitement"
+        },
+        VibeType.CHILL: {
+            "primary": "#96CEB4",
+            "secondary": "#FFEAA7",
+            "accent": "#DDA0DD",
+            "bg_start": "#96CEB4",
+            "bg_end": "#FFEAA7",
+            "card_bg": "linear-gradient(135deg, #96CEB4 0%, #FFEAA7 100%)",
+            "text_glow": "#96CEB4",
+            "particle_color": "#DDA0DD",
+            "aura_name": "Zen Chill Aura",
+            "description": "Peaceful greens and soft yellows for ultimate relaxation"
+        },
+        VibeType.GUILTY: {
+            "primary": "#E17055",
+            "secondary": "#FDCB6E",
+            "accent": "#FD79A8",
+            "bg_start": "#E17055",
+            "bg_end": "#FDCB6E",
+            "card_bg": "linear-gradient(135deg, #E17055 0%, #FDCB6E 100%)",
+            "text_glow": "#E17055",
+            "particle_color": "#FD79A8",
+            "aura_name": "Self-Compassion Aura",
+            "description": "Warm oranges and peaches promoting self-forgiveness"
+        }
+    }
+    
+    current_aura = vibe_auras[current_vibe]
+    
+    # Apply dynamic aura styling
+    st.markdown(f"""
+    <style>
+    /* DYNAMIC AURA SYSTEM - MOOD-RESPONSIVE DESIGN */
+    
+    :root {{
+        --aura-primary: {current_aura['primary']};
+        --aura-secondary: {current_aura['secondary']};
+        --aura-accent: {current_aura['accent']};
+        --aura-glow: {current_aura['text_glow']};
+    }}
+    
+    /* Animated background aura effect */
+    .stApp {{
+        background: linear-gradient(45deg, {current_aura['bg_start']}22, {current_aura['bg_end']}22);
+        animation: auraShift 8s ease-in-out infinite alternate;
+    }}
+    
+    @keyframes auraShift {{
+        0% {{ background: linear-gradient(45deg, {current_aura['bg_start']}15, {current_aura['bg_end']}15); }}
+        100% {{ background: linear-gradient(135deg, {current_aura['bg_end']}15, {current_aura['bg_start']}15); }}
+    }}
+    
+    /* Dynamic card styling based on mood */
+    .main-header {{
+        background: {current_aura['card_bg']} !important;
+        box-shadow: 0 10px 30px {current_aura['primary']}40 !important;
+        animation: cardGlow 3s ease-in-out infinite alternate;
+    }}
+    
+    @keyframes cardGlow {{
+        0% {{ box-shadow: 0 10px 30px {current_aura['primary']}40; }}
+        100% {{ box-shadow: 0 15px 40px {current_aura['primary']}60, 0 0 20px {current_aura['text_glow']}30; }}
+    }}
+    
+    .vibe-card {{
+        background: {current_aura['card_bg']} !important;
+        box-shadow: 0 8px 25px {current_aura['primary']}35 !important;
+    }}
+    
+    .money-card {{
+        background: {current_aura['card_bg']} !important;
+        border: 2px solid {current_aura['accent']}60;
+        box-shadow: 0 5px 20px {current_aura['primary']}30;
+    }}
+    
+    .budget-card {{
+        background: linear-gradient(135deg, {current_aura['accent']}80, {current_aura['secondary']}60) !important;
+        border: 1px solid {current_aura['primary']}40;
+    }}
+    
+    .investment-card {{
+        background: linear-gradient(135deg, {current_aura['secondary']}70, {current_aura['accent']}50) !important;
+        border-left: 4px solid {current_aura['primary']};
+    }}
+    
+    .financial-goal-card {{
+        background: {current_aura['card_bg']} !important;
+        box-shadow: 0 6px 20px {current_aura['primary']}35;
+    }}
+    
+    /* Mood-responsive text effects */
+    h1, h2, h3 {{
+        text-shadow: 0 0 10px {current_aura['text_glow']}50 !important;
+        animation: textGlow 2s ease-in-out infinite alternate;
+    }}
+    
+    @keyframes textGlow {{
+        0% {{ text-shadow: 0 0 10px {current_aura['text_glow']}50; }}
+        100% {{ text-shadow: 0 0 15px {current_aura['text_glow']}70, 0 0 25px {current_aura['text_glow']}30; }}
+    }}
+    
+    /* Button styling matches mood */
+    .stButton > button {{
+        background: {current_aura['card_bg']} !important;
+        border: 2px solid {current_aura['primary']} !important;
+        box-shadow: 0 4px 15px {current_aura['primary']}40 !important;
+        transition: all 0.3s ease !important;
+    }}
+    
+    .stButton > button:hover {{
+        box-shadow: 0 8px 25px {current_aura['primary']}60, 0 0 20px {current_aura['text_glow']}50 !important;
+        transform: translateY(-3px) !important;
+    }}
+    
+    /* Progress bars match the aura */
+    .progress-fill {{
+        background: {current_aura['card_bg']} !important;
+        box-shadow: inset 0 0 10px {current_aura['text_glow']}30;
+    }}
+    
+    /* Sidebar matches mood */
+    .sidebar .sidebar-content {{
+        background: linear-gradient(180deg, {current_aura['primary']}, {current_aura['secondary']}) !important;
+    }}
+    
+    /* Floating particles for extra aura effect */
+    .aura-particles {{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }}
+    
+    .particle {{
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: {current_aura['particle_color']};
+        border-radius: 50%;
+        animation: float 15s infinite linear;
+        opacity: 0.6;
+    }}
+    
+    @keyframes float {{
+        0% {{ transform: translateY(100vh) rotate(0deg); }}
+        100% {{ transform: translateY(-100px) rotate(360deg); }}
+    }}
+    
+    /* Create multiple particles with different delays */
+    .particle:nth-child(1) {{ left: 10%; animation-delay: 0s; }}
+    .particle:nth-child(2) {{ left: 20%; animation-delay: 2s; }}
+    .particle:nth-child(3) {{ left: 30%; animation-delay: 4s; }}
+    .particle:nth-child(4) {{ left: 40%; animation-delay: 6s; }}
+    .particle:nth-child(5) {{ left: 50%; animation-delay: 8s; }}
+    .particle:nth-child(6) {{ left: 60%; animation-delay: 10s; }}
+    .particle:nth-child(7) {{ left: 70%; animation-delay: 12s; }}
+    .particle:nth-child(8) {{ left: 80%; animation-delay: 14s; }}
+    .particle:nth-child(9) {{ left: 90%; animation-delay: 16s; }}
+    
+    </style>
+    
+    <!-- Floating particles for aura effect -->
+    <div class="aura-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    
+    <!-- Aura notification -->
+    <div style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: {current_aura['card_bg']};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 0.9em;
+        font-weight: 600;
+        box-shadow: 0 8px 25px {current_aura['primary']}50;
+        z-index: 1000;
+        animation: auraNotification 4s ease-out;
+    ">
+        ✨ {current_aura['aura_name']} Activated ✨
+    </div>
+    
+    @keyframes auraNotification {{
+        0% {{ opacity: 0; transform: translateX(100px); }}
+        20% {{ opacity: 1; transform: translateX(0); }}
+        80% {{ opacity: 1; transform: translateX(0); }}
+        100% {{ opacity: 0; transform: translateX(100px); }}
+    }}
+    
+    """, unsafe_allow_html=True)
+    
     st.session_state.current_vibe = current_vibe
 
 with stress_col:
@@ -829,28 +1086,58 @@ with stress_col:
 with conf_col:
     confidence_level = st.slider("Financial confidence", 1, 10, 6, key="hero_conf_slider")
 
-# AI Response based on vibe (big, animated card)
+# AI Response based on vibe (big, animated card) with dynamic aura
+current_aura = vibe_auras[current_vibe]
 vibe_response = st.session_state.agent.get_vibe_response(current_vibe)
+
+# Enhanced response card with aura integration
 st.markdown(f"""
 <div style='
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: {current_aura['card_bg']};
     padding: 2rem;
     border-radius: 20px;
     margin: 1.5rem 0 2.5rem 0;
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
-    box-shadow: 0 4px 24px rgba(240,147,251,0.15);
+    box-shadow: 0 10px 30px {current_aura['primary']}40, 0 0 40px {current_aura['text_glow']}20;
     transition: all 0.3s;
-    animation: heroFadeIn 1s;
+    animation: heroFadeIn 1s, auraGlow 3s ease-in-out infinite alternate;
+    border: 2px solid {current_aura['accent']}60;
 '>
-    <span style='font-size: 2.5rem; margin-right: 0.5rem;'>{{current_vibe.value}}</span>
+    <span style='font-size: 2.5rem; margin-right: 0.5rem; text-shadow: 0 0 15px {current_aura['text_glow']};'>{{current_vibe.value}}</span>
     {{vibe_response}}
+    
+    <div style='
+        margin-top: 1rem; 
+        font-size: 1rem; 
+        opacity: 0.9; 
+        font-style: italic;
+        background: rgba(255,255,255,0.1); 
+        padding: 0.8rem; 
+        border-radius: 10px;
+        border-left: 4px solid {current_aura['accent']};
+    '>
+        <strong>🌟 Current Aura:</strong> {current_aura['aura_name']}<br>
+        <small>{current_aura['description']}</small>
+    </div>
 </div>
+
 <style>
 @keyframes heroFadeIn {{
     from {{ opacity: 0; transform: translateY(0); }}
     to {{ opacity: 1; transform: translateY(0); }}
+}}
+
+@keyframes auraGlow {{
+    0% {{ 
+        box-shadow: 0 10px 30px {current_aura['primary']}40, 0 0 40px {current_aura['text_glow']}20;
+        transform: scale(1);
+    }}
+    100% {{ 
+        box-shadow: 0 15px 40px {current_aura['primary']}60, 0 0 60px {current_aura['text_glow']}40;
+        transform: scale(1.02);
+    }}
 }}
 </style>
 """, unsafe_allow_html=True)
