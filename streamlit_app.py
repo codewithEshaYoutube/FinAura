@@ -1670,12 +1670,14 @@ st.markdown("""
 # Motivational closing
 st.markdown(f"""
 <div class="success-card">
-    <h3>✨ You're Already Winning!</h3>
+    <h3>&#10024; You're Already Winning!</h3>
     <p>Just by using this calculator and thinking about your financial future, you're ahead of 70% of people your age. 
     Your {lifestyle_mode.split('(')[0]} approach with {format_currency(total_monthly_income, 0)} monthly income puts you on track for 
     serious wealth building. Remember: every dollar you save in your 20s becomes $10+ in your future. 
-    You've got this! 🚀</p>
+    You've got this! &#128640;</p>
 </div>
+""", unsafe_allow_html=True)
+
 st.markdown("""
 <div style="text-align:center; margin-top:60px; padding:40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
   <h2 style="margin-bottom: 10px; background: linear-gradient(45deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">FinAura: Where Gen Z Vibes Meet Financial Freedom</h2>
