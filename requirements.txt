@@ -1,10 +1,70 @@
-streamlit
-pandas
-asyncio
-logging
-pandas
-matplotlib
-sqlite3
-json
-hashlib
+# FinAura: Gen Z CFO Requirements
+# Core Dependencies for Streamlit App
 
+# Web Framework
+streamlit
+
+# Data Processing & Analysis
+pandas
+numpy
+
+# Data Visualization
+plotly
+matplotlib
+seaborn
+
+# Date & Time Handling
+python-dateutil
+
+# Database & Storage
+sqlalchemy
+
+# AI & Machine Learning (for future enhancements)
+openai
+langchain
+langchain-openai
+
+# API Integration
+requests
+httpx
+
+# Data Validation
+pydantic
+
+# Async Support
+aiohttp
+
+# Utility Libraries
+python-dotenv
+typing-extensions
+
+# Development & Testing
+pytest
+pytest-asyncio
+black
+flake8
+
+# Optional: For Production Deployment
+gunicorn
+uvicorn
+fastapi
+
+# Optional: For Enhanced Financial Features
+yfinance
+ccxt
+plaid-python
+
+# Optional: For WhatsApp Integration
+twilio
+pywhatkit
+
+# Optional: For Enhanced Data Processing
+scikit-learn
+joblib
+
+# Optional: For PDF Generation (reports)
+reportlab
+fpdf2
+
+# Optional: For Email Notifications
+email-validator
