@@ -1686,101 +1686,340 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Beautiful Footer - COMPLETELY FIXED AND IMPROVED
-st.markdown("""
-<div style="text-align:center; margin-top:60px; padding:40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-  <h2 style="margin-bottom: 10px; background: linear-gradient(45deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">FinAura: Where Gen Z Vibes Meet Financial Freedom</h2>
-  
-  <p style="font-size:1.1em; margin-bottom: 18px; opacity:0.95;">Revolutionizing financial wellness through AI-driven stress management and secure wealth building.</p>
-  
-  <div style="font-size:1.1em; margin-bottom: 25px; font-weight: 500;">Built to tackle Gen Z financial stress with intelligent insights, bulletproof security, and a fully automated companion that grows with your financial journey.</div>
-  
-  <!-- Two Column Layout -->
-  <div style="display: flex; justify-content: space-between; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
-    
-    <!-- Left Column: Features -->
-    <div style="flex: 1; min-width: 300px; background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
-      <div style="color: #FFD700; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">Why FinAura Stands Out</div>
-      <div style="text-align: left; font-size: 0.9em; line-height: 1.6;">
-        ✓ AI-powered financial stress detection and personalized wellness strategies<br>
-        ✓ Bank-grade encryption with multi-layer security protocols<br>
-        ✓ Behavioral analytics to combat Gen Z financial anxiety<br>
-        ✓ Gamified savings with real-time progress tracking<br>
-        ✓ Zero-knowledge architecture ensuring complete data privacy<br>
-        ✓ Smart budgeting algorithms for irregular income patterns
-      </div>
-      <div style="background: linear-gradient(45deg, #00C851, #007E33); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 500; margin-top: 15px; display: inline-block;">
-        Enterprise-Grade Security & Privacy Guaranteed
-      </div>
-    </div>
-    
-    <!-- Right Column: Developer & Links -->
-    <div style="flex: 1; min-width: 300px; background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
-      <div style="color: #FFD700; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">Connect & Learn More</div>
-      
-      <div style="margin: 20px 0;">
-        <div style="font-size:1.1em; margin-bottom: 15px;">
-          Made with ❤️ by <b style="color: #FFD700;">Esha Tariq</b>
-        </div>
-        
-        <div style="display: flex; justify-content: center; gap: 15px; margin: 20px 0;">
-          <a href="https://github.com/codewithEshaYoutube" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255, 255, 255, 0.2); border-radius: 20px; text-decoration: none; color: white; font-size: 0.85em;" target="_blank">
-            GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/esha-tariqdev/" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255, 255, 255, 0.2); border-radius: 20px; text-decoration: none; color: white; font-size: 0.85em;" target="_blank">
-            LinkedIn
-          </a>
-        </div>
-        
-        <div style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); padding: 8px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 500; margin-top: 15px; display: inline-block;">
-          DevPost Girlies Hackathon Winner
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Bottom Quote -->
-  <div style="font-size:0.95em; opacity:0.9; margin: 20px 0; font-style: italic; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 20px;">
-    Empowering the next generation to conquer financial stress and build lasting wealth.<br>
-    Every smart decision today creates the freedom you deserve tomorrow.
-  </div>
-</div>
-""", unsafe_allow_html=True)
 
-# 🛠️ ALTERNATIVE: If you want to create a format_currency function, add this at the top of your file:
-
-def format_currency(amount, decimals=2):
-    """Format currency with PKR symbol and proper formatting"""
-    if decimals == 0:
-        return f"PKR {amount:,.0f}"
-    else:
-        return f"PKR {amount:,.{decimals}f}"
-
-# Then your original code would work:
-# Your {lifestyle_mode.split('(')[0]} approach with {format_currency(total_monthly_income, 0)} monthly income
-
-# 🚨 ADDITIONAL FIXES NEEDED:
-
-# 1. Make sure these variables are defined before the motivational closing section:
-if 'lifestyle_mode' not in locals():
-    lifestyle_mode = "Balanced Mode (Your current approach)"
-
-if 'total_monthly_income' not in locals():
-    total_monthly_income = st.session_state.financial_profile.get('monthly_income', 0) if st.session_state.financial_profile else 0
-
-# 2. Add error handling for the split operation:
-try:
-    lifestyle_name = lifestyle_mode.split('(')[0].strip()
-except:
-    lifestyle_name = "Your current"
-
-# 3. SAFEST VERSION with error handling:
+# Motivational closing section
 st.markdown(f"""
 <div class="success-card">
     <h3>✨ You're Already Winning!</h3>
     <p>Just by using this calculator and thinking about your financial future, you're ahead of 70% of people your age. 
-    Your {lifestyle_name if 'lifestyle_name' in locals() else 'current'} approach with PKR {total_monthly_income:,.0f} monthly income puts you on track for 
+    Your {lifestyle_name} approach with PKR {total_monthly_income:,.0f} monthly income puts you on track for 
     serious wealth building. Remember: every dollar you save in your 20s becomes $10+ in your future. 
     You've got this! 🚀</p>
 </div>
 """, unsafe_allow_html=True)
+
+class FinAuraFooter:
+    """Complete Python-based footer generator for FinAura app"""
+    
+    def __init__(self):
+        self.current_year = datetime.now().year
+        self.app_name = "FinAura"
+        self.tagline = "Where Gen Z Vibes Meet Financial Freedom"
+        self.developer = "Esha Tariq"
+        self.achievement = "DevPost Girlies Hackathon Winner"
+        
+        # Color schemes
+        self.colors = {
+            'primary_gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'gold_gradient': 'linear-gradient(45deg, #FFD700, #FFA500)',
+            'success_gradient': 'linear-gradient(45deg, #00C851, #007E33)',
+            'winner_gradient': 'linear-gradient(45deg, #FF6B6B, #FF8E53)',
+            'glass_bg': 'rgba(255, 255, 255, 0.15)',
+            'glass_border': 'rgba(255, 255, 255, 0.2)',
+            'gold': '#FFD700',
+            'white': 'white'
+        }
+        
+        # App features
+        self.features = [
+            "AI-powered financial stress detection and personalized wellness strategies",
+            "Bank-grade encryption with multi-layer security protocols", 
+            "Behavioral analytics to combat Gen Z financial anxiety",
+            "Gamified savings with real-time progress tracking",
+            "Zero-knowledge architecture ensuring complete data privacy",
+            "Smart budgeting algorithms for irregular income patterns"
+        ]
+        
+        # Social links
+        self.social_links = {
+            'GitHub': 'https://github.com/codewithEshaYoutube',
+            'LinkedIn': 'https://www.linkedin.com/in/esha-tariqdev/'
+        }
+        
+        # Motivational quotes
+        self.quotes = [
+            "Empowering the next generation to conquer financial stress and build lasting wealth.",
+            "Every smart decision today creates the freedom you deserve tomorrow.",
+            "Building financial confidence one calculation at a time.",
+            "Your future self will thank you for the choices you make today."
+        ]
+
+    def format_currency(self, amount, decimals=2):
+        """Format currency with PKR symbol and proper formatting"""
+        if decimals == 0:
+            return f"PKR {amount:,.0f}"
+        else:
+            return f"PKR {amount:,.{decimals}f}"
+
+    def get_lifestyle_name(self, lifestyle_mode):
+        """Safely extract lifestyle name from mode string"""
+        try:
+            return lifestyle_mode.split('(')[0].strip()
+        except (AttributeError, IndexError):
+            return "Your current"
+
+    def get_user_variables(self):
+        """Get user variables with safe defaults"""
+        lifestyle_mode = getattr(st.session_state, 'lifestyle_mode', 'Balanced Mode (Your current approach)')
+        
+        if hasattr(st.session_state, 'financial_profile') and st.session_state.financial_profile:
+            monthly_income = st.session_state.financial_profile.get('monthly_income', 50000)
+        else:
+            monthly_income = 50000
+            
+        return lifestyle_mode, monthly_income
+
+    def create_glass_card_style(self, additional_styles=""):
+        """Generate glass morphism card styling"""
+        base_style = f"""
+            background: {self.colors['glass_bg']};
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid {self.colors['glass_border']};
+            {additional_styles}
+        """
+        return base_style
+
+    def create_button_style(self, bg_color="rgba(255, 255, 255, 0.2)"):
+        """Generate button styling"""
+        return f"""
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: {bg_color};
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            font-size: 0.85em;
+        """
+
+    def generate_features_list(self):
+        """Generate features list with checkmarks"""
+        features_html = ""
+        for feature in self.features:
+            features_html += f"✓ {feature}<br>"
+        return features_html
+
+    def generate_social_links(self):
+        """Generate social media links"""
+        links_html = ""
+        for platform, url in self.social_links.items():
+            button_style = self.create_button_style()
+            links_html += f'''
+                <a href="{url}" style="{button_style}" target="_blank">
+                    {platform}
+                </a>
+            '''
+        return links_html
+
+    def get_random_quote(self):
+        """Get a random motivational quote"""
+        return random.choice(self.quotes)
+
+    def render_success_message(self):
+        """Render the motivational success message"""
+        lifestyle_mode, monthly_income = self.get_user_variables()
+        lifestyle_name = self.get_lifestyle_name(lifestyle_mode)
+        formatted_income = self.format_currency(monthly_income, 0)
+        
+        success_html = f"""
+        <div class="success-card">
+            <h3>✨ You're Already Winning!</h3>
+            <p>Just by using this calculator and thinking about your financial future, you're ahead of 70% of people your age. 
+            Your {lifestyle_name} approach with {formatted_income} monthly income puts you on track for 
+            serious wealth building. Remember: every dollar you save in your 20s becomes $10+ in your future. 
+            You've got this! 🚀</p>
+        </div>
+        """
+        
+        st.markdown(success_html, unsafe_allow_html=True)
+
+    def render_main_footer(self):
+        """Render the complete footer section"""
+        features_list = self.generate_features_list()
+        social_links = self.generate_social_links()
+        quote = self.get_random_quote()
+        
+        # Main container styling
+        container_style = f"""
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px 20px;
+            background: {self.colors['primary_gradient']};
+            border-radius: 20px;
+            color: {self.colors['white']};
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        """
+        
+        # Header styling
+        header_style = f"""
+            margin-bottom: 10px;
+            background: {self.colors['gold_gradient']};
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        """
+        
+        # Features card styling
+        features_card_style = self.create_glass_card_style("flex: 1; min-width: 300px;")
+        
+        # Developer card styling
+        dev_card_style = self.create_glass_card_style("flex: 1; min-width: 300px;")
+        
+        # Security badge styling
+        security_badge_style = f"""
+            background: {self.colors['success_gradient']};
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin-top: 15px;
+            display: inline-block;
+        """
+        
+        # Winner badge styling
+        winner_badge_style = f"""
+            background: {self.colors['winner_gradient']};
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin-top: 15px;
+            display: inline-block;
+        """
+        
+        footer_html = f"""
+        <div style="{container_style}">
+            <h2 style="{header_style}">{self.app_name}: {self.tagline}</h2>
+            
+            <p style="font-size:1.1em; margin-bottom: 18px; opacity:0.95;">
+                Revolutionizing financial wellness through AI-driven stress management and secure wealth building.
+            </p>
+            
+            <div style="font-size:1.1em; margin-bottom: 25px; font-weight: 500;">
+                Built to tackle Gen Z financial stress with intelligent insights, bulletproof security, and a fully automated companion that grows with your financial journey.
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+                
+                <div style="{features_card_style}">
+                    <div style="color: {self.colors['gold']}; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">
+                        Why {self.app_name} Stands Out
+                    </div>
+                    <div style="text-align: left; font-size: 0.9em; line-height: 1.6;">
+                        {features_list}
+                    </div>
+                    <div style="{security_badge_style}">
+                        Enterprise-Grade Security & Privacy Guaranteed
+                    </div>
+                </div>
+                
+                <div style="{dev_card_style}">
+                    <div style="color: {self.colors['gold']}; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">
+                        Connect & Learn More
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <div style="font-size:1.1em; margin-bottom: 15px;">
+                            Made with ❤️ by <b style="color: {self.colors['gold']};">{self.developer}</b>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: center; gap: 15px; margin: 20px 0;">
+                            {social_links}
+                        </div>
+                        
+                        <div style="{winner_badge_style}">
+                            {self.achievement}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="font-size:0.95em; opacity:0.9; margin: 20px 0; font-style: italic; border-top: 1px solid {self.colors['glass_border']}; padding-top: 20px;">
+                {quote}<br>
+                © {self.current_year} {self.app_name} - Empowering Financial Freedom
+            </div>
+        </div>
+        """
+        
+        st.markdown(footer_html, unsafe_allow_html=True)
+
+    def add_custom_css(self):
+        """Add custom CSS for additional styling"""
+        css = """
+        <style>
+        .success-card {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .success-card h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        
+        .success-card p {
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .success-card {
+                padding: 15px;
+            }
+        }
+        </style>
+        """
+        st.markdown(css, unsafe_allow_html=True)
+
+    def render_complete_footer(self):
+        """Render the complete footer with all components"""
+        # Add custom CSS
+        self.add_custom_css()
+        
+        # Render success message
+        self.render_success_message()
+        
+        # Render main footer
+        self.render_main_footer()
+
+# 🚀 USAGE - MAXIMUM PYTHON IMPLEMENTATION:
+
+def main():
+    """Main function to render the footer"""
+    # Initialize the footer class
+    footer = FinAuraFooter()
+    
+    # Render complete footer
+    footer.render_complete_footer()
+
+# Call the main function
+if __name__ == "__main__":
+    main()
+
+# 🎯 ALTERNATIVE SIMPLE USAGE:
+# Just create instance and call render method
+# footer_generator = FinAuraFooter()
+# footer_generator.render_complete_footer()
+
+# 🔧 ADVANCED FEATURES IMPLEMENTED:
+# ✅ Object-oriented design with FinAuraFooter class
+# ✅ Dynamic variable handling with session state
+# ✅ Safe error handling for all operations  
+# ✅ Modular functions for each component
+# ✅ Random quote generation
+# ✅ Responsive design considerations
+# ✅ Currency formatting utility
+# ✅ Glass morphism styling generator
+# ✅ Dynamic color scheme management
+# ✅ Custom CSS injection
+# ✅ Social links generator
+# ✅ Features list generator
+# ✅ Multiple styling utility functions
