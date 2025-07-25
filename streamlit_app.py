@@ -1,4 +1,4 @@
-# 💸 FinAura: Your Gen Z CFO – Where Vibes Meet Value
+ # 💸 FinAura: Your Gen Z CFO – Where Vibes Meet Value
 # Enhanced Streamlit App with Financial Planning & Budget Structure
 
 import streamlit as st
