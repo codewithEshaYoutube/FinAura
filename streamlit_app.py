@@ -1797,3 +1797,120 @@ try:
     months_to_payoff_display = f"{months_to_payoff:.1f} months" if 'months_to_payoff' in locals() and months_to_payoff != float('inf') else 'N/A'
 except Exception:
     months_to_payoff_display = 'N/A'
+
+# =====================
+# COOL, ANIMATED SUMMARY CARD (ACHATHON-WINNING)
+# =====================
+
+# Ensure months_to_payoff_display is defined for the summary card
+try:
+    months_to_payoff_display = f"{months_to_payoff:.1f} months" if 'months_to_payoff' in locals() and months_to_payoff != float('inf') else 'N/A'
+except Exception:
+    months_to_payoff_display = 'N/A'
+
+# Dynamic motivational message
+if months_to_payoff_display == 'N/A' or months_to_payoff_display == '0.0 months':
+    motivation = "🎉 You're debt free! Time to invest in your dreams! 🚀"
+    show_confetti = True
+elif adjusted_savings/total_monthly_income >= 0.3:
+    motivation = "💪 Your savings rate is elite! Future you is proud."
+    show_confetti = False
+elif available_for_investment > 0:
+    motivation = "📈 You're ready to invest and grow your wealth!"
+    show_confetti = False
+else:
+    motivation = "🌱 Every step counts. Keep building your financial power!"
+    show_confetti = False
+
+# Confetti animation (Streamlit hack: st.balloons for confetti effect)
+if 'show_confetti' in locals() and show_confetti:
+    st.balloons()
+
+# Glassmorphism + animated gradient summary card
+st.markdown(f"""
+<style>
+.cool-summary-card {{
+    background: rgba(255,255,255,0.18);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 30px;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    margin-bottom: 2.5rem;
+    margin-top: 1.5rem;
+    animation: popIn 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+    position: relative;
+    overflow: hidden;
+}}
+@keyframes popIn {{
+    0% {{ transform: scale(0.95) translateY(30px); opacity: 0; }}
+    100% {{ transform: scale(1) translateY(0); opacity: 1; }}
+}}
+.cool-summary-card::before {{
+    content: "";
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 200px; height: 200px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 50%;
+    opacity: 0.18;
+    z-index: 0;
+}}
+.cool-summary-card::after {{
+    content: "";
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    opacity: 0.18;
+    z-index: 0;
+}}
+.cool-summary-emoji {{
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    animation: emojiBounce 1.2s infinite alternate;
+}}
+@keyframes emojiBounce {{
+    0% {{ transform: translateY(0); }}
+    100% {{ transform: translateY(-8px); }}
+}}
+.cool-summary-motivation {{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 1.2rem;
+    color: #764ba2;
+    text-shadow: 0 2px 8px rgba(102,126,234,0.08);
+    letter-spacing: 0.5px;
+    text-align: center;
+}}
+</style>
+<div class="cool-summary-card">
+    <div class="cool-summary-emoji">💸✨🚀</div>
+    <h2 style="text-align:center; font-size:2.2rem; margin-bottom:1.2rem; background: linear-gradient(90deg, #667eea, #f093fb, #f5576c); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Your Financial Power Summary</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; margin-top: 10px;">
+        <div style="text-align: center;">
+            <h3>💰 Monthly Power</h3>
+            <h2>{format_currency(total_monthly_income, 0)}</h2>
+            <p style="opacity:0.7;">Total Income</p>
+        </div>
+        <div style="text-align: center;">
+            <h3>🎯 Savings Rate</h3>
+            <h2>{(adjusted_savings/total_monthly_income*100):.1f}%</h2>
+            <p style="opacity:0.7;">Wealth Building</p>
+        </div>
+        <div style="text-align: center;">
+            <h3>🚀 Investment Ready</h3>
+            <h2>{format_currency(available_for_investment, 0)}</h2>
+            <p style="opacity:0.7;">Monthly Growth</p>
+        </div>
+        <div style="text-align: center;">
+            <h3>⏰ Debt Freedom</h3>
+            <h2>{months_to_payoff_display}</h2>
+            <p style="opacity:0.7;">Months to Freedom</p>
+        </div>
+    </div>
+    <div class="cool-summary-motivation">{motivation}</div>
+</div>
+""", unsafe_allow_html=True)
