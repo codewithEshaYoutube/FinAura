@@ -1691,12 +1691,12 @@ st.markdown("""
     <div style="flex: 1; min-width: 300px; background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
       <div style="color: #FFD700; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">Why FinAura Stands Out</div>
       <div style="text-align: left; font-size: 0.9em; line-height: 1.6;">
-        ✓ AI-powered financial stress detection and personalized wellness strategies<br>
-        ✓ Bank-grade encryption with multi-layer security protocols<br>
-        ✓ Behavioral analytics to combat Gen Z financial anxiety<br>
-        ✓ Gamified savings with real-time progress tracking<br>
-        ✓ Zero-knowledge architecture ensuring complete data privacy<br>
-        ✓ Smart budgeting algorithms for irregular income patterns
+        &#10003; AI-powered financial stress detection and personalized wellness strategies<br>
+        &#10003; Bank-grade encryption with multi-layer security protocols<br>
+        &#10003; Behavioral analytics to combat Gen Z financial anxiety<br>
+        &#10003; Gamified savings with real-time progress tracking<br>
+        &#10003; Zero-knowledge architecture ensuring complete data privacy<br>
+        &#10003; Smart budgeting algorithms for irregular income patterns
       </div>
       <div style="background: linear-gradient(45deg, #00C851, #007E33); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.8em; font-weight: 500; margin-top: 15px; display: inline-block;">
         Enterprise-Grade Security & Privacy Guaranteed
@@ -1709,7 +1709,7 @@ st.markdown("""
       
       <div style="margin: 20px 0;">
         <div style="font-size:1.1em; margin-bottom: 15px;">
-          Made with ❤️ by <b style="color: #FFD700;">Esha Tariq</b>
+          Made with &#10084;&#65039; by <b style="color: #FFD700;">Esha Tariq</b>
         </div>
         
         <div style="display: flex; justify-content: center; gap: 15px; margin: 20px 0;">
