@@ -418,125 +418,126 @@ def get_currency_label():
 
 if not st.session_state.manifesto_shown:
     st.markdown("""
-    <div id="manifesto-overlay" style="
+    <div id="manifesto-popup" style="
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.85);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 2rem;
+        max-width: 450px;
+        width: 90%;
+        color: white;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         z-index: 10000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        animation: fadeIn 0.5s ease-out;
+        border: 2px solid rgba(255,255,255,0.2);
+        animation: popIn 0.6s ease-out;
     ">
-        <div style="
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 25px;
-            padding: 3rem;
-            max-width: 600px;
-            margin: 2rem;
+        <!-- Close Button -->
+        <button id="close-manifesto" style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
             color: white;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideIn 0.8s ease-out;
-            border: 3px solid rgba(255,255,255,0.2);
-            position: relative;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        " onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
+           onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+            ✕
+        </button>
+        
+        <h2 style="
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            font-weight: 700;
         ">
-            <div style="
-                background: linear-gradient(45deg, #FFD700, #FFA500);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                font-size: 2.5rem;
-                margin-bottom: 1rem;
-                font-weight: 700;
-            ">
-                📜 The FinAura Manifesto
-            </div>
-            
-            <div style="font-size: 1.8rem; margin: 1.5rem 0; font-weight: 600; text-shadow: 0 0 20px rgba(255,255,255,0.3);">
-                💡 "What if money was emotional?"
-            </div>
-            
-            <div style="font-size: 1.2rem; line-height: 1.8; margin: 2rem 0; opacity: 0.95;">
-                We don't just optimize your spending, we <strong>listen to your vibe</strong>.<br><br>
-                We're not building an accountant — we're building a <strong style="color: #FFD700;">best friend</strong>.<br><br>
-                FinAura believes that financial advice should be <strong style="color: #4ECDC4;">joyful, not judgmental</strong>.
-            </div>
-            
-            <div style="
-                background: rgba(255,255,255,0.1);
-                border-radius: 15px;
-                padding: 1.5rem;
-                margin: 2rem 0;
-                border-left: 5px solid #FFD700;
-                font-style: italic;
-                font-size: 1.1rem;
-            ">
-                <strong>🌟 Our Promise:</strong> Every emotion is valid. Every financial journey is unique. 
-                Your feelings about money matter, and we're here to help you navigate them with compassion and wisdom.
-            </div>
-            
-            <div style="
-                background: linear-gradient(45deg, #4ECDC4, #45B7D1);
-                color: white;
-                padding: 15px 30px;
-                border-radius: 25px;
-                font-size: 1.1rem;
-                font-weight: 600;
-                margin: 2rem auto;
-                cursor: pointer;
-                border: none;
-                box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
-                transition: all 0.3s ease;
-                display: inline-block;
-            " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 35px rgba(78, 205, 196, 0.6)';" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(78, 205, 196, 0.4)';"
-               onclick="document.getElementById('manifesto-overlay').style.display='none';">
-                ✨ Begin My Financial Journey ✨
-            </div>
-            
-            <div style="font-size: 0.9rem; opacity: 0.8; margin-top: 1rem;">
-                Welcome to a new era of emotional financial wellness 💜
-            </div>
+            💡 What if money was emotional?
+        </h2>
+        
+        <p style="font-size: 1.1rem; line-height: 1.6; margin: 1rem 0; opacity: 0.95;">
+            We don't just optimize spending - we <strong>listen to your vibe</strong>.<br>
+            We're building a <strong style="color: #FFD700;">best friend</strong>, not an accountant.
+        </p>
+        
+        <div style="
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            border-left: 4px solid #4ECDC4;
+        ">
+            Financial advice should be <strong style="color: #4ECDC4;">joyful, not judgmental</strong> 💜
         </div>
     </div>
     
     <style>
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+    @keyframes popIn {
+        0% { 
+            opacity: 0; 
+            transform: translate(-50%, -50%) scale(0.7); 
+        }
+        100% { 
+            opacity: 1; 
+            transform: translate(-50%, -50%) scale(1); 
+        }
     }
     
-    @keyframes slideIn {
-        from { 
-            opacity: 0; 
-            transform: translateY(-50px) scale(0.9); 
-        }
-        to { 
+    @keyframes fadeOut {
+        0% { 
             opacity: 1; 
-            transform: translateY(0) scale(1); 
+            transform: translate(-50%, -50%) scale(1); 
+        }
+        100% { 
+            opacity: 0; 
+            transform: translate(-50%, -50%) scale(0.7); 
         }
     }
     </style>
     
     <script>
-    // Auto-close manifesto after reading (optional)
+    // Auto-close after 3 seconds
     setTimeout(function() {
-        var overlay = document.getElementById('manifesto-overlay');
-        if (overlay) {
-            overlay.style.animation = 'fadeOut 0.5s ease-out forwards';
+        var popup = document.getElementById('manifesto-popup');
+        if (popup) {
+            popup.style.animation = 'fadeOut 0.5s ease-out forwards';
             setTimeout(function() {
-                overlay.style.display = 'none';
+                popup.remove();
             }, 500);
         }
-    }, 15000); // Auto-close after 15 seconds
+    }, 3000);
     
-    // Handle click to close
-    document.addEventListener('click', function(e) {
-        if (e.target.id === 'manifesto-overlay') {
-            document.getElementById('manifesto-overlay').style.display = 'none';
+    // Close button functionality
+    document.getElementById('close-manifesto').addEventListener('click', function() {
+        var popup = document.getElementById('manifesto-popup');
+        if (popup) {
+            popup.style.animation = 'fadeOut 0.5s ease-out forwards';
+            setTimeout(function() {
+                popup.remove();
+            }, 500);
+        }
+    });
+    
+    // Close on background click
+    document.getElementById('manifesto-popup').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.style.animation = 'fadeOut 0.5s ease-out forwards';
+            setTimeout(() => this.remove(), 500);
         }
     });
     </script>
