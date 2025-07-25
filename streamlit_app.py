@@ -332,6 +332,10 @@ class EnhancedFinAuraAgent:
 # SESSION STATE INITIALIZATION
 # =============================================================================
 
+# Initialize manifesto popup state
+if 'manifesto_shown' not in st.session_state:
+    st.session_state.manifesto_shown = False
+
 if 'transactions' not in st.session_state:
     sample_data = [
         Transaction(datetime.now() - timedelta(days=1), 4.50, "iced coffee emergency", SpendingCategory.JOY, "starbucks", 0.3),
