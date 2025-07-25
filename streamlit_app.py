@@ -1691,7 +1691,7 @@ st.markdown("""
             <span style="font-size: 1.1rem;">by</span>
             <span style="font-size: 1.3rem; font-weight: bold; background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
                 Eesha Tariq
-            </span>
+            </span> 
         </div>
         
         <div style="display: flex; justify-content: center; gap: 20px; margin: 25px 0; flex-wrap: wrap;">
