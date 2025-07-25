@@ -774,6 +774,53 @@ with vibe_col:
         index=vibe_index,
         key="hero_vibe_selectbox"
     )
+    
+    # Check if vibe changed and trigger emoji pop-out effect
+    if 'previous_vibe' not in st.session_state:
+        st.session_state.previous_vibe = current_vibe
+    
+    if current_vibe != st.session_state.previous_vibe:
+        # Trigger emoji pop-out effect instead of balloons
+        st.markdown(f"""
+        <div id="emoji-popup" style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            z-index: 9999;
+            animation: emojiPop 2s ease-out forwards;
+            pointer-events: none;
+        ">
+            {current_vibe.value}
+        </div>
+        <style>
+        @keyframes emojiPop {{
+            0% {{ 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.1); 
+            }}
+            50% {{ 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.2); 
+            }}
+            100% {{ 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.8) translateY(-100px); 
+            }}
+        }}
+        </style>
+        <script>
+        setTimeout(function() {{
+            var popup = document.getElementById('emoji-popup');
+            if (popup) {{
+                popup.remove();
+            }}
+        }}, 2000);
+        </script>
+        """, unsafe_allow_html=True)
+        st.session_state.previous_vibe = current_vibe
+    
     st.session_state.current_vibe = current_vibe
 
 with stress_col:
