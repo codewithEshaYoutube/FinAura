@@ -1,2 +1,10 @@
 streamlit
 pandas
+asyncio
+logging
+pandas
+matplotlib
+sqlite3
+json
+hashlib
+
