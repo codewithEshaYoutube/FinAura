@@ -802,7 +802,7 @@ st.markdown(f"""
 </div>
 <style>
 @keyframes heroFadeIn {
-    from { opacity: 0; transform: translateY(-30px); }
+    from { opacity: 0; transform: translateY(0); }
     to { opacity: 1; transform: translateY(0); }
 }
 </style>
@@ -1791,4 +1791,3 @@ st.markdown("""
 
 # Optional: Add some final spacing
 st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
- 
