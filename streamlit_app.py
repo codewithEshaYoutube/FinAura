@@ -1,5 +1,5 @@
-# 💸 FinAura: Your Gen Z CFO – Enhanced Financial Planning
-# Complete Streamlit App with Advanced Financial Planning & Goal Tracking
+# 💸 FinAura: Your Gen Z CFO – Where Vibes Meet Value
+# Enhanced Streamlit App with Financial Planning & Budget Structure
 
 import streamlit as st
 import pandas as pd
@@ -23,7 +23,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Enhanced Custom CSS for Gen Z aesthetic
+# Custom CSS for Gen Z aesthetic
 st.markdown("""
 <style>
     .main-header {
@@ -33,113 +33,6 @@ st.markdown("""
         margin-bottom: 2rem;
         text-align: center;
         color: white;
-        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
-    }
-    
-    .financial-setup-card {
-        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 40%, #fee140 100%);
-        padding: 2rem;
-        border-radius: 20px;
-        margin: 1.5rem 0;
-        color: #2d3748;
-        box-shadow: 0 8px 32px rgba(255, 154, 158, 0.3);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .budget-card {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        text-align: center;
-        color: white;
-        margin: 0.5rem;
-        box-shadow: 0 6px 20px rgba(79, 172, 254, 0.3);
-        transition: transform 0.3s ease;
-    }
-    
-    .budget-card:hover {
-        transform: translateY(-5px);
-    }
-    
-    .survival-card {
-        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
-        color: #2d3748;
-        border-left: 5px solid #ff6b6b;
-        box-shadow: 0 4px 15px rgba(252, 182, 159, 0.4);
-    }
-    
-    .comfort-card {
-        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
-        color: #2d3748;
-        border-left: 5px solid #667eea;
-        box-shadow: 0 4px 15px rgba(168, 237, 234, 0.4);
-    }
-    
-    .slay-card {
-        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
-        color: #2d3748;
-        border-left: 5px solid #ff6b6b;
-        box-shadow: 0 4px 15px rgba(255, 154, 158, 0.4);
-    }
-    
-    .goal-tracker {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        color: white;
-        margin: 1rem 0;
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-    }
-    
-    .investment-card {
-        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
-        color: white;
-        text-align: center;
-        box-shadow: 0 4px 15px rgba(250, 112, 154, 0.3);
-    }
-    
-    .progress-container {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 25px;
-        height: 30px;
-        margin: 1rem 0;
-        overflow: hidden;
-        backdrop-filter: blur(10px);
-    }
-    
-    .progress-fill {
-        height: 100%;
-        border-radius: 25px;
-        background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-        transition: width 0.8s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .milestone-badge {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        margin: 0.2rem;
-        display: inline-block;
-        box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
     }
     
     .vibe-card {
@@ -148,7 +41,7 @@ st.markdown("""
         border-radius: 15px;
         margin: 1rem 0;
         color: white;
-        box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     
     .money-card {
@@ -158,22 +51,47 @@ st.markdown("""
         text-align: center;
         color: white;
         margin: 0.5rem;
-        box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
-        transition: transform 0.3s ease;
     }
     
-    .money-card:hover {
-        transform: scale(1.05);
-    }
-    
-    .chat-bubble {
-        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-        border-left: 4px solid #667eea;
+    .budget-card {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
         padding: 1.5rem;
+        border-radius: 15px;
+        margin: 0.5rem;
+        color: #2d3748;
+        text-align: center;
+    }
+    
+    .investment-card {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 0.5rem;
+        color: #2d3748;
+    }
+    
+    .warning-card {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        padding: 1rem;
+        border-radius: 10px;
         margin: 1rem 0;
-        border-radius: 0 15px 15px 0;
-        font-style: italic;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        color: white;
+    }
+    
+    .success-card {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        color: #2d3748;
+    }
+    
+    .financial-goal-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 1rem 0;
+        color: white;
     }
     
     .stButton > button {
@@ -183,40 +101,46 @@ st.markdown("""
         border-radius: 25px;
         padding: 0.75rem 2rem;
         font-weight: bold;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        transition: all 0.3s;
     }
     
     .stButton > button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
     
-    .financial-tip {
-        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        padding: 1rem;
-        border-radius: 10px;
-        margin: 0.5rem 0;
-        color: #2d3748;
-        border-left: 3px solid #667eea;
+    .sidebar .sidebar-content {
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
     }
     
-    .warning-card {
-        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    .metric-container {
+        display: flex;
+        justify-content: space-around;
+        margin: 2rem 0;
+    }
+    
+    .chat-bubble {
+        background: #f7fafc;
+        border-left: 4px solid #667eea;
         padding: 1rem;
-        border-radius: 10px;
         margin: 1rem 0;
-        color: white;
-        box-shadow: 0 4px 15px rgba(250, 112, 154, 0.3);
+        border-radius: 0 15px 15px 0;
+        font-style: italic;
     }
     
-    .success-card {
-        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        padding: 1rem;
+    .progress-bar {
+        background: #e2e8f0;
         border-radius: 10px;
-        margin: 1rem 0;
-        color: #2d3748;
-        box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
+        height: 20px;
+        margin: 10px 0;
+        overflow: hidden;
+    }
+    
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 10px;
+        transition: width 0.5s ease;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -240,14 +164,12 @@ class SpendingCategory(Enum):
     INVESTMENT = "📈 Investment"
 
 class FinancialGoal(Enum):
-    SURVIVAL = "🛡️ Survival Mode"
-    COMFORT = "😌 Comfort Zone"
-    SLAY = "👑 Slay Mode"
-
-class LifeStage(Enum):
-    STUDENT = "🎓 Student Life"
-    EARLY_CAREER = "🚀 Early Career"
-    ESTABLISHED = "💼 Established Professional"
+    EMERGENCY_FUND = "🚨 Emergency Fund"
+    TRAVEL = "✈️ Travel Fund"
+    HOUSE_DEPOSIT = "🏡 House Deposit"
+    RETIREMENT = "👴 Future Me Fund"
+    SIDE_HUSTLE = "💼 Side Hustle Capital"
+    EDUCATION = "📚 Skill Up Fund"
 
 @dataclass
 class Transaction:
@@ -259,219 +181,33 @@ class Transaction:
     vibe_impact: float = 0.0
 
 @dataclass
-class FinancialProfile:
-    monthly_income: float
-    age: int
-    life_stage: LifeStage
-    financial_goal: FinancialGoal
-    debt_amount: float = 0.0
-    current_savings: float = 0.0
-    risk_tolerance: str = "Medium"
+class VibeData:
+    current_vibe: VibeType
+    money_stress_level: int
+    spending_guilt: int
+    financial_confidence: int
 
 @dataclass
-class GoalTracker:
-    name: str
-    target_amount: float
-    current_amount: float
-    target_date: datetime
-    category: str
-    priority: str
-
-class EnhancedGenZFinancialPlanner:
-    """Advanced Financial planning structure tailored for Gen Z survival and slaying"""
+class BudgetPlan:
+    monthly_income: float
+    needs_percentage: float = 50.0  # 50/30/20 rule adjusted for Gen Z
+    wants_percentage: float = 30.0
+    savings_percentage: float = 20.0
     
-    def __init__(self):
-        self.frameworks = {
-            FinancialGoal.SURVIVAL: {
-                "needs": 65,  # Higher for survival mode
-                "wants": 20,  # Minimal fun spending
-                "savings": 15,  # Focus on emergency fund
-                "description": "Focus on stability and building emergency fund"
-            },
-            FinancialGoal.COMFORT: {
-                "needs": 50,  # Standard 50/30/20 rule
-                "wants": 30,
-                "savings": 20,
-                "description": "Balanced approach with room for enjoyment"
-            },
-            FinancialGoal.SLAY: {
-                "needs": 45,  # Lower needs ratio for higher income
-                "wants": 25,  # Controlled wants
-                "savings": 30,  # Aggressive savings/investments
-                "description": "Aggressive wealth building and investment focus"
-            }
-        }
-        
-        self.life_stage_multipliers = {
-            LifeStage.STUDENT: {"emergency_months": 3, "investment_risk": "High"},
-            LifeStage.EARLY_CAREER: {"emergency_months": 4, "investment_risk": "Medium-High"},
-            LifeStage.ESTABLISHED: {"emergency_months": 6, "investment_risk": "Medium"}
-        }
+    @property
+    def needs_amount(self) -> float:
+        return self.monthly_income * (self.needs_percentage / 100)
     
-    def calculate_comprehensive_budget(self, profile: FinancialProfile) -> Dict:
-        """Calculate detailed budget based on complete financial profile"""
-        
-        framework = self.frameworks[profile.financial_goal]
-        life_multipliers = self.life_stage_multipliers[profile.life_stage]
-        
-        # Base calculations
-        needs = profile.monthly_income * (framework["needs"] / 100)
-        wants = profile.monthly_income * (framework["wants"] / 100)
-        savings = profile.monthly_income * (framework["savings"] / 100)
-        
-        # Debt adjustment
-        if profile.debt_amount > 0:
-            min_debt_payment = min(profile.debt_amount * 0.02, savings * 0.5)  # 2% of debt or 50% of savings
-            savings -= min_debt_payment
-            debt_payment = min_debt_payment
-        else:
-            debt_payment = 0
-        
-        # Emergency fund calculation
-        emergency_target = needs * life_multipliers["emergency_months"]
-        
-        # Investment allocation
-        investment_amount = max(0, savings - min(200, savings * 0.3))  # Reserve some for emergency
-        emergency_contribution = savings - investment_amount
-        
-        return {
-            "needs": needs,
-            "wants": wants,
-            "savings": savings,
-            "debt_payment": debt_payment,
-            "emergency_target": emergency_target,
-            "emergency_contribution": emergency_contribution,
-            "investment_amount": investment_amount,
-            "framework": framework,
-            "life_stage_advice": life_multipliers,
-            "net_income_after_budget": profile.monthly_income - (needs + wants + savings + debt_payment)
-        }
+    @property
+    def wants_amount(self) -> float:
+        return self.monthly_income * (self.wants_percentage / 100)
     
-    def get_investment_allocation(self, amount: float, profile: FinancialProfile) -> Dict:
-        """Get detailed investment allocation suggestions"""
-        
-        risk_level = self.life_stage_multipliers[profile.life_stage]["investment_risk"]
-        
-        if profile.age < 25:
-            # Aggressive growth for young investors
-            allocation = {
-                "🏦 High-Yield Savings": amount * 0.1,
-                "📊 Index Funds (VTI/VXUS)": amount * 0.6,
-                "🚀 Growth Stocks": amount * 0.2,
-                "🌟 Crypto/Alternative": amount * 0.1
-            }
-        elif profile.age < 30:
-            # Balanced aggressive approach
-            allocation = {
-                "🏦 High-Yield Savings": amount * 0.15,
-                "📊 Index Funds (VTI/VXUS)": amount * 0.55,
-                "🚀 Growth Stocks": amount * 0.20,
-                "🏠 REITs": amount * 0.05,
-                "🌟 Crypto/Alternative": amount * 0.05
-            }
-        else:
-            # More conservative as income stabilizes
-            allocation = {
-                "🏦 High-Yield Savings": amount * 0.2,
-                "📊 Index Funds (VTI/VXUS)": amount * 0.5,
-                "🚀 Growth Stocks": amount * 0.15,
-                "🏠 REITs": amount * 0.1,
-                "🌟 Crypto/Alternative": amount * 0.05
-            }
-        
-        return allocation
-    
-    def generate_milestone_plan(self, profile: FinancialProfile) -> List[Dict]:
-        """Generate age-based financial milestones"""
-        
-        current_age = profile.age
-        milestones = []
-        
-        # Emergency Fund Milestone
-        if profile.current_savings < profile.monthly_income * 3:
-            milestones.append({
-                "age": current_age + 1,
-                "goal": "🛡️ Emergency Fund Complete",
-                "target": profile.monthly_income * 6,
-                "description": "6 months of expenses saved"
-            })
-        
-        # Net Worth Milestones
-        age_milestones = [
-            (25, profile.monthly_income * 12, "1x Annual Income"),
-            (30, profile.monthly_income * 36, "3x Annual Income"),
-            (35, profile.monthly_income * 60, "5x Annual Income")
-        ]
-        
-        for milestone_age, target_amount, description in age_milestones:
-            if current_age < milestone_age:
-                milestones.append({
-                    "age": milestone_age,
-                    "goal": f"💰 Net Worth Milestone",
-                    "target": target_amount,
-                    "description": description
-                })
-        
-        return milestones[:5]  # Return top 5 milestones
-    
-    def get_personalized_advice(self, profile: FinancialProfile) -> Dict:
-        """Get comprehensive personalized advice"""
-        
-        advice = {
-            "immediate": [],
-            "short_term": [],
-            "long_term": [],
-            "life_stage_specific": []
-        }
-        
-        # Immediate advice (next 30 days)
-        if profile.current_savings < 1000:
-            advice["immediate"].append("🚨 Priority: Build $1000 emergency fund immediately")
-            advice["immediate"].append("📱 Use cash-back apps for every purchase (Rakuten, Honey)")
-        
-        if profile.debt_amount > profile.monthly_income * 3:
-            advice["immediate"].append("💳 Focus on high-interest debt - avalanche method")
-            advice["immediate"].append("📞 Call creditors to negotiate lower rates")
-        
-        # Short-term advice (next 6 months)
-        advice["short_term"].append("🤖 Automate savings - pay yourself first")
-        advice["short_term"].append("📊 Open high-yield savings account (Marcus, Ally)")
-        
-        if profile.financial_goal == FinancialGoal.SLAY:
-            advice["short_term"].append("💼 Develop multiple income streams")
-            advice["short_term"].append("📈 Start investing in index funds")
-        
-        # Long-term advice (1+ years)
-        advice["long_term"].append("🏠 Start planning for major purchases")
-        advice["long_term"].append("📚 Invest in skills that increase earning potential")
-        
-        if profile.age < 30:
-            advice["long_term"].append("⚡ Time is your superpower - start investing NOW")
-        
-        # Life stage specific advice
-        if profile.life_stage == LifeStage.STUDENT:
-            advice["life_stage_specific"].extend([
-                "🎓 Build credit history with student card",
-                "💡 Focus on internships and networking",
-                "📖 Learn about personal finance early"
-            ])
-        elif profile.life_stage == LifeStage.EARLY_CAREER:
-            advice["life_stage_specific"].extend([
-                "🚀 Negotiate salary increases aggressively",
-                "🏦 Max out employer 401k match",
-                "🎯 Set specific financial goals"
-            ])
-        else:
-            advice["life_stage_specific"].extend([
-                "👑 Consider real estate investment",
-                "💼 Diversify investment portfolio",
-                "📊 Plan for major life events"
-            ])
-        
-        return advice
+    @property
+    def savings_amount(self) -> float:
+        return self.monthly_income * (self.savings_percentage / 100)
 
 class EnhancedFinAuraAgent:
-    """Enhanced Gen Z AI Agent with advanced financial coaching"""
+    """The Gen Z AI Agent that gets your vibes AND your financial goals"""
     
     def __init__(self):
         self.vibe_responses = {
@@ -497,63 +233,103 @@ class EnhancedFinAuraAgent:
             ]
         }
         
-        self.coaching_tips = {
-            "debt_stress": "Debt doesn't define your worth! Every payment is progress 💪",
-            "low_income": "Starting somewhere is better than not starting at all! 🌱",
-            "overspending": "Awareness is the first step to change. You got this! ✨",
-            "saving_struggle": "Even $5/week adds up! Small steps, big dreams 🎯"
+        self.investment_suggestions = {
+            "low_risk": [
+                {"name": "High-Yield Savings", "desc": "Safe & steady growth 📈", "risk": "Low", "return": "2-4%"},
+                {"name": "Government Bonds", "desc": "Boring but reliable 🏛️", "risk": "Low", "return": "3-5%"},
+                {"name": "CDs (Certificates of Deposit)", "desc": "Lock it up, stack it up 🔒", "risk": "Low", "return": "3-5%"}
+            ],
+            "medium_risk": [
+                {"name": "Index Funds (S&P 500)", "desc": "Diversified market vibes 📊", "risk": "Medium", "return": "7-10%"},
+                {"name": "Target-Date Funds", "desc": "Set it and forget it ⏰", "risk": "Medium", "return": "6-9%"},
+                {"name": "REITs", "desc": "Real estate without the drama 🏠", "risk": "Medium", "return": "5-8%"}
+            ],
+            "high_risk": [
+                {"name": "Individual Stocks", "desc": "Pick your favorites 🎯", "risk": "High", "return": "Variable"},
+                {"name": "Cryptocurrency", "desc": "Digital gold or digital chaos? 🪙", "risk": "High", "return": "Highly Variable"},
+                {"name": "Growth Stocks", "desc": "Betting on the future 🚀", "risk": "High", "return": "Variable"}
+            ]
         }
+        
+        self.gen_z_financial_tips = [
+            "💡 Automate your savings - treat it like a subscription you can't cancel",
+            "🎯 Use the 24-hour rule for purchases over $50",
+            "📱 Try investment apps like Robinhood, Acorns, or Stash for micro-investing",
+            "🏠 Aim for 6-month emergency fund (adulting is expensive!)",
+            "✨ Invest in yourself - courses, certifications, side hustles",
+            "🌱 Start investing early - compound interest is your bestie",
+            "💳 Build credit responsibly - your future self will thank you",
+            "🎉 Celebrate small wins - every dollar saved matters!"
+        ]
     
-    def get_contextual_coaching(self, profile: FinancialProfile, budget: Dict) -> str:
-        """Get personalized coaching based on financial situation"""
-        
-        coaching_messages = []
-        
-        # Income-based coaching
-        if profile.monthly_income < 3000:
-            coaching_messages.append("🌟 Every dollar you save is a win! You're building habits that will serve you for life.")
-        elif profile.monthly_income < 6000:
-            coaching_messages.append("💪 You're in a great position to build wealth! Time to level up your money game.")
+    def get_vibe_response(self, vibe: VibeType) -> str:
+        return random.choice(self.vibe_responses.get(vibe, ["You're doing great! 💜"]))
+    
+    def get_budget_suggestions(self, income: float, age: int = 25) -> Dict:
+        """Generate Gen Z-specific budget suggestions"""
+        if income < 2000:
+            return {
+                "needs": 60,  # Higher for survival mode
+                "wants": 25,
+                "savings": 15,
+                "advice": "Survival mode activated! Focus on essentials and small savings wins 💪"
+            }
+        elif income < 4000:
+            return {
+                "needs": 55,
+                "wants": 30,
+                "savings": 15,
+                "advice": "Building phase! You're doing great - balance is key 🌟"
+            }
+        elif income < 6000:
+            return {
+                "needs": 50,
+                "wants": 30,
+                "savings": 20,
+                "advice": "Thriving mode! Classic 50/30/20 rule works perfectly 🔥"
+            }
         else:
-            coaching_messages.append("👑 Your income is your superpower! Let's make it work harder for you.")
+            return {
+                "needs": 45,
+                "wants": 35,
+                "savings": 20,
+                "advice": "High earner energy! More room for joy spending AND aggressive saving ✨"
+            }
+    
+    def get_investment_roadmap(self, age: int, income: float, risk_tolerance: str) -> List[Dict]:
+        """Create age-appropriate investment suggestions"""
+        roadmap = []
         
-        # Debt coaching
-        if profile.debt_amount > 0:
-            debt_ratio = profile.debt_amount / (profile.monthly_income * 12)
-            if debt_ratio > 0.3:
-                coaching_messages.append("🎯 Debt payoff is your main quest right now. Every extra payment is XP!")
-            else:
-                coaching_messages.append("📈 Your debt is manageable! Balance payoff with building wealth.")
+        # Emergency fund first (always!)
+        roadmap.append({
+            "priority": 1,
+            "goal": "Emergency Fund",
+            "target": min(income * 6, 10000),  # 6 months expenses
+            "description": "Your financial safety net - aim for 3-6 months expenses 🚨"
+        })
         
-        # Goal-based coaching
-        if profile.financial_goal == FinancialGoal.SURVIVAL:
-            coaching_messages.append("🛡️ Survival mode is temporary! You're building the foundation for your comeback story.")
-        elif profile.financial_goal == FinancialGoal.SLAY:
-            coaching_messages.append("✨ Slay mode activated! Your future self is going to thank you SO much.")
+        # Age-based suggestions
+        if age < 30:
+            roadmap.extend([
+                {
+                    "priority": 2,
+                    "goal": "Retirement Start",
+                    "target": income * 0.15,  # 15% of income
+                    "description": "Start early = retire like royalty 👑"
+                },
+                {
+                    "priority": 3,
+                    "goal": "Skill Investment",
+                    "target": income * 0.05,  # 5% for education
+                    "description": "Invest in yourself - best ROI ever 📚"
+                }
+            ])
         
-        return random.choice(coaching_messages)
+        return roadmap
 
 # =============================================================================
 # SESSION STATE INITIALIZATION
 # =============================================================================
-
-# Initialize session state with enhanced data
-if 'financial_profile' not in st.session_state:
-    st.session_state.financial_profile = FinancialProfile(
-        monthly_income=0.0,
-        age=25,
-        life_stage=LifeStage.EARLY_CAREER,
-        financial_goal=FinancialGoal.COMFORT,
-        debt_amount=0.0,
-        current_savings=0.0
-    )
-
-if 'goal_trackers' not in st.session_state:
-    st.session_state.goal_trackers = [
-        GoalTracker("Emergency Fund", 6000, 1200, datetime.now() + timedelta(days=365), "Safety", "High"),
-        GoalTracker("Vacation Fund", 2000, 300, datetime.now() + timedelta(days=180), "Joy", "Medium"),
-        GoalTracker("Investment Portfolio", 10000, 500, datetime.now() + timedelta(days=730), "Wealth", "High")
-    ]
 
 if 'transactions' not in st.session_state:
     sample_data = [
@@ -571,291 +347,361 @@ if 'transactions' not in st.session_state:
 if 'current_vibe' not in st.session_state:
     st.session_state.current_vibe = VibeType.CHILL
 
-if 'planner' not in st.session_state:
-    st.session_state.planner = EnhancedGenZFinancialPlanner()
-
 if 'agent' not in st.session_state:
     st.session_state.agent = EnhancedFinAuraAgent()
+
+if 'budget_plan' not in st.session_state:
+    st.session_state.budget_plan = None
+
+if 'financial_profile' not in st.session_state:
+    st.session_state.financial_profile = {}
 
 # =============================================================================
 # MAIN APP INTERFACE
 # =============================================================================
 
-# Header with enhanced Gen Z energy
+# Header with Gen Z energy
 st.markdown("""
 <div class="main-header">
     <h1>💸 FinAura: Your Gen Z CFO</h1>
     <p><em>"Forget spreadsheets. Feel your finances."</em></p>
-    <p>Where vibes meet value ✨ | Complete Financial Planning & Goal Tracking</p>
+    <p>Where vibes meet value ✨ | Now with Financial Planning!</p>
 </div>
 """, unsafe_allow_html=True)
 
 # =============================================================================
-# ENHANCED FINANCIAL PROFILE SETUP
+# FINANCIAL PROFILE SETUP
 # =============================================================================
 
-st.markdown("## 🎯 Complete Your Financial Profile")
+st.markdown("## 💼 Financial Profile Setup")
 
-st.markdown("""
-<div class="financial-setup-card">
-    <h3>✨ Let's Get Your Money Story Started!</h3>
-    <p>Tell us about your financial situation so we can create your personalized Gen Z survival & slay plan!</p>
-</div>
-""", unsafe_allow_html=True)
-
-# Profile input form
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    monthly_income = st.number_input(
-        "💵 Monthly Income (after taxes)",
-        min_value=0.0,
-        value=float(st.session_state.financial_profile.monthly_income),
-        step=100.0,
-        help="Your take-home pay per month"
-    )
-
-with col2:
-    age = st.slider("🎂 Age", 18, 35, st.session_state.financial_profile.age)
-
-with col3:
-    life_stage = st.selectbox(
-        "🎭 Life Stage",
-        options=list(LifeStage),
-        format_func=lambda x: x.value,
-        index=list(LifeStage).index(st.session_state.financial_profile.life_stage)
-    )
-
-with col4:
-    financial_goal = st.selectbox(
-        "🎯 Current Mode",
-        options=list(FinancialGoal),
-        format_func=lambda x: x.value,
-        index=list(FinancialGoal).index(st.session_state.financial_profile.financial_goal)
-    )
-
-# Additional financial details
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    debt_amount = st.number_input(
-        "💳 Total Debt",
-        min_value=0.0,
-        value=float(st.session_state.financial_profile.debt_amount),
-        step=100.0,
-        help="Credit cards, student loans, etc."
-    )
-
-with col2:
-    current_savings = st.number_input(
-        "💰 Current Savings",
-        min_value=0.0,
-        value=float(st.session_state.financial_profile.current_savings),
-        step=100.0,
-        help="Emergency fund + other savings"
-    )
-
-with col3:
-    risk_tolerance = st.selectbox(
-        "📊 Investment Risk Tolerance",
-        ["Conservative", "Medium", "Aggressive"],
-        index=1
-    )
-
-# Update profile
-st.session_state.financial_profile = FinancialProfile(
-    monthly_income=monthly_income,
-    age=age,
-    life_stage=life_stage,
-    financial_goal=financial_goal,
-    debt_amount=debt_amount,
-    current_savings=current_savings,
-    risk_tolerance=risk_tolerance
-)
-
-# =============================================================================
-# COMPREHENSIVE BUDGET BREAKDOWN
-# =============================================================================
-
-if monthly_income > 0:
-    budget = st.session_state.planner.calculate_comprehensive_budget(st.session_state.financial_profile)
+with st.expander("🚀 Set Up Your Financial Profile (Click to expand)", expanded=not st.session_state.financial_profile):
+    col1, col2, col3 = st.columns(3)
     
-    st.markdown("## 📊 Your Personalized Gen Z Budget Blueprint")
+    with col1:
+        monthly_income = st.number_input(
+            "💰 Monthly Income/Allowance (PKR)",
+            min_value=0.0,
+            value=st.session_state.financial_profile.get('monthly_income', 50000.0),
+            step=1000.0,
+            help="Include salary, freelance, side hustles, everything!"
+        )
+        
+        age = st.slider(
+            "🎂 Age",
+            min_value=18,
+            max_value=35,
+            value=st.session_state.financial_profile.get('age', 25)
+        )
     
-    # Budget overview cards
+    with col2:
+        employment_status = st.selectbox(
+            "👔 Employment Status",
+            ["Student", "Full-time Job", "Freelancer", "Part-time", "Unemployed", "Side Hustle King/Queen"],
+            index=1
+        )
+        
+        living_situation = st.selectbox(
+            "🏠 Living Situation",
+            ["With Parents (blessed!)", "Shared Apartment", "Solo Living", "Dorm Life"],
+            index=0
+        )
+    
+    with col3:
+        risk_tolerance = st.selectbox(
+            "📊 Investment Risk Tolerance",
+            ["Conservative (play it safe)", "Moderate (balanced vibes)", "Aggressive (YOLO but smart)"],
+            index=1
+        )
+        
+        primary_goal = st.selectbox(
+            "🎯 Primary Financial Goal",
+            list(FinancialGoal),
+            format_func=lambda x: x.value
+        )
+    
+    if st.button("💾 Save My Financial Profile", type="primary"):
+        st.session_state.financial_profile = {
+            'monthly_income': monthly_income,
+            'age': age,
+            'employment_status': employment_status,
+            'living_situation': living_situation,
+            'risk_tolerance': risk_tolerance,
+            'primary_goal': primary_goal
+        }
+        
+        # Generate budget plan
+        budget_suggestions = st.session_state.agent.get_budget_suggestions(monthly_income, age)
+        st.session_state.budget_plan = BudgetPlan(
+            monthly_income=monthly_income,
+            needs_percentage=budget_suggestions['needs'],
+            wants_percentage=budget_suggestions['wants'],
+            savings_percentage=budget_suggestions['savings']
+        )
+        
+        st.success("🎉 Profile saved! Your personalized financial plan is ready!")
+        st.rerun()
+
+# =============================================================================
+# PERSONALIZED BUDGET BREAKDOWN
+# =============================================================================
+
+if st.session_state.budget_plan:
+    st.markdown("## 💎 Your Personalized Gen Z Budget Structure")
+    
+    budget = st.session_state.budget_plan
+    profile = st.session_state.financial_profile
+    
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        needs_amount = budget['needs']
-        needs_pct = budget['framework']['needs']
         st.markdown(f"""
-        <div class="survival-card">
-            <h3>🏠 NEEDS ({needs_pct}%)</h3>
-            <h2>${needs_amount:.0f}</h2>
-            <p>Rent, groceries, utilities, transport, insurance, minimum debt payments</p>
+        <div class="budget-card">
+            <h3>💰 Monthly Income</h3>
+            <h2>PKR {budget.monthly_income:,.0f}</h2>
+            <p>Your total hustle</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
-        wants_amount = budget['wants']
-        wants_pct = budget['framework']['wants']
         st.markdown(f"""
-        <div class="comfort-card">
-            <h3>✨ WANTS ({wants_pct}%)</h3>
-            <h2>${wants_amount:.0f}</h2>
-            <p>Entertainment, dining out, shopping, subscriptions, hobbies</p>
+        <div class="budget-card">
+            <h3>🏠 Needs ({budget.needs_percentage}%)</h3>
+            <h2>PKR {budget.needs_amount:,.0f}</h2>
+            <p>Rent, food, transport</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
-        savings_amount = budget['savings']
-        savings_pct = budget['framework']['savings']
         st.markdown(f"""
-        <div class="slay-card">
-            <h3>📈 SAVINGS ({savings_pct}%)</h3>
-            <h2>${savings_amount:.0f}</h2>
-            <p>Emergency fund, investments, extra debt payments</p>
+        <div class="budget-card">
+            <h3>✨ Wants ({budget.wants_percentage}%)</h3>
+            <h2>PKR {budget.wants_amount:,.0f}</h2>
+            <p>Fun, joy, self-care</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col4:
-        if budget['debt_payment'] > 0:
-            st.markdown(f"""
-            <div class="investment-card">
-                <h3>💳 DEBT PAYOFF</h3>
-                <h2>${budget['debt_payment']:.0f}</h2>
-                <p>Minimum + extra debt payments</p>
-            </div>
-            """, unsafe_allow_html=True)
-        else:
-            leftover = budget['net_income_after_budget']
-            st.markdown(f"""
-            <div class="investment-card">
-                <h3>🎉 EXTRA CASH</h3>
-                <h2>${leftover:.0f}</h2>
-                <p>Bonus for goals!</p>
-            </div>
-            """, unsafe_allow_html=True)
-    
-    # Emergency Fund Progress
-    st.markdown("### 🛡️ Emergency Fund Progress")
-    emergency_target = budget['emergency_target']
-    current_emergency = st.session_state.financial_profile.current_savings
-    progress_pct = (current_emergency / emergency_target) * 100 if emergency_target > 0 else 0
-    
-    st.markdown(f"""
-    <div class="progress-container">
-        <div class="progress-fill" style="width: {min(progress_pct, 100)}%;">
-            {progress_pct:.1f}% Complete
+        st.markdown(f"""
+        <div class="budget-card">
+            <h3>📈 Savings ({budget.savings_percentage}%)</h3>
+            <h2>PKR {budget.savings_amount:,.0f}</h2>
+            <p>Future you fund</p>
         </div>
-    </div>
-    <p><strong>Goal:</strong> ${emergency_target:.0f} | <strong>Current:</strong> ${current_emergency:.0f} | <strong>Monthly Contribution:</strong> ${budget['emergency_contribution']:.0f}</p>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
     
-    # Investment Allocation
-    if budget['investment_amount'] > 0:
-        st.markdown("### 📈 Investment Allocation Strategy")
-        
-        investment_allocation = st.session_state.planner.get_investment_allocation(
-            budget['investment_amount'], st.session_state.financial_profile
-        )
-        
-        cols = st.columns(len(investment_allocation))
-        for i, (investment_type, amount) in enumerate(investment_allocation.items()):
-            with cols[i]:
-                st.markdown(f"""
-                <div class="investment-card">
-                    <h4>{investment_type}</h4>
-                    <h3>${amount:.0f}</h3>
-                    <p>Monthly allocation</p>
-                </div>
-                """, unsafe_allow_html=True)
+    # Budget visualization
+    st.markdown("### 📊 Your Budget Breakdown")
     
-    # =============================================================================
-    # GOAL TRACKING SYSTEM
-    # =============================================================================
+    budget_data = {
+        'Category': ['🏠 Needs', '✨ Wants', '📈 Savings'],
+        'Amount': [budget.needs_amount, budget.wants_amount, budget.savings_amount],
+        'Percentage': [budget.needs_percentage, budget.wants_percentage, budget.savings_percentage]
+    }
     
-    st.markdown("## 🎯 Goal Tracking Dashboard")
+    fig_budget = px.pie(
+        values=budget_data['Amount'],
+        names=budget_data['Category'],
+        title="💫 Your Money Allocation",
+        color_discrete_sequence=['#FF6B6B', '#4ECDC4', '#45B7D1']
+    )
+    fig_budget.update_layout(
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font=dict(size=14)
+    )
+    st.plotly_chart(fig_budget, use_container_width=True)
+
+# =============================================================================
+# INVESTMENT SUGGESTIONS
+# =============================================================================
+
+if st.session_state.financial_profile:
+    st.markdown("## 📈 Gen Z Investment Roadmap")
     
-    for goal in st.session_state.goal_trackers:
-        progress = (goal.current_amount / goal.target_amount) * 100 if goal.target_amount > 0 else 0
-        days_left = (goal.target_date - datetime.now()).days
-        
-        col1, col2, col3 = st.columns([2, 1, 1])
-        
-        with col1:
-            st.markdown(f"""
-            <div class="goal-tracker">
-                <h4>{goal.name} - {goal.category}</h4>
-                <div class="progress-container">
-                    <div class="progress-fill" style="width: {min(progress, 100)}%;">
-                        ${goal.current_amount:.0f} / ${goal.target_amount:.0f}
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with col2:
-            st.markdown(f"""
-            <div class="milestone-badge">
-                {progress:.1f}% Complete
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with col3:
-            st.markdown(f"""
-            <div class="milestone-badge">
-                {days_left} days left
-            </div>
-            """, unsafe_allow_html=True)
-    
-    # =============================================================================
-    # FINANCIAL MILESTONES & ROADMAP
-    # =============================================================================
-    
-    st.markdown("### 🗺️ Your Financial Roadmap")
-    
-    milestones = st.session_state.planner.generate_milestone_plan(st.session_state.financial_profile)
+    profile = st.session_state.financial_profile
+    risk_level = profile['risk_tolerance'].split(' ')[0].lower()
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("#### 🎯 Upcoming Milestones")
-        for milestone in milestones:
+        st.markdown("### 🚀 Recommended Investments")
+        
+        if risk_level == "conservative":
+            investments = st.session_state.agent.investment_suggestions["low_risk"]
+        elif risk_level == "moderate":
+            investments = st.session_state.agent.investment_suggestions["medium_risk"]
+        else:
+            investments = st.session_state.agent.investment_suggestions["high_risk"]
+        
+        for inv in investments:
             st.markdown(f"""
-            <div class="financial-tip">
-                <strong>Age {milestone['age']}:</strong> {milestone['goal']}<br>
-                <em>Target: ${milestone['target']:,.0f} - {milestone['description']}</em>
+            <div class="investment-card">
+                <h4>{inv['name']}</h4>
+                <p>{inv['desc']}</p>
+                <p><strong>Risk:</strong> {inv['risk']} | <strong>Expected Return:</strong> {inv['return']}</p>
             </div>
             """, unsafe_allow_html=True)
     
     with col2:
-        # Personalized advice
-        advice = st.session_state.planner.get_personalized_advice(st.session_state.financial_profile)
+        st.markdown("### 🎯 Your Financial Goals Roadmap")
         
-        st.markdown("#### 💡 Personalized Action Plan")
+        roadmap = st.session_state.agent.get_investment_roadmap(
+            profile['age'], 
+            profile['monthly_income'],
+            risk_level
+        )
         
-        with st.expander("🚨 Immediate Actions (Next 30 Days)"):
-            for tip in advice["immediate"]:
-                st.markdown(f"• {tip}")
-        
-        with st.expander("📅 Short-term Goals (Next 6 Months)"):
-            for tip in advice["short_term"]:
-                st.markdown(f"• {tip}")
-        
-        with st.expander("🌟 Long-term Vision (1+ Years)"):
-            for tip in advice["long_term"]:
-                st.markdown(f"• {tip}")
-        
-        with st.expander(f"🎭 {st.session_state.financial_profile.life_stage.value} Specific"):
-            for tip in advice["life_stage_specific"]:
-                st.markdown(f"• {tip}")
+        for item in roadmap:
+            progress = min(100, random.randint(10, 80))  # Simulated progress
+            st.markdown(f"""
+            <div class="financial-goal-card">
+                <h4>Priority {item['priority']}: {item['goal']}</h4>
+                <p>{item['description']}</p>
+                <p><strong>Target:</strong> PKR {item['target']:,.0f}</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {progress}%"></div>
+                </div>
+                <p><small>{progress}% Complete</small></p>
+            </div>
+            """, unsafe_allow_html=True)
 
 # =============================================================================
-# ENHANCED VIBE CHECK & AI COACHING
+# GEN Z FINANCIAL SURVIVAL GUIDE
 # =============================================================================
 
-st.markdown("## 🌈 Daily Vibe Check & AI Coaching")
+st.markdown("## 🔥 Gen Z Financial Survival Guide")
+
+tab1, tab2, tab3, tab4 = st.tabs(["💰 Budgeting Hacks", "📈 Investment 101", "🚨 Emergency Fund", "💼 Side Hustle Tips"])
+
+with tab1:
+    st.markdown("### 💡 Budgeting That Actually Works")
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        **🎯 The 50/30/20 Rule (Gen Z Edition):**
+        - 50% Needs: Rent, groceries, transport, phone
+        - 30% Wants: Entertainment, dining out, shopping
+        - 20% Savings: Emergency fund + investments
+        
+        **📱 Apps That Slay:**
+        - Mint (free budgeting)
+        - YNAB (You Need A Budget)
+        - PocketGuard (spending limits)
+        - Goodbudget (envelope method)
+        """)
+    
+    with col2:
+        st.markdown("""
+        **💫 Budgeting Hacks:**
+        - Automate savings (pay yourself first!)
+        - Use the 24-hour rule for big purchases
+        - Track spending with photos of receipts
+        - Set up separate accounts for different goals
+        - Use cash for discretionary spending
+        - Review and adjust monthly (not daily!)
+        """)
+
+with tab2:
+    st.markdown("### 📊 Investing Made Simple")
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        **🚀 Start Here (Beginner-Friendly):**
+        - High-yield savings account (2-4% return)
+        - Index funds (S&P 500) - diversified & low fees
+        - Target-date funds - set it & forget it
+        - Employer 401(k) match - FREE MONEY!
+        
+        **📱 Investment Apps:**
+        - Robinhood (commission-free trading)
+        - Acorns (micro-investing with spare change)
+        - Stash ($5 minimum investment)
+        - M1 Finance (automated portfolios)
+        """)
+    
+    with col2:
+        st.markdown("""
+        **⚡ Power Moves:**
+        - Start with small amounts ($25-50/month)
+        - Diversify (don't put all eggs in one basket)
+        - Think long-term (10+ years)
+        - Don't panic sell during market dips
+        - Reinvest dividends automatically
+        - Learn about compound interest - it's magic! ✨
+        """)
+
+with tab3:
+    st.markdown("### 🚨 Emergency Fund Essentials")
+    
+    emergency_target = st.session_state.budget_plan.monthly_income * 6 if st.session_state.budget_plan else 30000
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown(f"""
+        **🎯 Your Emergency Fund Goal: PKR {emergency_target:,.0f}**
+        
+        **Why You Need It:**
+        - Job loss protection
+        - Medical emergencies
+        - Car repairs
+        - Unexpected expenses
+        - Mental peace (priceless!)
+        
+        **Where to Keep It:**
+        - High-yield savings account
+        - Money market account
+        - Short-term CDs
+        """)
+    
+    with col2:
+        st.markdown("""
+        **🔥 Building Strategy:**
+        - Start with PKR 1,000 (any amount is better than zero!)
+        - Automate transfers (PKR 2,000-5,000/month)
+        - Use windfalls (tax refunds, bonuses)
+        - Sell stuff you don't need
+        - Side hustle specifically for emergency fund
+        - Celebrate milestones! 🎉
+        """)
+
+with tab4:
+    st.markdown("### 💼 Side Hustle Game Strong")
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        **🔥 Hot Side Hustles for 2024:**
+        - Content creation (TikTok, YouTube, Instagram)
+        - Freelance writing/graphic design
+        - Online tutoring
+        - Virtual assistant
+        - Social media management
+        - Photography/videography
+        - Food delivery (Uber Eats, DoorDash)
+        - Pet sitting/dog walking
+        """)
+    
+    with col2:
+        st.markdown("""
+        **💡 Side Hustle Success Tips:**
+        - Start with skills you already have
+        - Set clear income goals
+        - Track time vs. money earned
+        - Separate business & personal finances
+        - Save taxes (15-30% of earnings)
+        - Scale what works, drop what doesn't
+        - Network like crazy! 🤝
+        """)
+
+# =============================================================================
+# VIBE CHECK SECTION (Original)
+# =============================================================================
+
+st.markdown("## 🌈 Daily Vibe Check")
 
 col1, col2, col3 = st.columns(3)
 
@@ -874,23 +720,16 @@ with col2:
 with col3:
     confidence_level = st.slider("Financial confidence", 1, 10, 6)
 
-# Enhanced AI Response
-if monthly_income > 0:
-    budget = st.session_state.planner.calculate_comprehensive_budget(st.session_state.financial_profile)
-    coaching_response = st.session_state.agent.get_contextual_coaching(
-        st.session_state.financial_profile, budget
-    )
-    vibe_response = st.session_state.agent.vibe_responses[current_vibe][0]
-    
-    st.markdown(f"""
-    <div class="chat-bubble">
-        <strong>FinBot says:</strong> {vibe_response}<br><br>
-        <strong>Personal Coaching:</strong> {coaching_response}
-    </div>
-    """, unsafe_allow_html=True)
+# AI Response based on vibe
+vibe_response = st.session_state.agent.get_vibe_response(current_vibe)
+st.markdown(f"""
+<div class="chat-bubble">
+    <strong>FinBot says:</strong> {vibe_response}
+</div>
+""", unsafe_allow_html=True)
 
 # =============================================================================
-# MONEY DASHBOARD WITH ENHANCED METRICS
+# ENHANCED MONEY DASHBOARD
 # =============================================================================
 
 st.markdown("## 💰 Your Money Mood Board")
@@ -901,13 +740,13 @@ avg_daily = total_spent / 7
 joy_spending = sum(t.amount for t in transactions if t.category == SpendingCategory.JOY)
 essential_spending = sum(t.amount for t in transactions if t.category == SpendingCategory.ESSENTIAL)
 
-col1, col2, col3, col4, col5 = st.columns(5)
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.markdown(f"""
     <div class="money-card">
         <h3>💸 Total Spent</h3>
-        <h2>${total_spent:.2f}</h2>
+        <h2>PKR {total_spent:,.2f}</h2>
         <p>Last 7 days</p>
     </div>
     """, unsafe_allow_html=True)
@@ -916,10 +755,12 @@ with col2:
     st.markdown(f"""
     <div class="money-card">
         <h3>📅 Daily Average</h3>
-        <h2>${avg_daily:.2f}</h2>
+        <h2>PKR {avg_daily:,.2f}</h2>
         <p>Per day</p>
     </div>
     """, unsafe_allow_html=True)
+
+
 
 with col3:
     joy_ratio = (joy_spending / total_spent * 100) if total_spent > 0 else 0
