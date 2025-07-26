@@ -332,9 +332,7 @@ class EnhancedFinAuraAgent:
 # SESSION STATE INITIALIZATION
 # =============================================================================
 
-# Initialize manifesto popup state
-if 'manifesto_shown' not in st.session_state:
-    st.session_state.manifesto_shown = False
+
 
 if 'transactions' not in st.session_state:
     sample_data = [
@@ -412,138 +410,7 @@ def get_currency_label():
 # MAIN APP INTERFACE
 # =============================================================================
 
-# =============================================================================
-# MANIFESTO POPUP - APPEARS ON FIRST VISIT
-# =============================================================================
 
-if not st.session_state.manifesto_shown:
-    st.markdown("""
-    <div id="manifesto-overlay" style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.85);
-        z-index: 10000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        animation: fadeIn 0.5s ease-out;
-    ">
-        <div style="
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 25px;
-            padding: 3rem;
-            max-width: 600px;
-            margin: 2rem;
-            color: white;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideIn 0.8s ease-out;
-            border: 3px solid rgba(255,255,255,0.2);
-            position: relative;
-        ">
-            <div style="
-                background: linear-gradient(45deg, #FFD700, #FFA500);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                font-size: 2.5rem;
-                margin-bottom: 1rem;
-                font-weight: 700;
-            ">
-                📜 The FinAura Manifesto
-            </div>
-            
-            <div style="font-size: 1.8rem; margin: 1.5rem 0; font-weight: 600; text-shadow: 0 0 20px rgba(255,255,255,0.3);">
-                💡 "What if money was emotional?"
-            </div>
-            
-            <div style="font-size: 1.2rem; line-height: 1.8; margin: 2rem 0; opacity: 0.95;">
-                We don't just optimize your spending, we <strong>listen to your vibe</strong>.<br><br>
-                We're not building an accountant — we're building a <strong style="color: #FFD700;">best friend</strong>.<br><br>
-                FinAura believes that financial advice should be <strong style="color: #4ECDC4;">joyful, not judgmental</strong>.
-            </div>
-            
-            <div style="
-                background: rgba(255,255,255,0.1);
-                border-radius: 15px;
-                padding: 1.5rem;
-                margin: 2rem 0;
-                border-left: 5px solid #FFD700;
-                font-style: italic;
-                font-size: 1.1rem;
-            ">
-                <strong>🌟 Our Promise:</strong> Every emotion is valid. Every financial journey is unique. 
-                Your feelings about money matter, and we're here to help you navigate them with compassion and wisdom.
-            </div>
-            
-            <div style="
-                background: linear-gradient(45deg, #4ECDC4, #45B7D1);
-                color: white;
-                padding: 15px 30px;
-                border-radius: 25px;
-                font-size: 1.1rem;
-                font-weight: 600;
-                margin: 2rem auto;
-                cursor: pointer;
-                border: none;
-                box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
-                transition: all 0.3s ease;
-                display: inline-block;
-            " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 35px rgba(78, 205, 196, 0.6)';" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(78, 205, 196, 0.4)';"
-               onclick="document.getElementById('manifesto-overlay').style.display='none';">
-                ✨ Begin My Financial Journey ✨
-            </div>
-            
-            <div style="font-size: 0.9rem; opacity: 0.8; margin-top: 1rem;">
-                Welcome to a new era of emotional financial wellness 💜
-            </div>
-        </div>
-    </div>
-    
-    <style>
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    @keyframes slideIn {
-        from { 
-            opacity: 0; 
-            transform: translateY(-50px) scale(0.9); 
-        }
-        to { 
-            opacity: 1; 
-            transform: translateY(0) scale(1); 
-        }
-    }
-    </style>
-    
-    <script>
-    // Auto-close manifesto after reading (optional)
-    setTimeout(function() {
-        var overlay = document.getElementById('manifesto-overlay');
-        if (overlay) {
-            overlay.style.animation = 'fadeOut 0.5s ease-out forwards';
-            setTimeout(function() {
-                overlay.style.display = 'none';
-            }, 500);
-        }
-    }, 15000); // Auto-close after 15 seconds
-    
-    // Handle click to close
-    document.addEventListener('click', function(e) {
-        if (e.target.id === 'manifesto-overlay') {
-            document.getElementById('manifesto-overlay').style.display = 'none';
-        }
-    });
-    </script>
-    """, unsafe_allow_html=True)
-    
-    # Mark manifesto as shown
-    st.session_state.manifesto_shown = True
 
 # Header with Gen Z energy
 st.markdown("""
