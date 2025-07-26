@@ -417,133 +417,66 @@ def get_currency_label():
 # =============================================================================
 
 if not st.session_state.manifesto_shown:
+    # Simple, error-free manifesto popup
     st.markdown("""
-    <div id="manifesto-popup" style="
+    <div style="
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 20px;
+        right: 20px;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 20px;
-        padding: 2rem;
-        max-width: 450px;
-        width: 90%;
         color: white;
-        text-align: center;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        z-index: 10000;
+        padding: 1.5rem;
+        border-radius: 15px;
+        max-width: 350px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 9999;
+        animation: slideInRight 0.5s ease-out, fadeOut 0.5s ease-out 1.5s forwards;
         border: 2px solid rgba(255,255,255,0.2);
-        animation: popIn 0.6s ease-out;
     ">
-        <!-- Close Button -->
-        <button id="close-manifesto" style="
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        " onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
-           onmouseout="this.style.background='rgba(255,255,255,0.2)'">
-            ✕
-        </button>
-        
-        <h2 style="
+        <div style="
             background: linear-gradient(45deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-            font-weight: 700;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
         ">
             💡 What if money was emotional?
-        </h2>
+        </div>
         
-        <p style="font-size: 1.1rem; line-height: 1.6; margin: 1rem 0; opacity: 0.95;">
-            We don't just optimize spending - we <strong>listen to your vibe</strong>.<br>
-            We're building a <strong style="color: #FFD700;">best friend</strong>, not an accountant.
-        </p>
-        
-        <div style="
-            background: rgba(255,255,255,0.15);
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-            border-left: 4px solid #4ECDC4;
-        ">
-            Financial advice should be <strong style="color: #4ECDC4;">joyful, not judgmental</strong> 💜
+        <div style="font-size: 0.95rem; line-height: 1.4; opacity: 0.95;">
+            We listen to your <strong>vibe</strong> 🌟<br>
+            Building a <strong style="color: #FFD700;">best friend</strong>, not an accountant.<br>
+            <em style="color: #4ECDC4;">Joyful, not judgmental</em> 💜
         </div>
     </div>
     
     <style>
-    @keyframes popIn {
-        0% { 
-            opacity: 0; 
-            transform: translate(-50%, -50%) scale(0.7); 
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(100px);
         }
-        100% { 
-            opacity: 1; 
-            transform: translate(-50%, -50%) scale(1); 
+        to {
+            opacity: 1;
+            transform: translateX(0);
         }
     }
     
     @keyframes fadeOut {
-        0% { 
-            opacity: 1; 
-            transform: translate(-50%, -50%) scale(1); 
+        from {
+            opacity: 1;
+            transform: translateX(0);
         }
-        100% { 
-            opacity: 0; 
-            transform: translate(-50%, -50%) scale(0.7); 
+        to {
+            opacity: 0;
+            transform: translateX(100px);
         }
     }
     </style>
-    
-    <script>
-    // Auto-close after 3 seconds
-    setTimeout(function() {
-        var popup = document.getElementById('manifesto-popup');
-        if (popup) {
-            popup.style.animation = 'fadeOut 0.5s ease-out forwards';
-            setTimeout(function() {
-                popup.remove();
-            }, 500);
-        }
-    }, 3000);
-    
-    // Close button functionality
-    document.getElementById('close-manifesto').addEventListener('click', function() {
-        var popup = document.getElementById('manifesto-popup');
-        if (popup) {
-            popup.style.animation = 'fadeOut 0.5s ease-out forwards';
-            setTimeout(function() {
-                popup.remove();
-            }, 500);
-        }
-    });
-    
-    // Close on background click
-    document.getElementById('manifesto-popup').addEventListener('click', function(e) {
-        if (e.target === this) {
-            this.style.animation = 'fadeOut 0.5s ease-out forwards';
-            setTimeout(() => this.remove(), 500);
-        }
-    });
-    </script>
     """, unsafe_allow_html=True)
     
-    # Mark manifesto as shown
+    # Mark manifesto as shown to prevent showing again
     st.session_state.manifesto_shown = True
 
 # Header with Gen Z energy
