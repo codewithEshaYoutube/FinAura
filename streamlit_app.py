@@ -417,6 +417,45 @@ with st.sidebar:
         format_func=lambda x: f"{currency_symbols[x]} {x}",
         index=['USD', 'Rs', 'EUR'].index(st.session_state.currency)
     )
+    # Add this code in the sidebar section, after the currency selection and before the Agentic AI Toggle
+
+st.markdown('### 🧭 Quick Access')
+
+# Home Button
+if st.button('🏠 Home', use_container_width=True):
+    st.rerun()
+
+# Daily Vibe Check Button  
+if st.button('🌈 Daily Vibe Check', use_container_width=True):
+    # Scroll to the vibe check section
+    st.markdown("""
+    <script>
+    document.querySelector('h1').scrollIntoView({behavior: 'smooth'});
+    </script>
+    """, unsafe_allow_html=True)
+
+# Financial Survival Guide Button
+if st.button('🔥 Financial Survival Guide', use_container_width=True):
+    # Scroll to the survival guide section
+    st.markdown("""
+    <script>
+    const element = document.querySelector('h2:nth-of-type(1)');
+    if (element && element.textContent.includes('Financial Survival Guide')) {
+        element.scrollIntoView({behavior: 'smooth'});
+    }
+    </script>
+    """, unsafe_allow_html=True)
+
+# External FinAura App Button
+if st.button('💎 Financial Blueprint', use_container_width=True):
+    st.markdown("""
+    <script>
+    window.open('https://finaura.streamlit.app/#your-personalized-financial-blueprint', '_blank');
+    </script>
+    """, unsafe_allow_html=True)
+    st.success('🔗 Opening Financial Blueprint in new tab!')
+
+
     
    
     
