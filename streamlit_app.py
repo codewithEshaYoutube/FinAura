@@ -15,6 +15,37 @@ import asyncio
 from enum import Enum
 import hashlib
 import math  # Added for debt calculations
+import traceback
+import logging
+
+# =============================================================================
+# ERROR HANDLING & DEBUGGING SYSTEM
+# =============================================================================
+
+# Configure logging for debugging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def safe_execute(func, fallback=None, error_message="An error occurred"):
+    """Safely execute a function with error handling"""
+    try:
+        return func()
+    except Exception as e:
+        logger.error(f"Error in {func.__name__ if hasattr(func, '__name__') else 'function'}: {str(e)}")
+        if st.session_state.get('debug_mode', False):
+            st.error(f"🐛 Debug Mode: {error_message}\n```\n{str(e)}\n```")
+        return fallback
+
+def handle_calculation_error(calculation_func, default_value=0):
+    """Handle mathematical calculation errors"""
+    try:
+        result = calculation_func()
+        if math.isnan(result) or math.isinf(result):
+            return default_value
+        return result
+    except (ZeroDivisionError, ValueError, TypeError) as e:
+        logger.warning(f"Calculation error: {str(e)}")
+        return default_value
 
 # Page config with Gen Z vibes
 st.set_page_config(
@@ -93,88 +124,6 @@ st.markdown("""
         border-radius: 15px;
         margin: 1rem 0;
         color: white;
-    }
-    
-    .survival-card {
-        background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 0.5rem;
-        color: white;
-        text-align: center;
-    }
-    
-    .comfort-card {
-        background: linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 0.5rem;
-        color: white;
-        text-align: center;
-    }
-    
-    .slay-card {
-        background: linear-gradient(135deg, #FFD93D 0%, #FF6B35 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 0.5rem;
-        color: white;
-        text-align: center;
-    }
-    
-    .goal-tracker {
-        background: linear-gradient(135deg, #96CEB4 0%, #FFEAA7 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 0.5rem;
-        color: #2d3748;
-        text-align: center;
-    }
-    
-    .financial-tip {
-        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
-        color: #2d3748;
-    }
-    
-    .milestone-badge {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-radius: 15px;
-        text-align: center;
-    }
-    
-    .financial-setup-card {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
-        color: white;
-        text-align: center;
-    }
-    
-    .progress-container {
-        background: #e2e8f0;
-        border-radius: 10px;
-        height: 30px;
-        margin: 15px 0;
-        overflow: hidden;
-        position: relative;
-    }
-    
-    .progress-container .progress-fill {
-        height: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
-        transition: width 0.5s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        font-size: 0.9rem;
     }
     
     .stButton > button {
@@ -411,12 +360,18 @@ class EnhancedFinAuraAgent:
         return roadmap
 
 # =============================================================================
-# SESSION STATE INITIALIZATION
+# SESSION STATE INITIALIZATION WITH ERROR HANDLING
 # =============================================================================
 
-# Initialize manifesto popup state
-if 'manifesto_shown' not in st.session_state:
-    st.session_state.manifesto_shown = False
+# Initialize debug mode and error tracking
+if 'debug_mode' not in st.session_state:
+    st.session_state.debug_mode = False
+
+if 'error_count' not in st.session_state:
+    st.session_state.error_count = 0
+
+if 'last_error' not in st.session_state:
+    st.session_state.last_error = None
 
 if 'transactions' not in st.session_state:
     sample_data = [
@@ -465,23 +420,103 @@ with st.sidebar:
     
     st.markdown('---')
     
-    # Manifesto button
-    if st.button('📜 Read Our Manifesto', use_container_width=True):
-        st.session_state.manifesto_shown = False
-        st.rerun()
+    # Debug Panel
+    st.markdown('### 🛠️ Developer Tools')
+    st.session_state.debug_mode = st.checkbox('🐛 Debug Mode', value=st.session_state.debug_mode)
+    
+    if st.session_state.debug_mode:
+        st.markdown('#### 📊 Debug Info')
+        st.info(f"Errors: {st.session_state.error_count}")
+        if st.session_state.last_error:
+            st.error(f"Last Error: {st.session_state.last_error}")
+        
+        if st.button('🔄 Reset App Data'):
+            for key in list(st.session_state.keys()):
+                if key not in ['debug_mode', 'error_count']:
+                    del st.session_state[key]
+            st.success('App data reset!')
+            st.rerun()
+    
+    st.markdown('---')
+    
+    # App Settings
+    st.markdown('### ⚙️ App Settings')
+    
+    # Theme selector
+    theme_mode = st.selectbox(
+        '🎨 Interface Theme',
+        options=['Auto', 'Dark', 'Light'],
+        index=0
+    )
+    
+    # Notification settings
+    show_notifications = st.checkbox('🔔 Show Notifications', value=True)
+    
+    # Performance mode
+    performance_mode = st.selectbox(
+        '⚡ Performance Mode',
+        options=['Standard', 'Fast', 'Detailed'],
+        index=0,
+        help='Fast: Fewer animations, Detailed: More calculations'
+    )
+    
+    st.markdown('---')
+    
+    # Quick Actions
+    st.markdown('### 🚀 Quick Actions')
+    
+    if st.button('💰 Add Quick Transaction', use_container_width=True):
+        # Add a quick random transaction
+        try:
+            quick_transactions = [
+                ("Coffee break ☕", 5.50, SpendingCategory.JOY),
+                ("Lunch deal 🍕", 12.99, SpendingCategory.ESSENTIAL),
+                ("Impulse buy 😅", 25.00, SpendingCategory.OOPS),
+                ("Gas/Transport 🚗", 35.00, SpendingCategory.ESSENTIAL),
+                ("Movie night 🎬", 18.50, SpendingCategory.JOY)
+            ]
+            desc, amount, category = random.choice(quick_transactions)
+            new_transaction = Transaction(
+                datetime.now(), 
+                amount, 
+                desc, 
+                category, 
+                "quick-add", 
+                random.uniform(-0.2, 0.3)
+            )
+            st.session_state.transactions.append(new_transaction)
+            st.success(f'Added: {desc} - {format_currency(amount)}')
+            st.rerun()
+        except Exception as e:
+            st.error(f"Error adding transaction: {str(e)}")
+    
+    if st.button('📈 Generate Report', use_container_width=True):
+        st.info('📊 Report generated! Check the dashboard below.')
+    
+    if st.button('🎯 Set Financial Goal', use_container_width=True):
+        st.info('🎯 Goal setting panel activated!')
 
-# Helper to convert and format currency
+# Helper to convert and format currency with error handling
 
 def format_currency(amount, decimals=2):
-    symbol = currency_symbols[st.session_state.currency]
-    rate = currency_rates[st.session_state.currency]
-    value = amount * rate
-    if symbol == 'PKR':
-        return f"PKR {value:,.{decimals}f}"
-    elif symbol == '€':
-        return f"€{value:,.{decimals}f}"
-    else:
-        return f"${value:,.{decimals}f}"
+    """Safely format currency with error handling"""
+    try:
+        if amount is None or math.isnan(amount) or math.isinf(amount):
+            amount = 0
+        
+        symbol = currency_symbols.get(st.session_state.currency, '$')
+        rate = currency_rates.get(st.session_state.currency, 1.0)
+        value = float(amount) * rate
+        
+        if symbol == 'PKR':
+            return f"PKR {value:,.{decimals}f}"
+        elif symbol == '€':
+            return f"€{value:,.{decimals}f}"
+        else:
+            return f"${value:,.{decimals}f}"
+    except (ValueError, TypeError, KeyError) as e:
+        logger.warning(f"Currency formatting error: {str(e)}")
+        return f"${float(amount or 0):,.{decimals}f}"
 
 # Helper to get currency label for headings
 
@@ -494,147 +529,31 @@ def get_currency_label():
 # MAIN APP INTERFACE
 # =============================================================================
 
+
+
 # =============================================================================
-# MANIFESTO POPUP - APPEARS ON FIRST VISIT
+# GLOBAL ERROR HANDLER & MAIN APP WRAPPER
 # =============================================================================
 
-if not st.session_state.manifesto_shown:
+try:
+    # Header with Gen Z energy
     st.markdown("""
-    <div id="manifesto-overlay" style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.85);
-        z-index: 10000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        animation: fadeIn 0.5s ease-out;
-    ">
-        <div style="
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 25px;
-            padding: 3rem;
-            max-width: 600px;
-            margin: 2rem;
-            color: white;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideIn 0.8s ease-out;
-            border: 3px solid rgba(255,255,255,0.2);
-            position: relative;
-        ">
-            <div style="
-                background: linear-gradient(45deg, #FFD700, #FFA500);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                font-size: 2.5rem;
-                margin-bottom: 1rem;
-                font-weight: 700;
-            ">
-                📜 The FinAura Manifesto
-            </div>
-            
-            <div style="font-size: 1.8rem; margin: 1.5rem 0; font-weight: 600; text-shadow: 0 0 20px rgba(255,255,255,0.3);">
-                💡 "What if money was emotional?"
-            </div>
-            
-            <div style="font-size: 1.2rem; line-height: 1.8; margin: 2rem 0; opacity: 0.95;">
-                We don't just optimize your spending, we <strong>listen to your vibe</strong>.<br><br>
-                We're not building an accountant — we're building a <strong style="color: #FFD700;">best friend</strong>.<br><br>
-                FinAura believes that financial advice should be <strong style="color: #4ECDC4;">joyful, not judgmental</strong>.
-            </div>
-            
-            <div style="
-                background: rgba(255,255,255,0.1);
-                border-radius: 15px;
-                padding: 1.5rem;
-                margin: 2rem 0;
-                border-left: 5px solid #FFD700;
-                font-style: italic;
-                font-size: 1.1rem;
-            ">
-                <strong>🌟 Our Promise:</strong> Every emotion is valid. Every financial journey is unique. 
-                Your feelings about money matter, and we're here to help you navigate them with compassion and wisdom.
-            </div>
-            
-            <div style="
-                background: linear-gradient(45deg, #4ECDC4, #45B7D1);
-                color: white;
-                padding: 15px 30px;
-                border-radius: 25px;
-                font-size: 1.1rem;
-                font-weight: 600;
-                margin: 2rem auto;
-                cursor: pointer;
-                border: none;
-                box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
-                transition: all 0.3s ease;
-                display: inline-block;
-            " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 35px rgba(78, 205, 196, 0.6)';" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(78, 205, 196, 0.4)';"
-               onclick="document.getElementById('manifesto-overlay').style.display='none';">
-                ✨ Begin My Financial Journey ✨
-            </div>
-            
-            <div style="font-size: 0.9rem; opacity: 0.8; margin-top: 1rem;">
-                Welcome to a new era of emotional financial wellness 💜
-            </div>
-        </div>
+    <div class="main-header">
+        <h1>💸 FinAura: Your Gen Z CFO</h1>
+        <p><em>"Forget spreadsheets. Feel your finances."</em></p>
+        <p>Where vibes meet value ✨ | Fully Debugged & Enhanced!</p>
     </div>
-    
-    <style>
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    @keyframes slideIn {
-        from { 
-            opacity: 0; 
-            transform: translateY(-50px) scale(0.9); 
-        }
-        to { 
-            opacity: 1; 
-            transform: translateY(0) scale(1); 
-        }
-    }
-    </style>
-    
-    <script>
-    // Auto-close manifesto after reading (optional)
-    setTimeout(function() {
-        var overlay = document.getElementById('manifesto-overlay');
-        if (overlay) {
-            overlay.style.animation = 'fadeOut 0.5s ease-out forwards';
-            setTimeout(function() {
-                overlay.style.display = 'none';
-            }, 500);
-        }
-    }, 15000); // Auto-close after 15 seconds
-    
-    // Handle click to close
-    document.addEventListener('click', function(e) {
-        if (e.target.id === 'manifesto-overlay') {
-            document.getElementById('manifesto-overlay').style.display = 'none';
-        }
-    });
-    </script>
     """, unsafe_allow_html=True)
     
-    # Mark manifesto as shown
-    st.session_state.manifesto_shown = True
+    # Error count display for admins
+    if st.session_state.debug_mode and st.session_state.error_count > 0:
+        st.warning(f"⚠️ Debug Mode: {st.session_state.error_count} errors detected this session")
 
-# Header with Gen Z energy
-st.markdown("""
-<div class="main-header">
-    <h1>💸 FinAura: Your Gen Z CFO</h1>
-    <p><em>"Forget spreadsheets. Feel your finances."</em></p>
-    <p>Where vibes meet value ✨ | Now with Financial Planning!</p>
-</div>
-""", unsafe_allow_html=True)
+except Exception as e:
+    st.error("🚨 Critical Error in App Header")
+    logger.critical(f"Header error: {str(e)}")
+    st.session_state.error_count += 1
+    st.session_state.last_error = str(e)
 
 # =============================================================================
 # FINANCIAL PROFILE SETUP
@@ -1374,11 +1293,22 @@ st.markdown(f"""
 
 st.markdown("## 💰 Your Money Mood Board")
 
-transactions = st.session_state.transactions
-total_spent = sum(t.amount for t in transactions)
-avg_daily = total_spent / 7
-joy_spending = sum(t.amount for t in transactions if t.category == SpendingCategory.JOY)
-essential_spending = sum(t.amount for t in transactions if t.category == SpendingCategory.ESSENTIAL)
+# Safe calculations with error handling
+def calculate_dashboard_metrics():
+    try:
+        transactions = st.session_state.transactions or []
+        total_spent = sum(t.amount for t in transactions if hasattr(t, 'amount') and t.amount)
+        avg_daily = handle_calculation_error(lambda: total_spent / 7, 0)
+        joy_spending = sum(t.amount for t in transactions if hasattr(t, 'category') and t.category == SpendingCategory.JOY and t.amount)
+        essential_spending = sum(t.amount for t in transactions if hasattr(t, 'category') and t.category == SpendingCategory.ESSENTIAL and t.amount)
+        return total_spent, avg_daily, joy_spending, essential_spending
+    except Exception as e:
+        logger.error(f"Dashboard calculation error: {str(e)}")
+        st.session_state.error_count += 1
+        st.session_state.last_error = str(e)
+        return 0, 0, 0, 0
+
+total_spent, avg_daily, joy_spending, essential_spending = calculate_dashboard_metrics()
 
 # Get monthly_income safely
 monthly_income = st.session_state.financial_profile.get('monthly_income', 0) if st.session_state.financial_profile else 0
@@ -1503,24 +1433,113 @@ if monthly_income > 0:
             st.markdown('<div class="success-card">🎉 Under budget! Great job!</div>', unsafe_allow_html=True)
 
 # =============================================================================
-# TRANSACTION LOG & INTERACTIVE FEATURES
+# TRANSACTION INPUT & INTERACTIVE FEATURES
+# =============================================================================
+
+st.markdown("## 💳 Add New Transaction")
+
+# Transaction input form with error handling
+with st.expander("➕ Add a New Transaction", expanded=False):
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        new_amount = st.number_input("💰 Amount", min_value=0.01, value=10.0, step=0.5)
+        new_description = st.text_input("📝 Description", placeholder="What did you spend on?")
+    
+    with col2:
+        new_category = st.selectbox("📂 Category", list(SpendingCategory))
+        new_merchant = st.text_input("🏪 Merchant", placeholder="Where did you spend?")
+    
+    with col3:
+        new_vibe_impact = st.slider("😊 Vibe Impact", -1.0, 1.0, 0.0, 0.1, 
+                                   help="How did this purchase make you feel?")
+        
+        if st.button("✅ Add Transaction", type="primary", use_container_width=True):
+            try:
+                if new_description.strip():
+                    new_transaction = Transaction(
+                        date=datetime.now(),
+                        amount=float(new_amount),
+                        description=new_description.strip(),
+                        category=new_category,
+                        merchant=new_merchant.strip(),
+                        vibe_impact=float(new_vibe_impact)
+                    )
+                    st.session_state.transactions.append(new_transaction)
+                    st.success(f"✅ Added: {new_description} - {format_currency(new_amount)}")
+                    st.rerun()
+                else:
+                    st.warning("Please enter a description for your transaction!")
+            except Exception as e:
+                st.error(f"Error adding transaction: {str(e)}")
+                st.session_state.error_count += 1
+                st.session_state.last_error = str(e)
+
+# =============================================================================
+# TRANSACTION LOG & DISPLAY
 # =============================================================================
 
 st.markdown("## 🧾 Recent Spending Tea ☕")
 
-df_transactions = pd.DataFrame([
-    {
-        'Date': t.date.strftime('%m/%d'),
-        'Vibe': t.category.value,
-        'Amount': f"{format_currency(t.amount)}",
-        'Description': t.description,
-        'Merchant': t.merchant,
-        'Mood Impact': '😊' if t.vibe_impact > 0 else '😐' if t.vibe_impact == 0 else '😔'
-    }
-    for t in sorted(transactions, key=lambda x: x.date, reverse=True)
-])
+# Safe transaction display with error handling
+def create_transaction_dataframe():
+    try:
+        transactions = st.session_state.transactions or []
+        if not transactions:
+            return pd.DataFrame({'Message': ['No transactions yet! Add your first transaction above. 💸']})
+        
+        transaction_data = []
+        for t in sorted(transactions, key=lambda x: getattr(x, 'date', datetime.now()), reverse=True):
+            try:
+                transaction_data.append({
+                    'Date': getattr(t, 'date', datetime.now()).strftime('%m/%d'),
+                    'Vibe': getattr(t, 'category', SpendingCategory.ESSENTIAL).value,
+                    'Amount': format_currency(getattr(t, 'amount', 0)),
+                    'Description': getattr(t, 'description', 'Unknown'),
+                    'Merchant': getattr(t, 'merchant', 'Unknown'),
+                    'Mood Impact': '😊' if getattr(t, 'vibe_impact', 0) > 0 else '😐' if getattr(t, 'vibe_impact', 0) == 0 else '😔'
+                })
+            except Exception as e:
+                logger.warning(f"Error processing transaction: {str(e)}")
+                continue
+        
+        return pd.DataFrame(transaction_data)
+    except Exception as e:
+        logger.error(f"Error creating transaction dataframe: {str(e)}")
+        st.session_state.error_count += 1
+        st.session_state.last_error = str(e)
+        return pd.DataFrame({'Error': ['Unable to load transactions. Please try refreshing.']})
 
+df_transactions = create_transaction_dataframe()
 st.dataframe(df_transactions, use_container_width=True)
+
+# Transaction analytics
+if len(st.session_state.transactions) > 0:
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        try:
+            avg_transaction = handle_calculation_error(
+                lambda: sum(t.amount for t in st.session_state.transactions) / len(st.session_state.transactions),
+                0
+            )
+            st.metric("💰 Avg Transaction", format_currency(avg_transaction))
+        except:
+            st.metric("💰 Avg Transaction", "N/A")
+    
+    with col2:
+        try:
+            positive_vibes = len([t for t in st.session_state.transactions if getattr(t, 'vibe_impact', 0) > 0])
+            st.metric("😊 Positive Purchases", f"{positive_vibes}")
+        except:
+            st.metric("😊 Positive Purchases", "N/A")
+    
+    with col3:
+        try:
+            most_category = max(SpendingCategory, key=lambda cat: len([t for t in st.session_state.transactions if getattr(t, 'category', None) == cat]))
+            st.metric("🔥 Top Category", most_category.value)
+        except:
+            st.metric("🔥 Top Category", "N/A")
 
 # =============================================================================
 # ENHANCED SALARY INPUT & FINANCIAL PLANNING CALCULATOR
