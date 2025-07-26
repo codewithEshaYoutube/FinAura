@@ -15,6 +15,97 @@ import asyncio
 from enum import Enum
 import hashlib
 import math  # Added for debt calculations
+.survival-card {
+        background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 0.5rem;
+        color: white;
+        text-align: center;
+    }
+    
+    .comfort-card {
+        background: linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 0.5rem;
+        color: white;
+        text-align: center;
+    }
+    
+    .slay-card {
+        background: linear-gradient(135deg, #FFD93D 0%, #FF6B35 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 0.5rem;
+        color: white;
+        text-align: center;
+    }
+    
+    .goal-tracker {
+        background: linear-gradient(135deg, #96CEB4 0%, #FFEAA7 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 0.5rem;
+        color: #2d3748;
+        text-align: center;
+    }
+    
+    .financial-tip {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 1rem 0;
+        color: #2d3748;
+    }
+    
+    .milestone-badge {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px;
+        text-align: center;
+    }
+    
+    .financial-setup-card {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 1rem 0;
+        color: white;
+        text-align: center;
+    }
+    
+    .progress-container {
+        background: #e2e8f0;
+        border-radius: 10px;
+        height: 30px;
+        margin: 15px 0;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .progress-container .progress-fill {
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 10px;
+        transition: width 0.5s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }# =============================================================================
+# SESSION STATE INITIALIZATION
+# =============================================================================
+
+if 'manifesto_shown' not in st.session_state:
+    st.session_state.manifesto_shown = True
+
+if 'vibe_card_generated' not in st.session_state:
+    st.session_state.vibe_card_generated = False
+
+if 'transactions' not in st.session_state:
 
 # Page config with Gen Z vibes
 st.set_page_config(
