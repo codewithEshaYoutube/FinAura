@@ -729,91 +729,94 @@ if st.session_state.get('agent_enabled', False) and 'slay_goal' in st.session_st
                     st.rerun()
             # Add this code in the sidebar section
 
-# Initialize current page if not exists
-if 'current_page' not in st.session_state:
-    st.session_state.current_page = 'home'
+# Add this code in the sidebar section AFTER the Agentic AI Toggle
 
-# Custom CSS for horizontal buttons with active states
-st.markdown("""
-<style>
-.nav-button-row {
-    display: flex;
-    gap: 5px;
-    margin: 10px 0;
-    flex-wrap: wrap;
-}
-
-.nav-btn {
-    flex: 1;
-    min-width: 60px;
-    padding: 8px 4px;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 8px;
-    background: transparent;
-    color: white;
-    text-align: center;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-
-.nav-btn:hover {
-    background: rgba(255,255,255,0.1);
-    transform: translateY(-1px);
-}
-
-.nav-btn.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 0 2px 8px rgba(102,126,234,0.4);
-    font-weight: bold;
-}
-
-.nav-btn.external {
-    background: linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%);
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Create horizontal button row
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    if st.button('🏠 Home', key='home_btn', use_container_width=True):
+# Show navigation only when agentic AI is enabled
+if st.session_state.get('agent_enabled', False):
+    # Initialize current page if not exists
+    if 'current_page' not in st.session_state:
         st.session_state.current_page = 'home'
-        st.rerun()
 
-with col2:
-    if st.button('🌈 Vibe', key='vibe_btn', use_container_width=True):
-        st.session_state.current_page = 'vibe'
-        st.markdown("""
-        <script>
-        document.querySelector('h1').scrollIntoView({behavior: 'smooth'});
-        </script>
-        """, unsafe_allow_html=True)
+    # Custom CSS for horizontal buttons with active states
+    st.markdown("""
+    <style>
+    .nav-button-row {
+        display: flex;
+        gap: 5px;
+        margin: 10px 0;
+        flex-wrap: wrap;
+    }
 
-with col3:
-    if st.button('🔥 Planning', key='planning_btn', use_container_width=True):
-        st.session_state.current_page = 'planning'
-        st.markdown("""
-        <script>
-        const element = document.querySelector('h2:nth-of-type(1)');
-        if (element && element.textContent.includes('Financial Survival Guide')) {
-            element.scrollIntoView({behavior: 'smooth'});
-        }
-        </script>
-        """, unsafe_allow_html=True)
+    .nav-btn {
+        flex: 1;
+        min-width: 60px;
+        padding: 8px 4px;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 8px;
+        background: transparent;
+        color: white;
+        text-align: center;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
 
-with col4:
-    if st.button('💎 Survival Guide', key='survival_btn', use_container_width=True):
-        st.markdown("""
-        <script>
-        window.open('https://finaura.streamlit.app/#your-personalized-financial-blueprint', '_blank');
-        </script>
-        """, unsafe_allow_html=True)
-    
-    
-  
+    .nav-btn:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-1px);
+    }
+
+    .nav-btn.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        box-shadow: 0 2px 8px rgba(102,126,234,0.4);
+        font-weight: bold;
+    }
+
+    .nav-btn.external {
+        background: linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%);
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Create horizontal button row
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        if st.button('🏠 Home', key='home_btn', use_container_width=True):
+            st.session_state.current_page = 'home'
+            st.rerun()
+
+    with col2:
+        if st.button('🌈 Vibe', key='vibe_btn', use_container_width=True):
+            st.session_state.current_page = 'vibe'
+            st.markdown("""
+            <script>
+            document.querySelector('h1').scrollIntoView({behavior: 'smooth'});
+            </script>
+            """, unsafe_allow_html=True)
+
+    with col3:
+        if st.button('🔥 Planning', key='planning_btn', use_container_width=True):
+            st.session_state.current_page = 'planning'
+            st.markdown("""
+            <script>
+            const element = document.querySelector('h2:nth-of-type(1)');
+            if (element && element.textContent.includes('Financial Survival Guide')) {
+                element.scrollIntoView({behavior: 'smooth'});
+            }
+            </script>
+            """, unsafe_allow_html=True)
+
+    with col4:
+        if st.button('💎 Survival Guide', key='survival_btn', use_container_width=True):
+            st.markdown("""
+            <script>
+            window.open('https://finaura.streamlit.app/#your-personalized-financial-blueprint', '_blank');
+            </script>
+            """, unsafe_allow_html=True)
+
+    st.markdown('---')
 # Helper to convert and format currency with error handling
 
 def format_currency(amount, decimals=2):
