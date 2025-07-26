@@ -1482,23 +1482,7 @@ st.markdown(f"""
     animation: heroFadeIn 1s, auraGlow 3s ease-in-out infinite alternate;
     border: 2px solid {current_aura['accent']}60;
 '>
-    <span style='font-size: 2.5rem; margin-right: 0.5rem; text-shadow: 0 0 15px {current_aura['text_glow']};'>{{current_vibe.value}}</span>
-    {{vibe_response}}
-    
-    <div style='
-        margin-top: 1rem; 
-        font-size: 1rem; 
-        opacity: 0.9; 
-        font-style: italic;
-        background: rgba(255,255,255,0.1); 
-        padding: 0.8rem; 
-        border-radius: 10px;
-        border-left: 4px solid {current_aura['accent']};
-    '>
-        <strong>🌟 Current Aura:</strong> {current_aura['aura_name']}<br>
-        <small>{current_aura['description']}</small>
-    </div>
-</div>
+   
 
 <style>
 @keyframes heroFadeIn {{
