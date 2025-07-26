@@ -454,7 +454,7 @@ if st.button('💎 Financial Blueprint', use_container_width=True):
     """, unsafe_allow_html=True)
     st.success('🔗 Opening Financial Blueprint!')
 
-st.markdown('---')
+\
     
     # Agentic AI Toggle
     st.markdown('### 🤖 Agentic AI Assistant')
