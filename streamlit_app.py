@@ -1446,12 +1446,7 @@ with vibe_col:
         ✨ {current_aura['aura_name']} Activated ✨
     </div>
     
-    @keyframes auraNotification {{
-        0% {{ opacity: 0; transform: translateX(100px); }}
-        20% {{ opacity: 1; transform: translateX(0); }}
-        80% {{ opacity: 1; transform: translateX(0); }}
-        100% {{ opacity: 0; transform: translateX(100px); }}
-    }}
+    
     
     """, unsafe_allow_html=True)
     
