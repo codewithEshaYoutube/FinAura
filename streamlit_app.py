@@ -332,9 +332,7 @@ class EnhancedFinAuraAgent:
 # SESSION STATE INITIALIZATION
 # =============================================================================
 
-# Initialize manifesto popup state
-if 'manifesto_shown' not in st.session_state:
-    st.session_state.manifesto_shown = False
+
 
 if 'transactions' not in st.session_state:
     sample_data = [
@@ -412,72 +410,7 @@ def get_currency_label():
 # MAIN APP INTERFACE
 # =============================================================================
 
-# =============================================================================
-# MANIFESTO POPUP - APPEARS ON FIRST VISIT
-# =============================================================================
 
-if not st.session_state.manifesto_shown:
-    # Simple, error-free manifesto popup
-    st.markdown("""
-    <div style="
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        max-width: 350px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        z-index: 9999;
-        animation: slideInRight 0.5s ease-out, fadeOut 0.5s ease-out 1.5s forwards;
-        border: 2px solid rgba(255,255,255,0.2);
-    ">
-        <div style="
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 0.8rem;
-        ">
-            💡 What if money was emotional?
-        </div>
-        
-        <div style="font-size: 0.95rem; line-height: 1.4; opacity: 0.95;">
-            We listen to your <strong>vibe</strong> 🌟<br>
-            Building a <strong style="color: #FFD700;">best friend</strong>, not an accountant.<br>
-            <em style="color: #4ECDC4;">Joyful, not judgmental</em> 💜
-        </div>
-    </div>
-    
-    <style>
-    @keyframes slideInRight {
-        from {
-            opacity: 0;
-            transform: translateX(100px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    @keyframes fadeOut {
-        from {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        to {
-            opacity: 0;
-            transform: translateX(100px);
-        }
-    }
-    </style>
-    """, unsafe_allow_html=True)
-    
-    # Mark manifesto as shown to prevent showing again
-    st.session_state.manifesto_shown = True
 
 # Header with Gen Z energy
 st.markdown("""
