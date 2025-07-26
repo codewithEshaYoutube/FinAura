@@ -418,7 +418,43 @@ with st.sidebar:
         index=['USD', 'Rs', 'EUR'].index(st.session_state.currency)
     )
     # Add this code in the sidebar section, after the currency selection and before the Agentic AI Toggle
+# Add this code in the sidebar section
 
+st.markdown('### 🧭 Quick Access')
+
+# Home Button
+if st.button('🏠 Home', use_container_width=True):
+    st.rerun()
+
+# Daily Vibe Check Button  
+if st.button('🌈 Daily Vibe Check', use_container_width=True):
+    st.markdown("""
+    <script>
+    document.querySelector('h1').scrollIntoView({behavior: 'smooth'});
+    </script>
+    """, unsafe_allow_html=True)
+
+# Financial Survival Guide Button
+if st.button('🔥 Financial Survival Guide', use_container_width=True):
+    st.markdown("""
+    <script>
+    const element = document.querySelector('h2:nth-of-type(1)');
+    if (element && element.textContent.includes('Financial Survival Guide')) {
+        element.scrollIntoView({behavior: 'smooth'});
+    }
+    </script>
+    """, unsafe_allow_html=True)
+
+# Financial Blueprint Button
+if st.button('💎 Financial Blueprint', use_container_width=True):
+    st.markdown("""
+    <script>
+    window.open('https://finaura.streamlit.app/#your-personalized-financial-blueprint', '_blank');
+    </script>
+    """, unsafe_allow_html=True)
+    st.success('🔗 Opening Financial Blueprint!')
+
+st.markdown('---')
     
     # Agentic AI Toggle
     st.markdown('### 🤖 Agentic AI Assistant')
