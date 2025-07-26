@@ -415,7 +415,7 @@ with st.sidebar:
         'Currency',
         options=['USD', 'PKR', 'EUR'],
         format_func=lambda x: f"{currency_symbols[x]} {x}",
-        index=['USD', 'PKR', 'EUR'].index(st.session_state.currency)
+        index=['USD', 'Rs', 'EUR'].index(st.session_state.currency)
     )
     
     st.markdown('---')
@@ -439,62 +439,7 @@ with st.sidebar:
     
     st.markdown('---')
     
-    # App Settings
-    st.markdown('### ⚙️ App Settings')
     
-    # Theme selector
-    theme_mode = st.selectbox(
-        '🎨 Interface Theme',
-        options=['Auto', 'Dark', 'Light'],
-        index=0
-    )
-    
-    # Notification settings
-    show_notifications = st.checkbox('🔔 Show Notifications', value=True)
-    
-    # Performance mode
-    performance_mode = st.selectbox(
-        '⚡ Performance Mode',
-        options=['Standard', 'Fast', 'Detailed'],
-        index=0,
-        help='Fast: Fewer animations, Detailed: More calculations'
-    )
-    
-    st.markdown('---')
-    
-    # Quick Actions
-    st.markdown('### 🚀 Quick Actions')
-    
-    if st.button('💰 Add Quick Transaction', use_container_width=True):
-        # Add a quick random transaction
-        try:
-            quick_transactions = [
-                ("Coffee break ☕", 5.50, SpendingCategory.JOY),
-                ("Lunch deal 🍕", 12.99, SpendingCategory.ESSENTIAL),
-                ("Impulse buy 😅", 25.00, SpendingCategory.OOPS),
-                ("Gas/Transport 🚗", 35.00, SpendingCategory.ESSENTIAL),
-                ("Movie night 🎬", 18.50, SpendingCategory.JOY)
-            ]
-            desc, amount, category = random.choice(quick_transactions)
-            new_transaction = Transaction(
-                datetime.now(), 
-                amount, 
-                desc, 
-                category, 
-                "quick-add", 
-                random.uniform(-0.2, 0.3)
-            )
-            st.session_state.transactions.append(new_transaction)
-            st.success(f'Added: {desc} - {format_currency(amount)}')
-            st.rerun()
-        except Exception as e:
-            st.error(f"Error adding transaction: {str(e)}")
-    
-    if st.button('📈 Generate Report', use_container_width=True):
-        st.info('📊 Report generated! Check the dashboard below.')
-    
-    if st.button('🎯 Set Financial Goal', use_container_width=True):
-        st.info('🎯 Goal setting panel activated!')
     
     st.markdown('---')
     
