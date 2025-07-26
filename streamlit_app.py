@@ -495,6 +495,311 @@ with st.sidebar:
     
     if st.button('🎯 Set Financial Goal', use_container_width=True):
         st.info('🎯 Goal setting panel activated!')
+    
+    st.markdown('---')
+    
+    # Agentic AI Toggle
+    st.markdown('### 🤖 Agentic AI Assistant')
+    enable_agent = st.checkbox('🧠 Enable AI Agent', value=st.session_state.get('agent_enabled', False))
+    st.session_state.agent_enabled = enable_agent
+    
+    if enable_agent:
+        st.success('🚀 AI Agent Active!')
+        agent_mode = st.selectbox(
+            '🎯 Agent Focus',
+            ['💰 Autonomous Slay Planner', '🧾 Emotional Spending Coach', '📊 Financial Advisor', '🎯 Goal Tracker'],
+            help='Choose what your AI agent should focus on'
+        )
+        st.session_state.agent_mode = agent_mode
+        
+        # Agent intensity
+        agent_intensity = st.slider('🔥 Agent Intensity', 1, 5, 3, help='How often should the agent intervene?')
+        st.session_state.agent_intensity = agent_intensity
+
+# =============================================================================
+# AGENTIC AI CHATBOT INTEGRATION
+# =============================================================================
+
+if st.session_state.get('agent_enabled', False):
+    st.markdown("## 🤖 Your Personal AI Financial Coach")
+    
+    # Display current agent mode
+    current_mode = st.session_state.get('agent_mode', '💰 Autonomous Slay Planner')
+    st.info(f"🧠 **Active Agent Mode:** {current_mode}")
+    
+    # Chatbot iframe integration
+    st.markdown("""
+    <div style="
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1rem;
+        border-radius: 15px;
+        margin: 1rem 0;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    ">
+        <h3 style="color: white; text-align: center; margin-bottom: 1rem;">
+            💬 Chat with Your AI Financial Coach
+        </h3>
+        <div style="border-radius: 10px; overflow: hidden; background: white;">
+            <iframe
+                src="https://www.chatbase.co/chatbot-iframe/97sccVBW3_J60VexD-2eY"
+                width="100%"
+                style="height: 100%; min-height: 700px; border: none;"
+                frameborder="0">
+            </iframe>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# =============================================================================
+# AGENTIC AI FEATURES - AUTONOMOUS PLANNER & EMOTIONAL COACH
+# =============================================================================
+
+if st.session_state.get('agent_enabled', False):
+    agent_mode = st.session_state.get('agent_mode', '💰 Autonomous Slay Planner')
+    
+    if agent_mode == '💰 Autonomous Slay Planner':
+        st.markdown("### 🎯 Autonomous Slay Planner")
+        
+        # Goal Setting Interface
+        with st.expander("🚀 Set Your Slay Goal", expanded=True):
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                goal_item = st.text_input("🎯 What do you want to buy?", placeholder="e.g., iPad, vacation, car")
+                goal_amount = st.number_input("💰 How much does it cost?", min_value=1.0, value=500.0, step=50.0)
+            
+            with col2:
+                goal_months = st.slider("📅 In how many months?", 1, 24, 3)
+                current_saved = st.number_input("💳 Already saved?", min_value=0.0, value=0.0, step=10.0)
+            
+            if st.button("🚀 Activate Slay Planner", type="primary"):
+                # Calculate weekly savings needed
+                remaining_amount = goal_amount - current_saved
+                weeks_available = goal_months * 4.33  # Average weeks per month
+                weekly_savings_needed = remaining_amount / weeks_available
+                
+                # Store goal in session state
+                st.session_state.slay_goal = {
+                    'item': goal_item,
+                    'total_amount': goal_amount,
+                    'months': goal_months,
+                    'current_saved': current_saved,
+                    'weekly_needed': weekly_savings_needed,
+                    'created_date': datetime.now()
+                }
+                
+                st.success(f"🎯 Goal Set! Save {format_currency(weekly_savings_needed)} per week to get your {goal_item}!")
+        
+        # Active Goal Tracking
+        if 'slay_goal' in st.session_state:
+            goal = st.session_state.slay_goal
+            progress = (goal['current_saved'] / goal['total_amount']) * 100
+            
+            st.markdown("#### 🔥 Your Active Slay Goal")
+            
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("🎯 Goal", goal['item'])
+                st.metric("💰 Total Cost", format_currency(goal['total_amount']))
+            
+            with col2:
+                st.metric("💳 Saved So Far", format_currency(goal['current_saved']))
+                st.metric("📅 Time Left", f"{goal['months']} months")
+            
+            with col3:
+                st.metric("💪 Weekly Target", format_currency(goal['weekly_needed']))
+                st.metric("📈 Progress", f"{progress:.1f}%")
+            
+            # Progress bar
+            st.progress(progress / 100)
+            
+            # AI Agent Intervention
+            if goal['weekly_needed'] > 0:
+                st.markdown("#### 🤖 AI Agent Recommendations")
+                
+                # Calculate spending adjustments
+                monthly_income = st.session_state.financial_profile.get('monthly_income', 0) if st.session_state.financial_profile else 3000
+                weekly_income = monthly_income / 4.33
+                savings_rate = (goal['weekly_needed'] / weekly_income) * 100
+                
+                if savings_rate > 30:
+                    st.warning(f"🚨 **Agent Alert:** This goal requires {savings_rate:.1f}% of your weekly income. Consider extending the timeline or finding additional income sources.")
+                elif savings_rate > 15:
+                    st.info(f"💪 **Agent Suggestion:** This goal requires {savings_rate:.1f}% of weekly income. I'll help you optimize your 'wants' spending!")
+                else:
+                    st.success(f"✅ **Agent Approved:** This goal is achievable with {savings_rate:.1f}% of your income!")
+                
+                # Spending category recommendations
+                st.markdown("**🎯 AI Spending Adjustments:**")
+                st.markdown(f"• Reduce 'Joy' spending by {format_currency(goal['weekly_needed'] * 0.6)} per week")
+                st.markdown(f"• Find {format_currency(goal['weekly_needed'] * 0.4)} in optimized 'Essential' spending")
+                st.markdown("• I'll remind you when you're about to overspend! 🤖")
+    
+    elif agent_mode == '🧾 Emotional Spending Coach':
+        st.markdown("### 🧾 Emotional Spending Tracker + Agentic Coaching")
+        
+        # Emotional spending analysis
+        if st.session_state.transactions:
+            st.markdown("#### 🔍 Recent Emotional Spending Analysis")
+            
+            # Classify transactions by emotional state
+            emotional_categories = {
+                'Joy': [],
+                'Regret': [],
+                'Impulse': [],
+                'Survival': []
+            }
+            
+            for transaction in st.session_state.transactions[-10:]:  # Last 10 transactions
+                vibe_impact = getattr(transaction, 'vibe_impact', 0)
+                amount = getattr(transaction, 'amount', 0)
+                description = getattr(transaction, 'description', '')
+                
+                # Simple emotional classification based on vibe impact and keywords
+                if vibe_impact > 0.3:
+                    emotional_categories['Joy'].append((description, amount))
+                elif vibe_impact < -0.3:
+                    emotional_categories['Regret'].append((description, amount))
+                elif any(word in description.lower() for word in ['impulse', 'quick', 'saw', 'wanted']):
+                    emotional_categories['Impulse'].append((description, amount))
+                else:
+                    emotional_categories['Survival'].append((description, amount))
+            
+            # Display emotional spending breakdown
+            col1, col2, col3, col4 = st.columns(4)
+            
+            with col1:
+                joy_total = sum(amount for _, amount in emotional_categories['Joy'])
+                st.metric("😊 Joy Purchases", f"{len(emotional_categories['Joy'])}")
+                st.caption(f"Total: {format_currency(joy_total)}")
+            
+            with col2:
+                regret_total = sum(amount for _, amount in emotional_categories['Regret'])
+                st.metric("😔 Regret Purchases", f"{len(emotional_categories['Regret'])}")
+                st.caption(f"Total: {format_currency(regret_total)}")
+            
+            with col3:
+                impulse_total = sum(amount for _, amount in emotional_categories['Impulse'])
+                st.metric("⚡ Impulse Buys", f"{len(emotional_categories['Impulse'])}")
+                st.caption(f"Total: {format_currency(impulse_total)}")
+            
+            with col4:
+                survival_total = sum(amount for _, amount in emotional_categories['Survival'])
+                st.metric("🛡️ Survival Needs", f"{len(emotional_categories['Survival'])}")
+                st.caption(f"Total: {format_currency(survival_total)}")
+            
+            # AI Coach Recommendations
+            st.markdown("#### 🤖 AI Emotional Coach Insights")
+            
+            total_emotional = regret_total + impulse_total
+            if total_emotional > joy_total:
+                st.warning("🚨 **Coach Alert:** You're spending more on regret/impulse than joy! Let's fix this.")
+                
+                st.markdown("**🧸 Custom Action Plan:**")
+                st.markdown("• **Pause Rule:** Wait 24 hours before any purchase over $25")
+                st.markdown("• **Emotion Check:** Ask yourself 'Am I buying this because I'm sad/stressed?'")
+                st.markdown("• **Joy Alternative:** Next time you're sad, save $10 instead of shopping")
+                st.markdown("• **Celebration Savings:** Reward yourself with good vibes when you resist impulse buys!")
+                
+            elif joy_total > 0:
+                st.success("✨ **Coach Celebration:** You're spending mindfully and choosing joy! Keep it up!")
+                st.markdown("🎉 **Milestone Rewards:** You've made more joy purchases than regret purchases this week!")
+            
+            # Emotional spending tracker for new purchases
+            st.markdown("#### 💭 Why Did You Buy This?")
+            
+            with st.expander("🔍 Analyze Your Last Purchase", expanded=False):
+                if st.session_state.transactions:
+                    last_transaction = st.session_state.transactions[-1]
+                    st.write(f"**Last Purchase:** {last_transaction.description} - {format_currency(last_transaction.amount)}")
+                    
+                    emotional_reason = st.selectbox(
+                        "Why did you buy this?",
+                        ["I genuinely needed it", "It made me happy", "I was feeling sad/stressed", "It was on sale/impulse", "Social pressure", "Boredom"]
+                    )
+                    
+                    emotional_rating = st.slider("How do you feel about this purchase now?", 1, 10, 5)
+                    
+                    if st.button("💾 Save Emotional Analysis"):
+                        # Update transaction with emotional data
+                        last_transaction.emotional_reason = emotional_reason
+                        last_transaction.emotional_rating = emotional_rating
+                        st.success("🧠 Emotional data saved! I'll learn your patterns to help you better.")
+        
+        else:
+            st.info("💝 Start making some purchases to unlock emotional spending insights!")
+    
+    # Agent Notifications & Interventions
+    if st.session_state.get('agent_intensity', 3) >= 3:
+        st.markdown("### 🚨 Live Agent Interventions")
+        
+        # Check for spending deviations
+        if st.session_state.transactions:
+            recent_spending = sum(t.amount for t in st.session_state.transactions[-5:])  # Last 5 transactions
+            
+            if recent_spending > 200:  # Threshold for intervention
+                st.warning("🤖 **Agent Alert:** Heavy spending detected! Current session: " + format_currency(recent_spending))
+                st.markdown("**AI Suggestions:**")
+                st.markdown("• Take a 10-minute break before your next purchase")
+                st.markdown("• Consider if this aligns with your current goals")
+                st.markdown("• Remember: Every dollar saved is a step closer to your dreams! ✨")
+            
+            # Positive reinforcement
+            positive_transactions = [t for t in st.session_state.transactions[-10:] if getattr(t, 'vibe_impact', 0) > 0.2]
+            if len(positive_transactions) >= 3:
+                st.success("🎉 **Agent Celebration:** You're making smart, joy-filled purchases! Keep up the positive money vibes!")
+        
+        # Weekly check-ins (simulated)
+        if datetime.now().weekday() == 0:  # Monday
+            st.info("📅 **Weekly Agent Check-in:** How did your spending align with your goals last week?")
+            
+            weekly_reflection = st.selectbox(
+                "How do you feel about last week's spending?",
+                ["🔥 Crushed my goals!", "😌 Pretty good overall", "😅 Could've been better", "😔 Need to refocus"],
+                key="weekly_reflection"
+            )
+            
+            if weekly_reflection == "🔥 Crushed my goals!":
+                st.balloons()
+                st.success("🎉 Amazing work! Your AI agent is proud of you!")
+            elif weekly_reflection == "😔 Need to refocus":
+                st.markdown("💪 No worries! Let's adjust your plan and get back on track!")
+
+# =============================================================================
+# AGENT MILESTONE & REWARD SYSTEM
+# =============================================================================
+
+if st.session_state.get('agent_enabled', False) and 'slay_goal' in st.session_state:
+    goal = st.session_state.slay_goal
+    progress = (goal['current_saved'] / goal['total_amount']) * 100
+    
+    # Milestone celebrations
+    milestones = [25, 50, 75, 90, 100]
+    
+    if 'celebrated_milestones' not in st.session_state:
+        st.session_state.celebrated_milestones = []
+    
+    for milestone in milestones:
+        if progress >= milestone and milestone not in st.session_state.celebrated_milestones:
+            st.session_state.celebrated_milestones.append(milestone)
+            
+            # Celebration based on milestone
+            if milestone == 25:
+                st.success("🎉 **25% Milestone!** You're officially on your way! Your AI agent believes in you!")
+            elif milestone == 50:
+                st.success("🚀 **Halfway There!** You're absolutely crushing this goal! Keep the momentum!")
+                st.balloons()
+            elif milestone == 75:
+                st.success("💎 **75% Complete!** You're in the final stretch! Your dream is so close!")
+            elif milestone == 90:
+                st.success("🔥 **90% Almost There!** Just a little more and you'll have your " + goal['item'] + "!")
+            elif milestone == 100:
+                st.success("🏆 **GOAL ACHIEVED!** You did it! Time to enjoy your " + goal['item'] + "! 🎊")
+                st.balloons()
+                # Reset goal after achievement
+                if st.button("🎯 Set New Goal"):
+                    del st.session_state.slay_goal
+                    st.rerun()
 
 # Helper to convert and format currency with error handling
 
