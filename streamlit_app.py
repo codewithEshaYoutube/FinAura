@@ -772,7 +772,7 @@ try:
     st.markdown("""
     <div class="main-header">
         <h1>💸 FinAura: Your Gen Z CFO</h1>
-        <p>Emotionally Smart. Financially Sharp.</p>
+        <h3>Emotionally Smart. Financially Sharp.</h3>
         <p><em>"Forget spreadsheets. Feel your finances."</em></p>
         
     </div>
