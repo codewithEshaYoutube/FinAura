@@ -406,7 +406,7 @@ if 'financial_profile' not in st.session_state:
 if 'currency' not in st.session_state:
     st.session_state.currency = 'USD'
 
-currency_symbols = {'USD': '$', 'PKR': 'PKR', 'EUR': '€'}
+currency_symbols = {'USD': '$', 'PKR': 'Rs', 'EUR': '€'}
 currency_rates = {'USD': 1.0, 'PKR': 280.0, 'EUR': 0.92}  # Example rates, update as needed
 
 with st.sidebar:
@@ -418,27 +418,7 @@ with st.sidebar:
         index=['USD', 'Rs', 'EUR'].index(st.session_state.currency)
     )
     
-    st.markdown('---')
-    
-    # Debug Panel
-    st.markdown('### 🛠️ Developer Tools')
-    st.session_state.debug_mode = st.checkbox('🐛 Debug Mode', value=st.session_state.debug_mode)
-    
-    if st.session_state.debug_mode:
-        st.markdown('#### 📊 Debug Info')
-        st.info(f"Errors: {st.session_state.error_count}")
-        if st.session_state.last_error:
-            st.error(f"Last Error: {st.session_state.last_error}")
-        
-        if st.button('🔄 Reset App Data'):
-            for key in list(st.session_state.keys()):
-                if key not in ['debug_mode', 'error_count']:
-                    del st.session_state[key]
-            st.success('App data reset!')
-            st.rerun()
-    
-    st.markdown('---')
-    
+   
     
     
     st.markdown('---')
@@ -745,7 +725,79 @@ if st.session_state.get('agent_enabled', False) and 'slay_goal' in st.session_st
                 if st.button("🎯 Set New Goal"):
                     del st.session_state.slay_goal
                     st.rerun()
-
+    
+    
+    st.markdown('---')
+# App Settings
+    st.markdown('### ⚙️ App Settings')
+    
+    
+    # Notification settings
+    show_notifications = st.checkbox('🔔 Show Notifications', value=True)
+    
+    # Performance mode
+    performance_mode = st.selectbox(
+        '⚡ Performance Mode',
+        options=['Standard', 'Fast', 'Detailed'],
+        index=0,
+        help='Fast: Fewer animations, Detailed: More calculations'
+    )
+    
+    st.markdown('---')
+    
+    # Quick Actions
+    st.markdown('### 🚀 Quick Actions')
+    
+    if st.button('💰 Add Quick Transaction', use_container_width=True):
+        # Add a quick random transaction
+        try:
+            quick_transactions = [
+                ("Coffee break ☕", 5.50, SpendingCategory.JOY),
+                ("Lunch deal 🍕", 12.99, SpendingCategory.ESSENTIAL),
+                ("Impulse buy 😅", 25.00, SpendingCategory.OOPS),
+                ("Gas/Transport 🚗", 35.00, SpendingCategory.ESSENTIAL),
+                ("Movie night 🎬", 18.50, SpendingCategory.JOY)
+            ]
+            desc, amount, category = random.choice(quick_transactions)
+            new_transaction = Transaction(
+                datetime.now(), 
+                amount, 
+                desc, 
+                category, 
+                "quick-add", 
+                random.uniform(-0.2, 0.3)
+            )
+            st.session_state.transactions.append(new_transaction)
+            st.success(f'Added: {desc} - {format_currency(amount)}')
+            st.rerun()
+        except Exception as e:
+            st.error(f"Error adding transaction: {str(e)}")
+    
+    if st.button('📈 Generate Report', use_container_width=True):
+        st.info('📊 Report generated! Check the dashboard below.')
+    
+    if st.button('🎯 Set Financial Goal', use_container_width=True):
+        st.info('🎯 Goal setting panel activated!')
+     st.markdown('---')
+    
+    # Debug Panel
+    st.markdown('### 🛠️ Developer Tools')
+    st.session_state.debug_mode = st.checkbox('🐛 Debug Mode', value=st.session_state.debug_mode)
+    
+    if st.session_state.debug_mode:
+        st.markdown('#### 📊 Debug Info')
+        st.info(f"Errors: {st.session_state.error_count}")
+        if st.session_state.last_error:
+            st.error(f"Last Error: {st.session_state.last_error}")
+        
+        if st.button('🔄 Reset App Data'):
+            for key in list(st.session_state.keys()):
+                if key not in ['debug_mode', 'error_count']:
+                    del st.session_state[key]
+            st.success('App data reset!')
+            st.rerun()
+    
+    st.markdown('---')
 # Helper to convert and format currency with error handling
 
 def format_currency(amount, decimals=2):
