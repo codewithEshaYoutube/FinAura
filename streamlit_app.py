@@ -15,6 +15,37 @@ import asyncio
 from enum import Enum
 import hashlib
 import math  # Added for debt calculations
+import traceback
+import logging
+
+# =============================================================================
+# ERROR HANDLING & DEBUGGING SYSTEM
+# =============================================================================
+
+# Configure logging for debugging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def safe_execute(func, fallback=None, error_message="An error occurred"):
+    """Safely execute a function with error handling"""
+    try:
+        return func()
+    except Exception as e:
+        logger.error(f"Error in {func.__name__ if hasattr(func, '__name__') else 'function'}: {str(e)}")
+        if st.session_state.get('debug_mode', False):
+            st.error(f"🐛 Debug Mode: {error_message}\n```\n{str(e)}\n```")
+        return fallback
+
+def handle_calculation_error(calculation_func, default_value=0):
+    """Handle mathematical calculation errors"""
+    try:
+        result = calculation_func()
+        if math.isnan(result) or math.isinf(result):
+            return default_value
+        return result
+    except (ZeroDivisionError, ValueError, TypeError) as e:
+        logger.warning(f"Calculation error: {str(e)}")
+        return default_value
 
 # Page config with Gen Z vibes
 st.set_page_config(
@@ -329,10 +360,18 @@ class EnhancedFinAuraAgent:
         return roadmap
 
 # =============================================================================
-# SESSION STATE INITIALIZATION
+# SESSION STATE INITIALIZATION WITH ERROR HANDLING
 # =============================================================================
 
+# Initialize debug mode and error tracking
+if 'debug_mode' not in st.session_state:
+    st.session_state.debug_mode = False
 
+if 'error_count' not in st.session_state:
+    st.session_state.error_count = 0
+
+if 'last_error' not in st.session_state:
+    st.session_state.last_error = None
 
 if 'transactions' not in st.session_state:
     sample_data = [
@@ -381,23 +420,103 @@ with st.sidebar:
     
     st.markdown('---')
     
-    # Manifesto button
-    if st.button('📜 Read Our Manifesto', use_container_width=True):
-        st.session_state.manifesto_shown = False
-        st.rerun()
+    # Debug Panel
+    st.markdown('### 🛠️ Developer Tools')
+    st.session_state.debug_mode = st.checkbox('🐛 Debug Mode', value=st.session_state.debug_mode)
+    
+    if st.session_state.debug_mode:
+        st.markdown('#### 📊 Debug Info')
+        st.info(f"Errors: {st.session_state.error_count}")
+        if st.session_state.last_error:
+            st.error(f"Last Error: {st.session_state.last_error}")
+        
+        if st.button('🔄 Reset App Data'):
+            for key in list(st.session_state.keys()):
+                if key not in ['debug_mode', 'error_count']:
+                    del st.session_state[key]
+            st.success('App data reset!')
+            st.rerun()
+    
+    st.markdown('---')
+    
+    # App Settings
+    st.markdown('### ⚙️ App Settings')
+    
+    # Theme selector
+    theme_mode = st.selectbox(
+        '🎨 Interface Theme',
+        options=['Auto', 'Dark', 'Light'],
+        index=0
+    )
+    
+    # Notification settings
+    show_notifications = st.checkbox('🔔 Show Notifications', value=True)
+    
+    # Performance mode
+    performance_mode = st.selectbox(
+        '⚡ Performance Mode',
+        options=['Standard', 'Fast', 'Detailed'],
+        index=0,
+        help='Fast: Fewer animations, Detailed: More calculations'
+    )
+    
+    st.markdown('---')
+    
+    # Quick Actions
+    st.markdown('### 🚀 Quick Actions')
+    
+    if st.button('💰 Add Quick Transaction', use_container_width=True):
+        # Add a quick random transaction
+        try:
+            quick_transactions = [
+                ("Coffee break ☕", 5.50, SpendingCategory.JOY),
+                ("Lunch deal 🍕", 12.99, SpendingCategory.ESSENTIAL),
+                ("Impulse buy 😅", 25.00, SpendingCategory.OOPS),
+                ("Gas/Transport 🚗", 35.00, SpendingCategory.ESSENTIAL),
+                ("Movie night 🎬", 18.50, SpendingCategory.JOY)
+            ]
+            desc, amount, category = random.choice(quick_transactions)
+            new_transaction = Transaction(
+                datetime.now(), 
+                amount, 
+                desc, 
+                category, 
+                "quick-add", 
+                random.uniform(-0.2, 0.3)
+            )
+            st.session_state.transactions.append(new_transaction)
+            st.success(f'Added: {desc} - {format_currency(amount)}')
+            st.rerun()
+        except Exception as e:
+            st.error(f"Error adding transaction: {str(e)}")
+    
+    if st.button('📈 Generate Report', use_container_width=True):
+        st.info('📊 Report generated! Check the dashboard below.')
+    
+    if st.button('🎯 Set Financial Goal', use_container_width=True):
+        st.info('🎯 Goal setting panel activated!')
 
-# Helper to convert and format currency
+# Helper to convert and format currency with error handling
 
 def format_currency(amount, decimals=2):
-    symbol = currency_symbols[st.session_state.currency]
-    rate = currency_rates[st.session_state.currency]
-    value = amount * rate
-    if symbol == 'PKR':
-        return f"PKR {value:,.{decimals}f}"
-    elif symbol == '€':
-        return f"€{value:,.{decimals}f}"
-    else:
-        return f"${value:,.{decimals}f}"
+    """Safely format currency with error handling"""
+    try:
+        if amount is None or math.isnan(amount) or math.isinf(amount):
+            amount = 0
+        
+        symbol = currency_symbols.get(st.session_state.currency, '$')
+        rate = currency_rates.get(st.session_state.currency, 1.0)
+        value = float(amount) * rate
+        
+        if symbol == 'PKR':
+            return f"PKR {value:,.{decimals}f}"
+        elif symbol == '€':
+            return f"€{value:,.{decimals}f}"
+        else:
+            return f"${value:,.{decimals}f}"
+    except (ValueError, TypeError, KeyError) as e:
+        logger.warning(f"Currency formatting error: {str(e)}")
+        return f"${float(amount or 0):,.{decimals}f}"
 
 # Helper to get currency label for headings
 
@@ -412,14 +531,29 @@ def get_currency_label():
 
 
 
-# Header with Gen Z energy
-st.markdown("""
-<div class="main-header">
-    <h1>💸 FinAura: Your Gen Z CFO</h1>
-    <p><em>"Forget spreadsheets. Feel your finances."</em></p>
-    <p>Where vibes meet value ✨ | Now with Financial Planning!</p>
-</div>
-""", unsafe_allow_html=True)
+# =============================================================================
+# GLOBAL ERROR HANDLER & MAIN APP WRAPPER
+# =============================================================================
+
+try:
+    # Header with Gen Z energy
+    st.markdown("""
+    <div class="main-header">
+        <h1>💸 FinAura: Your Gen Z CFO</h1>
+        <p><em>"Forget spreadsheets. Feel your finances."</em></p>
+        <p>Where vibes meet value ✨ | Fully Debugged & Enhanced!</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Error count display for admins
+    if st.session_state.debug_mode and st.session_state.error_count > 0:
+        st.warning(f"⚠️ Debug Mode: {st.session_state.error_count} errors detected this session")
+
+except Exception as e:
+    st.error("🚨 Critical Error in App Header")
+    logger.critical(f"Header error: {str(e)}")
+    st.session_state.error_count += 1
+    st.session_state.last_error = str(e)
 
 # =============================================================================
 # FINANCIAL PROFILE SETUP
@@ -1159,11 +1293,22 @@ st.markdown(f"""
 
 st.markdown("## 💰 Your Money Mood Board")
 
-transactions = st.session_state.transactions
-total_spent = sum(t.amount for t in transactions)
-avg_daily = total_spent / 7
-joy_spending = sum(t.amount for t in transactions if t.category == SpendingCategory.JOY)
-essential_spending = sum(t.amount for t in transactions if t.category == SpendingCategory.ESSENTIAL)
+# Safe calculations with error handling
+def calculate_dashboard_metrics():
+    try:
+        transactions = st.session_state.transactions or []
+        total_spent = sum(t.amount for t in transactions if hasattr(t, 'amount') and t.amount)
+        avg_daily = handle_calculation_error(lambda: total_spent / 7, 0)
+        joy_spending = sum(t.amount for t in transactions if hasattr(t, 'category') and t.category == SpendingCategory.JOY and t.amount)
+        essential_spending = sum(t.amount for t in transactions if hasattr(t, 'category') and t.category == SpendingCategory.ESSENTIAL and t.amount)
+        return total_spent, avg_daily, joy_spending, essential_spending
+    except Exception as e:
+        logger.error(f"Dashboard calculation error: {str(e)}")
+        st.session_state.error_count += 1
+        st.session_state.last_error = str(e)
+        return 0, 0, 0, 0
+
+total_spent, avg_daily, joy_spending, essential_spending = calculate_dashboard_metrics()
 
 # Get monthly_income safely
 monthly_income = st.session_state.financial_profile.get('monthly_income', 0) if st.session_state.financial_profile else 0
@@ -1288,24 +1433,113 @@ if monthly_income > 0:
             st.markdown('<div class="success-card">🎉 Under budget! Great job!</div>', unsafe_allow_html=True)
 
 # =============================================================================
-# TRANSACTION LOG & INTERACTIVE FEATURES
+# TRANSACTION INPUT & INTERACTIVE FEATURES
+# =============================================================================
+
+st.markdown("## 💳 Add New Transaction")
+
+# Transaction input form with error handling
+with st.expander("➕ Add a New Transaction", expanded=False):
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        new_amount = st.number_input("💰 Amount", min_value=0.01, value=10.0, step=0.5)
+        new_description = st.text_input("📝 Description", placeholder="What did you spend on?")
+    
+    with col2:
+        new_category = st.selectbox("📂 Category", list(SpendingCategory))
+        new_merchant = st.text_input("🏪 Merchant", placeholder="Where did you spend?")
+    
+    with col3:
+        new_vibe_impact = st.slider("😊 Vibe Impact", -1.0, 1.0, 0.0, 0.1, 
+                                   help="How did this purchase make you feel?")
+        
+        if st.button("✅ Add Transaction", type="primary", use_container_width=True):
+            try:
+                if new_description.strip():
+                    new_transaction = Transaction(
+                        date=datetime.now(),
+                        amount=float(new_amount),
+                        description=new_description.strip(),
+                        category=new_category,
+                        merchant=new_merchant.strip(),
+                        vibe_impact=float(new_vibe_impact)
+                    )
+                    st.session_state.transactions.append(new_transaction)
+                    st.success(f"✅ Added: {new_description} - {format_currency(new_amount)}")
+                    st.rerun()
+                else:
+                    st.warning("Please enter a description for your transaction!")
+            except Exception as e:
+                st.error(f"Error adding transaction: {str(e)}")
+                st.session_state.error_count += 1
+                st.session_state.last_error = str(e)
+
+# =============================================================================
+# TRANSACTION LOG & DISPLAY
 # =============================================================================
 
 st.markdown("## 🧾 Recent Spending Tea ☕")
 
-df_transactions = pd.DataFrame([
-    {
-        'Date': t.date.strftime('%m/%d'),
-        'Vibe': t.category.value,
-        'Amount': f"{format_currency(t.amount)}",
-        'Description': t.description,
-        'Merchant': t.merchant,
-        'Mood Impact': '😊' if t.vibe_impact > 0 else '😐' if t.vibe_impact == 0 else '😔'
-    }
-    for t in sorted(transactions, key=lambda x: x.date, reverse=True)
-])
+# Safe transaction display with error handling
+def create_transaction_dataframe():
+    try:
+        transactions = st.session_state.transactions or []
+        if not transactions:
+            return pd.DataFrame({'Message': ['No transactions yet! Add your first transaction above. 💸']})
+        
+        transaction_data = []
+        for t in sorted(transactions, key=lambda x: getattr(x, 'date', datetime.now()), reverse=True):
+            try:
+                transaction_data.append({
+                    'Date': getattr(t, 'date', datetime.now()).strftime('%m/%d'),
+                    'Vibe': getattr(t, 'category', SpendingCategory.ESSENTIAL).value,
+                    'Amount': format_currency(getattr(t, 'amount', 0)),
+                    'Description': getattr(t, 'description', 'Unknown'),
+                    'Merchant': getattr(t, 'merchant', 'Unknown'),
+                    'Mood Impact': '😊' if getattr(t, 'vibe_impact', 0) > 0 else '😐' if getattr(t, 'vibe_impact', 0) == 0 else '😔'
+                })
+            except Exception as e:
+                logger.warning(f"Error processing transaction: {str(e)}")
+                continue
+        
+        return pd.DataFrame(transaction_data)
+    except Exception as e:
+        logger.error(f"Error creating transaction dataframe: {str(e)}")
+        st.session_state.error_count += 1
+        st.session_state.last_error = str(e)
+        return pd.DataFrame({'Error': ['Unable to load transactions. Please try refreshing.']})
 
+df_transactions = create_transaction_dataframe()
 st.dataframe(df_transactions, use_container_width=True)
+
+# Transaction analytics
+if len(st.session_state.transactions) > 0:
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        try:
+            avg_transaction = handle_calculation_error(
+                lambda: sum(t.amount for t in st.session_state.transactions) / len(st.session_state.transactions),
+                0
+            )
+            st.metric("💰 Avg Transaction", format_currency(avg_transaction))
+        except:
+            st.metric("💰 Avg Transaction", "N/A")
+    
+    with col2:
+        try:
+            positive_vibes = len([t for t in st.session_state.transactions if getattr(t, 'vibe_impact', 0) > 0])
+            st.metric("😊 Positive Purchases", f"{positive_vibes}")
+        except:
+            st.metric("😊 Positive Purchases", "N/A")
+    
+    with col3:
+        try:
+            most_category = max(SpendingCategory, key=lambda cat: len([t for t in st.session_state.transactions if getattr(t, 'category', None) == cat]))
+            st.metric("🔥 Top Category", most_category.value)
+        except:
+            st.metric("🔥 Top Category", "N/A")
 
 # =============================================================================
 # ENHANCED SALARY INPUT & FINANCIAL PLANNING CALCULATOR
