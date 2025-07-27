@@ -1,4 +1,4 @@
-# 💸 FinAura – Your Gen Z CFO 🤘
+ # 💸 FinAura – Your Gen Z CFO 🤘
 
 > **Forget spreadsheets. Feel your finances.**  
 > A vibe-first AI finance companion replacing the need for traditional financial advisors or boring budgeting apps.  
