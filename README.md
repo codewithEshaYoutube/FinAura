@@ -1,4 +1,4 @@
- # 💸 FinAura – Your Gen Z CFO 🤘
+# 💸 FinAura – Your Gen Z CFO 🤘
 
 > **Forget spreadsheets. Feel your finances.**  
 > A vibe-first AI finance companion replacing the need for traditional financial advisors or boring budgeting apps.  
@@ -10,15 +10,22 @@
 
 ---
 
+## 🏆 Awards & Recognition
+
+- 🧠 **Winner of the Chaotic Genius Prize** – at an international hackathon hosted by **[CS Girlies](https://www.csgirlies.com/)** 🇺🇸 (United States)  
+- 💻 Submitted on **[Devpost – FinAura Project](https://devpost.com/software/finaura/)**  
+
+---
+
 ## 😫 The Problem: Gen Z & Financial Anxiety
 
 Today’s Gen Z is:
 
-- 🧾 Overwhelmed by spreadsheets & financial jargon
-- 💳 Living paycheck to paycheck with rising debt
-- 😬 Suffering from spending guilt and anxiety
-- 😶‍🌫️ Lacking access to real financial advice (who can afford a CA?)
-- 🧠 Emotionally disconnected from their money
+- 🧾 Overwhelmed by spreadsheets & financial jargon  
+- 💳 Living paycheck to paycheck with rising debt  
+- 😬 Suffering from spending guilt and anxiety  
+- 😶‍🌫️ Lacking access to real financial advice (who can afford a CA?)  
+- 🧠 Emotionally disconnected from their money  
 
 ---
 
@@ -26,11 +33,11 @@ Today’s Gen Z is:
 
 **FinAura** is a smart, emotional, and vibey AI-powered CFO that:
 
-- 💬 Talks to you based on your **money mood**
-- 📊 Builds personalized **budgets & saving plans**
-- 📈 Suggests **investments & emergency funds**
-- 💰 Tracks spending guilt, joy, and monthly habits
-- 🎯 Helps you grow **financially + mentally strong**
+- 💬 Talks to you based on your **money mood**  
+- 📊 Builds personalized **budgets & saving plans**  
+- 📈 Suggests **investments & emergency funds**  
+- 💰 Tracks spending guilt, joy, and monthly habits  
+- 🎯 Helps you grow **financially + mentally strong**  
 
 ---
 
@@ -81,11 +88,11 @@ Today’s Gen Z is:
 
 ## 🧠 Who Is This For?
 
-- 🧑‍🎓 Students who want to save smarter
-- 💼 Freelancers or side hustlers
-- 🧘‍♀️ Anyone with money anxiety
-- 💬 People who think "Finance apps are boring"
-- 🎯 Anyone who loves structure + vibes
+- 🧑‍🎓 Students who want to save smarter  
+- 💼 Freelancers or side hustlers  
+- 🧘‍♀️ Anyone with money anxiety  
+- 💬 People who think "Finance apps are boring"  
+- 🎯 Anyone who loves structure + vibes  
 
 ---
 
@@ -112,9 +119,8 @@ Coming soon:
 
 **Eesha Tariq**  
 
-
-- 🔗 [GitHub](https://github.com/eeshatariqofficial)  
-- 🔗 [LinkedIn](https://linkedin.com/in/eeshatariq)
+- 🔗 [GitHub](https://github.com/codewithEshaYoutube/)  
+- 🔗 [LinkedIn](https://www.linkedin.com/in/esha-tariqdev/)
 
 ---
 
