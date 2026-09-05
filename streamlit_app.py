@@ -1,4 +1,4 @@
-# 💸 FinAura: Your Gen Z CFO – Where Vibes Meet Value
+# 💸 FinAura: Your Gen Z CFO – Where Vibes Meet Value 
 # Enhanced Streamlit App with Financial Planning & Budget Structure
 
 import streamlit as st
@@ -55,201 +55,124 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# =============================================================================
-# CUSTOM CSS (THE IMPROVED UI)
-# Using #7c15e8 (Purple) as the Primary Brand Color
-# =============================================================================
-
+# Custom CSS for Gen Z aesthetic
 st.markdown("""
 <style>
-    /* --- GLOBAL VARIABLES & FONTS --- */
-    :root {
-        --brand-purple: #7c15e8;
-        --brand-purple-light: #bfa3ff;
-        --brand-purple-dark: #5a0eb5;
-        --brand-accent: #00f2fe;
-        --glass-bg: rgba(255, 255, 255, 0.9);
-        --glass-border: rgba(124, 21, 232, 0.1);
-        --card-shadow: 0 10px 30px -10px rgba(124, 21, 232, 0.15);
-    }
-
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background-color: #f8f9fc;
-        color: #1a202c;
-    }
-
-    /* --- SIDEBAR --- */
-    .css-1d391kg {
-        background: linear-gradient(180deg, #240b36 0%, #2d1b4e 100%);
-    }
-    
-    .css-1d391kg .css-17ziqus {
-        color: white;
-    }
-
-    /* --- HEADER --- */
     .main-header {
-        background: linear-gradient(135deg, var(--brand-purple) 0%, #5a0eb5 100%);
-        padding: 3rem 2rem;
-        border-radius: 25px;
-        margin-bottom: 2.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
         text-align: center;
         color: white;
-        box-shadow: 0 15px 40px rgba(124, 21, 232, 0.3);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .main-header::after {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-        animation: rotate 20s linear infinite;
-        pointer-events: none;
-    }
-
-    @keyframes rotate {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
     }
     
-    .header-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    /* --- CARDS (Glassmorphism) --- */
-    .glass-card {
-        background: var(--glass-bg);
-        backdrop-filter: blur(10px);
-        border: 1px solid var(--glass-border);
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: var(--card-shadow);
-        margin-bottom: 1.5rem;
-        transition: transform 0.3s ease;
-        height: 100%;
-    }
-    
-    .glass-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--brand-purple-light);
-    }
-
-    /* Specific Card Styles */
     .vibe-card {
-        background: linear-gradient(135deg, var(--brand-purple) 0%, #9d4edd 100%);
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 1rem 0;
         color: white;
-        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     
     .money-card {
-        background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        text-align: center;
         color: white;
-        border: none;
+        margin: 0.5rem;
     }
     
     .budget-card {
-        background: white;
-        border: 1px solid var(--glass-border);
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 0.5rem;
         color: #2d3748;
-        border-left: 5px solid var(--brand-purple);
+        text-align: center;
     }
     
     .investment-card {
-        background: white;
-        border: 1px solid var(--glass-border);
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        padding: 1.5rem;
         border-radius: 15px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .warning-card {
-        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-        color: #4a4a4a;
-        border: none;
-        padding: 1rem;
-        border-radius: 15px;
-    }
-
-    .success-card {
-        background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        margin: 0.5rem;
         color: #2d3748;
-        border: none;
+    }
+    
+    .warning-card {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
         padding: 1rem;
-        border-radius: 15px;
+        border-radius: 10px;
+        margin: 1rem 0;
+        color: white;
+    }
+    
+    .success-card {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        color: #2d3748;
     }
     
     .financial-goal-card {
-        background: var(--brand-purple);
-        color: white;
-        border-radius: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         padding: 1.5rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 10px 20px rgba(124, 21, 232, 0.2);
+        border-radius: 15px;
+        margin: 1rem 0;
+        color: white;
     }
-
-    /* --- BUTTONS --- */
+    
     .stButton > button {
-        background: linear-gradient(90deg, var(--brand-purple) 0%, var(--brand-purple-dark) 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: none;
-        border-radius: 50px;
-        padding: 0.75rem 2.5rem;
-        font-weight: 700;
-        font-size: 1rem;
-        box-shadow: 0 5px 15px rgba(124, 21, 232, 0.4);
-        transition: all 0.3s ease;
+        border-radius: 25px;
+        padding: 0.75rem 2rem;
+        font-weight: bold;
+        transition: all 0.3s;
     }
     
     .stButton > button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 25px rgba(124, 21, 232, 0.6);
-        letter-spacing: 1px;
-    }
-
-    /* --- METRICS --- */
-    div[data-testid="stMetricValue"] {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: #1a202c;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
     
-    div[data-testid="stMetricLabel"] {
-        font-weight: 600;
-        color: #718096;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-size: 0.9rem;
+    .sidebar .sidebar-content {
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
     }
-
-    /* --- PROGRESS BAR --- */
+    
+    .metric-container {
+        display: flex;
+        justify-content: space-around;
+        margin: 2rem 0;
+    }
+    
+    .chat-bubble {
+        background: #f7fafc;
+        border-left: 4px solid #667eea;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 0 15px 15px 0;
+        font-style: italic;
+    }
+    
     .progress-bar {
-        background: rgba(124, 21, 232, 0.1);
+        background: #e2e8f0;
         border-radius: 10px;
-        height: 12px;
-        margin: 15px 0;
+        height: 20px;
+        margin: 10px 0;
         overflow: hidden;
     }
     
     .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, var(--brand-purple), var(--brand-accent));
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 10px;
-        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* --- CHAT INTERFACE --- */
-    .chat-container {
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        border: 2px solid var(--brand-purple-light);
+        transition: width 0.5s ease;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -259,12 +182,12 @@ st.markdown("""
 # =============================================================================
 
 class VibeType(Enum):
-    STRESSED = "😩 Stressed"
-    CONFIDENT = "😎 Confident"
-    CONFUSED = "🤔 Confused"
-    EXCITED = "🚀 Excited"
-    CHILL = "😌 Chill"
-    GUILTY = "😬 Guilty"
+    STRESSED = "😩"
+    CONFIDENT = "😎"
+    CONFUSED = "🤔"
+    EXCITED = "🚀"
+    CHILL = "😌"
+    GUILTY = "😬"
 
 class SpendingCategory(Enum):
     ESSENTIAL = "🏠 Essential"
@@ -299,7 +222,7 @@ class VibeData:
 @dataclass
 class BudgetPlan:
     monthly_income: float
-    needs_percentage: float = 50.0
+    needs_percentage: float = 50.0  # 50/30/20 rule adjusted for Gen Z
     wants_percentage: float = 30.0
     savings_percentage: float = 20.0
     
@@ -339,16 +262,6 @@ class EnhancedFinAuraAgent:
                 "Stop! 🛑 Guilt spending happens to literally everyone",
                 "That purchase doesn't define you, babe. Let's just adjust and move on",
                 "Self-compassion > self-judgment. Your worth isn't your spending"
-            ],
-            VibeType.EXCITED: [
-                "Let's GOO! 🚀 Channel this energy into your savings goals!",
-                "I love this hype! Keep this momentum going.",
-                "Turn that excitement into compound interest! 💸"
-            ],
-            VibeType.CHILL: [
-                "A balanced vibe is the best vibe. 😌 Keep maintaining the course.",
-                "Calm money minds make the best decisions.",
-                "Enjoy the stability. You're building a solid foundation."
             ]
         }
         
@@ -388,7 +301,7 @@ class EnhancedFinAuraAgent:
         """Generate Gen Z-specific budget suggestions"""
         if income < 2000:
             return {
-                "needs": 60, 
+                "needs": 60,  # Higher for survival mode
                 "wants": 25,
                 "savings": 15,
                 "advice": "Survival mode activated! Focus on essentials and small savings wins 💪"
@@ -419,25 +332,27 @@ class EnhancedFinAuraAgent:
         """Create age-appropriate investment suggestions"""
         roadmap = []
         
+        # Emergency fund first (always!)
         roadmap.append({
             "priority": 1,
             "goal": "Emergency Fund",
-            "target": min(income * 6, 10000),
+            "target": min(income * 6, 10000),  # 6 months expenses
             "description": "Your financial safety net - aim for 3-6 months expenses 🚨"
         })
         
+        # Age-based suggestions
         if age < 30:
             roadmap.extend([
                 {
                     "priority": 2,
                     "goal": "Retirement Start",
-                    "target": income * 0.15, 
+                    "target": income * 0.15,  # 15% of income
                     "description": "Start early = retire like royalty 👑"
                 },
                 {
                     "priority": 3,
                     "goal": "Skill Investment",
-                    "target": income * 0.05, 
+                    "target": income * 0.05,  # 5% for education
                     "description": "Invest in yourself - best ROI ever 📚"
                 }
             ])
@@ -448,6 +363,7 @@ class EnhancedFinAuraAgent:
 # SESSION STATE INITIALIZATION WITH ERROR HANDLING
 # =============================================================================
 
+# Initialize debug mode and error tracking
 if 'debug_mode' not in st.session_state:
     st.session_state.debug_mode = False
 
@@ -486,22 +402,28 @@ if 'financial_profile' not in st.session_state:
 # GLOBAL CURRENCY SELECTION
 # =============================================================================
 
+# Add currency selection at the top of the sidebar
 if 'currency' not in st.session_state:
     st.session_state.currency = 'USD'
 
 currency_symbols = {'USD': '$', 'PKR': 'Rs', 'EUR': '€'}
-currency_rates = {'USD': 1.0, 'PKR': 280.0, 'EUR': 0.92} 
+currency_rates = {'USD': 1.0, 'PKR': 280.0, 'EUR': 0.92}  # Example rates, update as needed
 
 with st.sidebar:
-    st.markdown('### 🌍 Global Settings')
+    st.markdown('### 🌍 Select Currency')
     st.session_state.currency = st.selectbox(
         'Currency',
         options=['USD', 'PKR', 'EUR'],
         format_func=lambda x: f"{currency_symbols[x]} {x}",
-        index=['USD', 'Rs', 'EUR'].index(st.session_state.currency) if st.session_state.currency in ['USD', 'Rs', 'EUR'] else 0
+        index=['USD', 'Rs', 'EUR'].index(st.session_state.currency)
     )
     
-    st.markdown('---')
+    # Add this code in the sidebar section, after the currency selection and before the Agentic AI Toggle
+    # Add this code in the sidebar section
+    
+
+
+
     
     # Agentic AI Toggle
     st.markdown('### 🤖 Agentic AI Assistant')
@@ -521,41 +443,37 @@ with st.sidebar:
         agent_intensity = st.slider('🔥 Agent Intensity', 1, 5, 3, help='How often should the agent intervene?')
         st.session_state.agent_intensity = agent_intensity
 
-    # Navigation for Agent Mode
-    if enable_agent:
-        st.markdown("---")
-        st.markdown("### 🧭 Navigation")
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            if st.button('🏠 Home', use_container_width=True):
-                st.session_state.current_page = 'home'
-                st.rerun()
-        with col2:
-            if st.button('🌈 Vibe', use_container_width=True):
-                st.session_state.current_page = 'vibe'
-                st.rerun()
-        with col3:
-             if st.button('🔥 Plan', use_container_width=True):
-                st.session_state.current_page = 'planning'
-                st.rerun()
-
 # =============================================================================
 # AGENTIC AI CHATBOT INTEGRATION
 # =============================================================================
 
 if st.session_state.get('agent_enabled', False):
     st.markdown("## 🤖 Your Personal AI Financial Coach")
+    
+    # Display current agent mode
     current_mode = st.session_state.get('agent_mode', '💰 Autonomous Slay Planner')
     st.info(f"🧠 **Active Agent Mode:** {current_mode}")
     
-    st.markdown(f"""
-    <div class="chat-container">
-        <iframe
-            src="https://www.chatbase.co/chatbot-iframe/97sccVBW3_J60VexD-2eY"
-            width="100%"
-            height="600"
-            style="border:none; background:white;"
-        ></iframe>
+    # Chatbot iframe integration
+    st.markdown("""
+    <div style="
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1rem;
+        border-radius: 15px;
+        margin: 1rem 0;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    ">
+        <h3 style="color: white; text-align: center; margin-bottom: 1rem;">
+            💬 Chat with Your AI Financial Coach
+        </h3>
+        <div style="border-radius: 10px; overflow: hidden; background: white;">
+            <iframe
+                src="https://www.chatbase.co/chatbot-iframe/97sccVBW3_J60VexD-2eY"
+                width="100%"
+                style="height: 100%; min-height: 700px; border: none;"
+                frameborder="0">
+            </iframe>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -569,6 +487,7 @@ if st.session_state.get('agent_enabled', False):
     if agent_mode == '💰 Autonomous Slay Planner':
         st.markdown("### 🎯 Autonomous Slay Planner")
         
+        # Goal Setting Interface
         with st.expander("🚀 Set Your Slay Goal", expanded=True):
             col1, col2 = st.columns(2)
             
@@ -581,10 +500,12 @@ if st.session_state.get('agent_enabled', False):
                 current_saved = st.number_input("💳 Already saved?", min_value=0.0, value=0.0, step=10.0)
             
             if st.button("🚀 Activate Slay Planner", type="primary"):
+                # Calculate weekly savings needed
                 remaining_amount = goal_amount - current_saved
-                weeks_available = goal_months * 4.33 
+                weeks_available = goal_months * 4.33  # Average weeks per month
                 weekly_savings_needed = remaining_amount / weeks_available
                 
+                # Store goal in session state
                 st.session_state.slay_goal = {
                     'item': goal_item,
                     'total_amount': goal_amount,
@@ -596,9 +517,12 @@ if st.session_state.get('agent_enabled', False):
                 
                 st.success(f"🎯 Goal Set! Save {format_currency(weekly_savings_needed)} per week to get your {goal_item}!")
         
+        # Active Goal Tracking
         if 'slay_goal' in st.session_state:
             goal = st.session_state.slay_goal
             progress = (goal['current_saved'] / goal['total_amount']) * 100
+            
+            st.markdown("#### 🔥 Your Active Slay Goal")
             
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -613,33 +537,52 @@ if st.session_state.get('agent_enabled', False):
                 st.metric("💪 Weekly Target", format_currency(goal['weekly_needed']))
                 st.metric("📈 Progress", f"{progress:.1f}%")
             
+            # Progress bar
             st.progress(progress / 100)
             
+            # AI Agent Intervention
             if goal['weekly_needed'] > 0:
+                st.markdown("#### 🤖 AI Agent Recommendations")
+                
+                # Calculate spending adjustments
                 monthly_income = st.session_state.financial_profile.get('monthly_income', 0) if st.session_state.financial_profile else 3000
                 weekly_income = monthly_income / 4.33
                 savings_rate = (goal['weekly_needed'] / weekly_income) * 100
                 
                 if savings_rate > 30:
-                    st.warning(f"🚨 **Agent Alert:** This goal requires {savings_rate:.1f}% of your weekly income.")
+                    st.warning(f"🚨 **Agent Alert:** This goal requires {savings_rate:.1f}% of your weekly income. Consider extending the timeline or finding additional income sources.")
                 elif savings_rate > 15:
-                    st.info(f"💪 **Agent Suggestion:** This goal requires {savings_rate:.1f}% of weekly income.")
+                    st.info(f"💪 **Agent Suggestion:** This goal requires {savings_rate:.1f}% of weekly income. I'll help you optimize your 'wants' spending!")
                 else:
-                    st.success(f"✅ **Agent Approved:** This goal is achievable!")
+                    st.success(f"✅ **Agent Approved:** This goal is achievable with {savings_rate:.1f}% of your income!")
+                
+                # Spending category recommendations
+                st.markdown("**🎯 AI Spending Adjustments:**")
+                st.markdown(f"• Reduce 'Joy' spending by {format_currency(goal['weekly_needed'] * 0.6)} per week")
+                st.markdown(f"• Find {format_currency(goal['weekly_needed'] * 0.4)} in optimized 'Essential' spending")
+                st.markdown("• I'll remind you when you're about to overspend! 🤖")
     
     elif agent_mode == '🧾 Emotional Spending Coach':
         st.markdown("### 🧾 Emotional Spending Tracker + Agentic Coaching")
         
+        # Emotional spending analysis
         if st.session_state.transactions:
             st.markdown("#### 🔍 Recent Emotional Spending Analysis")
             
-            emotional_categories = {'Joy': [], 'Regret': [], 'Impulse': [], 'Survival': []}
+            # Classify transactions by emotional state
+            emotional_categories = {
+                'Joy': [],
+                'Regret': [],
+                'Impulse': [],
+                'Survival': []
+            }
             
-            for transaction in st.session_state.transactions[-10:]:
+            for transaction in st.session_state.transactions[-10:]:  # Last 10 transactions
                 vibe_impact = getattr(transaction, 'vibe_impact', 0)
                 amount = getattr(transaction, 'amount', 0)
                 description = getattr(transaction, 'description', '')
                 
+                # Simple emotional classification based on vibe impact and keywords
                 if vibe_impact > 0.3:
                     emotional_categories['Joy'].append((description, amount))
                 elif vibe_impact < -0.3:
@@ -649,40 +592,105 @@ if st.session_state.get('agent_enabled', False):
                 else:
                     emotional_categories['Survival'].append((description, amount))
             
+            # Display emotional spending breakdown
             col1, col2, col3, col4 = st.columns(4)
             
             with col1:
                 joy_total = sum(amount for _, amount in emotional_categories['Joy'])
-                st.metric("😊 Joy", f"{len(emotional_categories['Joy'])}", delta=format_currency(joy_total))
+                st.metric("😊 Joy Purchases", f"{len(emotional_categories['Joy'])}")
+                st.caption(f"Total: {format_currency(joy_total)}")
+            
             with col2:
                 regret_total = sum(amount for _, amount in emotional_categories['Regret'])
-                st.metric("😔 Regret", f"{len(emotional_categories['Regret'])}", delta=format_currency(regret_total))
+                st.metric("😔 Regret Purchases", f"{len(emotional_categories['Regret'])}")
+                st.caption(f"Total: {format_currency(regret_total)}")
+            
             with col3:
                 impulse_total = sum(amount for _, amount in emotional_categories['Impulse'])
-                st.metric("⚡ Impulse", f"{len(emotional_categories['Impulse'])}", delta=format_currency(impulse_total))
+                st.metric("⚡ Impulse Buys", f"{len(emotional_categories['Impulse'])}")
+                st.caption(f"Total: {format_currency(impulse_total)}")
+            
             with col4:
                 survival_total = sum(amount for _, amount in emotional_categories['Survival'])
-                st.metric("🛡️ Survival", f"{len(emotional_categories['Survival'])}", delta=format_currency(survival_total))
+                st.metric("🛡️ Survival Needs", f"{len(emotional_categories['Survival'])}")
+                st.caption(f"Total: {format_currency(survival_total)}")
+            
+            # AI Coach Recommendations
+            st.markdown("#### 🤖 AI Emotional Coach Insights")
             
             total_emotional = regret_total + impulse_total
             if total_emotional > joy_total:
-                st.warning("🚨 **Coach Alert:** You're spending more on regret/impulse than joy!")
+                st.warning("🚨 **Coach Alert:** You're spending more on regret/impulse than joy! Let's fix this.")
+                
+                st.markdown("**🧸 Custom Action Plan:**")
                 st.markdown("• **Pause Rule:** Wait 24 hours before any purchase over $25")
                 st.markdown("• **Emotion Check:** Ask yourself 'Am I buying this because I'm sad/stressed?'")
+                st.markdown("• **Joy Alternative:** Next time you're sad, save $10 instead of shopping")
+                st.markdown("• **Celebration Savings:** Reward yourself with good vibes when you resist impulse buys!")
+                
+            elif joy_total > 0:
+                st.success("✨ **Coach Celebration:** You're spending mindfully and choosing joy! Keep it up!")
+                st.markdown("🎉 **Milestone Rewards:** You've made more joy purchases than regret purchases this week!")
+            
+            # Emotional spending tracker for new purchases
+            st.markdown("#### 💭 Why Did You Buy This?")
+            
+            with st.expander("🔍 Analyze Your Last Purchase", expanded=False):
+                if st.session_state.transactions:
+                    last_transaction = st.session_state.transactions[-1]
+                    st.write(f"**Last Purchase:** {last_transaction.description} - {format_currency(last_transaction.amount)}")
+                    
+                    emotional_reason = st.selectbox(
+                        "Why did you buy this?",
+                        ["I genuinely needed it", "It made me happy", "I was feeling sad/stressed", "It was on sale/impulse", "Social pressure", "Boredom"]
+                    )
+                    
+                    emotional_rating = st.slider("How do you feel about this purchase now?", 1, 10, 5)
+                    
+                    if st.button("💾 Save Emotional Analysis"):
+                        # Update transaction with emotional data
+                        last_transaction.emotional_reason = emotional_reason
+                        last_transaction.emotional_rating = emotional_rating
+                        st.success("🧠 Emotional data saved! I'll learn your patterns to help you better.")
         
         else:
             st.info("💝 Start making some purchases to unlock emotional spending insights!")
-
-    # Agent Notifications
+    
+    # Agent Notifications & Interventions
     if st.session_state.get('agent_intensity', 3) >= 3:
         st.markdown("### 🚨 Live Agent Interventions")
+        
+        # Check for spending deviations
         if st.session_state.transactions:
-            recent_spending = sum(t.amount for t in st.session_state.transactions[-5:])
+            recent_spending = sum(t.amount for t in st.session_state.transactions[-5:])  # Last 5 transactions
             
-            if recent_spending > 200:
+            if recent_spending > 200:  # Threshold for intervention
                 st.warning("🤖 **Agent Alert:** Heavy spending detected! Current session: " + format_currency(recent_spending))
+                st.markdown("**AI Suggestions:**")
                 st.markdown("• Take a 10-minute break before your next purchase")
                 st.markdown("• Consider if this aligns with your current goals")
+                st.markdown("• Remember: Every dollar saved is a step closer to your dreams! ✨")
+            
+            # Positive reinforcement
+            positive_transactions = [t for t in st.session_state.transactions[-10:] if getattr(t, 'vibe_impact', 0) > 0.2]
+            if len(positive_transactions) >= 3:
+                st.success("🎉 **Agent Celebration:** You're making smart, joy-filled purchases! Keep up the positive money vibes!")
+        
+        # Weekly check-ins (simulated)
+        if datetime.now().weekday() == 0:  # Monday
+            st.info("📅 **Weekly Agent Check-in:** How did your spending align with your goals last week?")
+            
+            weekly_reflection = st.selectbox(
+                "How do you feel about last week's spending?",
+                ["🔥 Crushed my goals!", "😌 Pretty good overall", "😅 Could've been better", "😔 Need to refocus"],
+                key="weekly_reflection"
+            )
+            
+            if weekly_reflection == "🔥 Crushed my goals!":
+                st.balloons()
+                st.success("🎉 Amazing work! Your AI agent is proud of you!")
+            elif weekly_reflection == "😔 Need to refocus":
+                st.markdown("💪 No worries! Let's adjust your plan and get back on track!")
 
 # =============================================================================
 # AGENT MILESTONE & REWARD SYSTEM
@@ -691,6 +699,8 @@ if st.session_state.get('agent_enabled', False):
 if st.session_state.get('agent_enabled', False) and 'slay_goal' in st.session_state:
     goal = st.session_state.slay_goal
     progress = (goal['current_saved'] / goal['total_amount']) * 100
+    
+    # Milestone celebrations
     milestones = [25, 50, 75, 90, 100]
     
     if 'celebrated_milestones' not in st.session_state:
@@ -700,24 +710,121 @@ if st.session_state.get('agent_enabled', False) and 'slay_goal' in st.session_st
         if progress >= milestone and milestone not in st.session_state.celebrated_milestones:
             st.session_state.celebrated_milestones.append(milestone)
             
-            if milestone == 50:
+            # Celebration based on milestone
+            if milestone == 25:
+                st.success("🎉 **25% Milestone!** You're officially on your way! Your AI agent believes in you!")
+            elif milestone == 50:
+                st.success("🚀 **Halfway There!** You're absolutely crushing this goal! Keep the momentum!")
                 st.balloons()
-                st.success("🚀 **Halfway There!** You're absolutely crushing this goal!")
+            elif milestone == 75:
+                st.success("💎 **75% Complete!** You're in the final stretch! Your dream is so close!")
+            elif milestone == 90:
+                st.success("🔥 **90% Almost There!** Just a little more and you'll have your " + goal['item'] + "!")
             elif milestone == 100:
-                st.success("🏆 **GOAL ACHIEVED!** You did it!")
+                st.success("🏆 **GOAL ACHIEVED!** You did it! Time to enjoy your " + goal['item'] + "! 🎊")
+                st.balloons()
+                # Reset goal after achievement
                 if st.button("🎯 Set New Goal"):
                     del st.session_state.slay_goal
                     st.rerun()
+            # Add this code in the sidebar section
 
-# =============================================================================
-# HELPER FUNCTIONS
-# =============================================================================
+# Add this code in the sidebar section AFTER the Agentic AI Toggle
+
+# Show navigation only when agentic AI is enabled
+if st.session_state.get('agent_enabled', False):
+    # Initialize current page if not exists
+    if 'current_page' not in st.session_state:
+        st.session_state.current_page = 'home'
+
+    # Custom CSS for horizontal buttons with active states
+    st.markdown("""
+    <style>
+    .nav-button-row {
+        display: flex;
+        gap: 5px;
+        margin: 10px 0;
+        flex-wrap: wrap;
+    }
+
+    .nav-btn {
+        flex: 1;
+        min-width: 60px;
+        padding: 8px 4px;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 8px;
+        background: transparent;
+        color: white;
+        text-align: center;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .nav-btn:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-1px);
+    }
+
+    .nav-btn.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        box-shadow: 0 2px 8px rgba(102,126,234,0.4);
+        font-weight: bold;
+    }
+
+    .nav-btn.external {
+        background: linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%);
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Create horizontal button row
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        if st.button('🏠 Home', key='home_btn', use_container_width=True):
+            st.session_state.current_page = 'home'
+            st.rerun()
+
+    with col2:
+        if st.button('🌈 Vibe', key='vibe_btn', use_container_width=True):
+            st.session_state.current_page = 'vibe'
+            st.markdown("""
+            <script>
+            document.querySelector('h1').scrollIntoView({behavior: 'smooth'});
+            </script>
+            """, unsafe_allow_html=True)
+
+    with col3:
+        if st.button('🔥 Planning', key='planning_btn', use_container_width=True):
+            st.session_state.current_page = 'planning'
+            st.markdown("""
+            <script>
+            const element = document.querySelector('h2:nth-of-type(1)');
+            if (element && element.textContent.includes('Financial Survival Guide')) {
+                element.scrollIntoView({behavior: 'smooth'});
+            }
+            </script>
+            """, unsafe_allow_html=True)
+
+    with col4:
+        if st.button('💎 Survival Guide', key='survival_btn', use_container_width=True):
+            st.markdown("""
+            <script>
+            window.open('https://finaura.streamlit.app/#your-personalized-financial-blueprint', '_blank');
+            </script>
+            """, unsafe_allow_html=True)
+
+    st.markdown('---')
+# Helper to convert and format currency with error handling
 
 def format_currency(amount, decimals=2):
     """Safely format currency with error handling"""
     try:
         if amount is None or math.isnan(amount) or math.isinf(amount):
             amount = 0
+        
         symbol = currency_symbols.get(st.session_state.currency, '$')
         rate = currency_rates.get(st.session_state.currency, 1.0)
         value = float(amount) * rate
@@ -732,6 +839,8 @@ def format_currency(amount, decimals=2):
         logger.warning(f"Currency formatting error: {str(e)}")
         return f"${float(amount or 0):,.{decimals}f}"
 
+# Helper to get currency label for headings
+
 def get_currency_label():
     symbol = currency_symbols[st.session_state.currency]
     code = st.session_state.currency
@@ -741,19 +850,26 @@ def get_currency_label():
 # MAIN APP INTERFACE
 # =============================================================================
 
+
+
+# =============================================================================
+# GLOBAL ERROR HANDLER & MAIN APP WRAPPER
+# =============================================================================
+
 try:
-    st.markdown(f"""
+    # Header with Gen Z energy
+    st.markdown("""
     <div class="main-header">
-        <div class="header-content">
-            <h1 style="font-size: 3.5rem; font-weight: 800; margin: 0; line-height: 1.2;">💸 FinAura</h1>
-            <h2 style="font-weight: 300; font-size: 1.5rem; margin-top: 0.5rem; opacity: 0.9;">Your Gen Z CFO</h2>
-            <p style="font-style: italic; margin-top: 1rem; opacity: 0.8;">Emotionally Smart. Financially Sharp.</p>
-        </div>
+        <h1>💸 FinAura: Your Gen Z CFO</h1>
+        <h5>Emotionally Smart. Financially Sharp.</h5>
+        <p><em>"Forget spreadsheets. Feel your finances."</em></p>
+        
     </div>
     """, unsafe_allow_html=True)
     
+    # Error count display for admins
     if st.session_state.debug_mode and st.session_state.error_count > 0:
-        st.warning(f"⚠️ Debug Mode: {st.session_state.error_count} errors detected")
+        st.warning(f"⚠️ Debug Mode: {st.session_state.error_count} errors detected this session")
 
 except Exception as e:
     st.error("🚨 Critical Error in App Header")
@@ -774,25 +890,55 @@ with st.expander("🚀 Set Up Your Financial Profile (Click to expand)", expande
         monthly_income = st.number_input(
             f"💰 Monthly Income/Allowance {get_currency_label()}",
             min_value=0.0,
-            value=st.session_state.financial_profile.get('monthly_income', 5000.0),
-            step=100.0
+            value=st.session_state.financial_profile.get('monthly_income', 50000.0),
+            step=1000.0,
+            help="Include salary, freelance, side hustles, everything!"
         )
-        age = st.slider("🎂 Age", min_value=18, max_value=35, value=st.session_state.financial_profile.get('age', 25))
+        
+        age = st.slider(
+            "🎂 Age",
+            min_value=18,
+            max_value=35,
+            value=st.session_state.financial_profile.get('age', 25)
+        )
     
     with col2:
-        employment_status = st.selectbox("👔 Employment Status", ["Student", "Full-time Job", "Freelancer", "Part-time", "Unemployed", "Side Hustle King/Queen"], index=1)
-        living_situation = st.selectbox("🏠 Living Situation", ["With Parents (blessed!)", "Shared Apartment", "Solo Living", "Dorm Life"], index=0)
+        employment_status = st.selectbox(
+            "👔 Employment Status",
+            ["Student", "Full-time Job", "Freelancer", "Part-time", "Unemployed", "Side Hustle King/Queen"],
+            index=1
+        )
+        
+        living_situation = st.selectbox(
+            "🏠 Living Situation",
+            ["With Parents (blessed!)", "Shared Apartment", "Solo Living", "Dorm Life"],
+            index=0
+        )
     
     with col3:
-        risk_tolerance = st.selectbox("📊 Investment Risk Tolerance", ["Conservative (play it safe)", "Moderate (balanced vibes)", "Aggressive (YOLO but smart)"], index=1)
-        primary_goal = st.selectbox("🎯 Primary Financial Goal", list(FinancialGoal), format_func=lambda x: x.value)
+        risk_tolerance = st.selectbox(
+            "📊 Investment Risk Tolerance",
+            ["Conservative (play it safe)", "Moderate (balanced vibes)", "Aggressive (YOLO but smart)"],
+            index=1
+        )
+        
+        primary_goal = st.selectbox(
+            "🎯 Primary Financial Goal",
+            list(FinancialGoal),
+            format_func=lambda x: x.value
+        )
     
     if st.button("💾 Save My Financial Profile", type="primary"):
         st.session_state.financial_profile = {
-            'monthly_income': monthly_income, 'age': age, 'employment_status': employment_status,
-            'living_situation': living_situation, 'risk_tolerance': risk_tolerance, 'primary_goal': primary_goal
+            'monthly_income': monthly_income,
+            'age': age,
+            'employment_status': employment_status,
+            'living_situation': living_situation,
+            'risk_tolerance': risk_tolerance,
+            'primary_goal': primary_goal
         }
         
+        # Generate budget plan
         budget_suggestions = st.session_state.agent.get_budget_suggestions(monthly_income, age)
         st.session_state.budget_plan = BudgetPlan(
             monthly_income=monthly_income,
@@ -818,41 +964,43 @@ if st.session_state.budget_plan:
     
     with col1:
         st.markdown(f"""
-        <div class="budget-card glass-card">
-            <h3 style="color:#7c15e8">💰 Monthly Income</h3>
-            <h2 style="font-size: 2rem;">{format_currency(budget.monthly_income, 0)}</h2>
+        <div class="budget-card">
+            <h3>💰 Monthly Income</h3>
+            <h2>{format_currency(budget.monthly_income, 0)}</h2>
             <p>Your total hustle</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
         st.markdown(f"""
-        <div class="budget-card glass-card">
-            <h3 style="color:#7c15e8">🏠 Needs ({budget.needs_percentage}%)</h3>
-            <h2 style="font-size: 2rem;">{format_currency(budget.needs_amount, 0)}</h2>
+        <div class="budget-card">
+            <h3>🏠 Needs ({budget.needs_percentage}%)</h3>
+            <h2>{format_currency(budget.needs_amount, 0)}</h2>
             <p>Rent, food, transport</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
         st.markdown(f"""
-        <div class="budget-card glass-card">
-            <h3 style="color:#7c15e8">✨ Wants ({budget.wants_percentage}%)</h3>
-            <h2 style="font-size: 2rem;">{format_currency(budget.wants_amount, 0)}</h2>
+        <div class="budget-card">
+            <h3>✨ Wants ({budget.wants_percentage}%)</h3>
+            <h2>{format_currency(budget.wants_amount, 0)}</h2>
             <p>Fun, joy, self-care</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col4:
         st.markdown(f"""
-        <div class="budget-card glass-card">
-            <h3 style="color:#7c15e8">📈 Savings ({budget.savings_percentage}%)</h3>
-            <h2 style="font-size: 2rem;">{format_currency(budget.savings_amount, 0)}</h2>
+        <div class="budget-card">
+            <h3>📈 Savings ({budget.savings_percentage}%)</h3>
+            <h2>{format_currency(budget.savings_amount, 0)}</h2>
             <p>Future you fund</p>
         </div>
         """, unsafe_allow_html=True)
     
+    # Budget visualization
     st.markdown("### 📊 Your Budget Breakdown")
+    
     budget_data = {
         'Category': ['🏠 Needs', '✨ Wants', '📈 Savings'],
         'Amount': [budget.needs_amount, budget.wants_amount, budget.savings_amount],
@@ -863,10 +1011,8 @@ if st.session_state.budget_plan:
         values=budget_data['Amount'],
         names=budget_data['Category'],
         title="💫 Your Money Allocation",
-        color_discrete_sequence=['#7c15e8', '#bfa3ff', '#4facfe'], # Updated Colors
-        hole=0.4
+        color_discrete_sequence=['#FF6B6B', '#4ECDC4', '#45B7D1']
     )
-    fig_budget.update_traces(textposition='inside', textinfo='percent+label')
     fig_budget.update_layout(
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
@@ -899,9 +1045,9 @@ if st.session_state.financial_profile:
         for inv in investments:
             st.markdown(f"""
             <div class="investment-card">
-                <h4 style="color: #7c15e8; margin-bottom: 0.2rem;">{inv['name']}</h4>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">{inv['desc']}</p>
-                <p style="font-size: 0.8rem;"><strong>Risk:</strong> {inv['risk']} | <strong>Expected Return:</strong> {inv['return']}</p>
+                <h4>{inv['name']}</h4>
+                <p>{inv['desc']}</p>
+                <p><strong>Risk:</strong> {inv['risk']} | <strong>Expected Return:</strong> {inv['return']}</p>
             </div>
             """, unsafe_allow_html=True)
     
@@ -919,12 +1065,12 @@ if st.session_state.financial_profile:
             st.markdown(f"""
             <div class="financial-goal-card">
                 <h4>Priority {item['priority']}: {item['goal']}</h4>
-                <p style="opacity: 0.9;">{item['description']}</p>
-                <p style="font-weight: bold; margin-top: 0.5rem;">Target: {format_currency(item['target'], 0)}</p>
+                <p>{item['description']}</p>
+                <p><strong>Target:</strong> {format_currency(item['target'], 0)}</p>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: {progress}%"></div>
                 </div>
-                <p style="text-align: right; font-size: 0.8rem; margin-top: 5px;">{progress}% Complete</p>
+                <p><small>{progress}% Complete</small></p>
             </div>
             """, unsafe_allow_html=True)
 
@@ -951,6 +1097,7 @@ with tab1:
         - Mint (free budgeting)
         - YNAB (You Need A Budget)
         - PocketGuard (spending limits)
+        - Goodbudget (envelope method)
         """)
     
     with col2:
@@ -961,6 +1108,7 @@ with tab1:
         - Track spending with photos of receipts
         - Set up separate accounts for different goals
         - Use cash for discretionary spending
+        - Review and adjust monthly (not daily!)
         """)
 
 with tab2:
@@ -974,6 +1122,12 @@ with tab2:
         - Index funds (S&P 500) - diversified & low fees
         - Target-date funds - set it & forget it
         - Employer 401(k) match - FREE MONEY!
+        
+        **📱 Investment Apps:**
+        - Robinhood (commission-free trading)
+        - Acorns (micro-investing with spare change)
+        - Stash ($5 minimum investment)
+        - M1 Finance (automated portfolios)
         """)
     
     with col2:
@@ -983,10 +1137,13 @@ with tab2:
         - Diversify (don't put all eggs in one basket)
         - Think long-term (10+ years)
         - Don't panic sell during market dips
+        - Reinvest dividends automatically
+        - Learn about compound interest - it's magic! ✨
         """)
 
 with tab3:
     st.markdown("### 🚨 Emergency Fund Essentials")
+    
     emergency_target = st.session_state.budget_plan.monthly_income * 6 if st.session_state.budget_plan else 30000
     
     col1, col2 = st.columns(2)
@@ -999,16 +1156,23 @@ with tab3:
         - Job loss protection
         - Medical emergencies
         - Car repairs
+        - Unexpected expenses
         - Mental peace (priceless!)
+        
+        **Where to Keep It:**
+        - High-yield savings account
+        - Money market account
+        - Short-term CDs
         """)
     
     with col2:
         st.markdown("""
         **🔥 Building Strategy:**
-        - Start with $1,000 (any amount is better than zero!)
-        - Automate transfers (monthly)
+        - Start with PKR 1,000 (any amount is better than zero!)
+        - Automate transfers (PKR 2,000-5,000/month)
         - Use windfalls (tax refunds, bonuses)
         - Sell stuff you don't need
+        - Side hustle specifically for emergency fund
         - Celebrate milestones! 🎉
         """)
 
@@ -1024,6 +1188,9 @@ with tab4:
         - Online tutoring
         - Virtual assistant
         - Social media management
+        - Photography/videography
+        - Food delivery (Uber Eats, DoorDash)
+        - Pet sitting/dog walking
         """)
     
     with col2:
@@ -1034,16 +1201,17 @@ with tab4:
         - Track time vs. money earned
         - Separate business & personal finances
         - Save taxes (15-30% of earnings)
+        - Scale what works, drop what doesn't
+        - Network like crazy! 🤝
         """)
 
 # =============================================================================
-# HERO VIBE CHECK SECTION (RESTORED & IMPROVED)
+# HERO VIBE CHECK SECTION (Gen Z Hero Feature)
 # =============================================================================
 
-st.markdown("---")
-st.markdown(f"""
+st.markdown("""
 <div style='
-    background: linear-gradient(135deg, #7c15e8 0%, #9d4edd 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 2.5rem 1rem 2rem 1rem;
     border-radius: 25px;
     margin-bottom: 2.5rem;
@@ -1056,62 +1224,1396 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Vibe Selector
-col_vibe, col_stress, col_conf = st.columns([2, 1, 1])
+# Large, central vibe selector and sliders
+vibe_col, stress_col, conf_col = st.columns([2, 1, 1])
 
-with col_vibe:
+with vibe_col:
+    # Ensure current_vibe is always a valid VibeType
     try:
         vibe_index = list(VibeType).index(st.session_state.current_vibe)
     except Exception:
         st.session_state.current_vibe = VibeType.CHILL
         vibe_index = list(VibeType).index(VibeType.CHILL)
-        
     current_vibe = st.selectbox(
-        "Select your current vibe:",
+        "",
         options=list(VibeType),
         format_func=lambda x: f"{x.value} {x.name.title()}",
         index=vibe_index,
-        key="hero_vibe_selectbox",
-        label_visibility="collapsed"
+        key="hero_vibe_selectbox"
     )
     
-    # Check if vibe changed to trigger updates
+    # Check if vibe changed and trigger emoji pop-out effect
     if 'previous_vibe' not in st.session_state:
         st.session_state.previous_vibe = current_vibe
     
     if current_vibe != st.session_state.previous_vibe:
-        st.session_state.current_vibe = current_vibe
+        # Trigger emoji pop-out effect instead of balloons
+        st.markdown(f"""
+        <div id="emoji-popup" style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            z-index: 9999;
+            animation: emojiPop 2s ease-out forwards;
+            pointer-events: none;
+        ">
+            {current_vibe.value}
+        </div>
+        <style>
+        @keyframes emojiPop {{
+            0% {{ 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.1); 
+            }}
+            50% {{ 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.2); 
+            }}
+            100% {{ 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.8) translateY(-100px); 
+            }}
+        }}
+        </style>
+        <script>
+        setTimeout(function() {{
+            var popup = document.getElementById('emoji-popup');
+            if (popup) {{
+                popup.remove();
+            }}
+        }}, 2000);
+        </script>
+        """, unsafe_allow_html=True)
         st.session_state.previous_vibe = current_vibe
-        st.rerun()
-
-# Sliders for additional context
-with col_stress:
-    money_stress = st.slider("Money Stress Level", 1, 10, 3)
     
-with col_conf:
-    confidence_level = st.slider("Financial Confidence", 1, 10, 7)
-
-# Display AI Response based on Vibe
-if st.session_state.current_vibe:
-    response = st.session_state.agent.get_vibe_response(st.session_state.current_vibe)
+    # =============================================================================
+    # DYNAMIC AURA SYSTEM - CHANGES WEBSITE COLORS BASED ON MOOD
+    # =============================================================================
     
+    # Define mood-based color schemes and auras
+    vibe_auras = {
+        VibeType.STRESSED: {
+            "primary": "#FF6B6B",
+            "secondary": "#FF8E8E", 
+            "accent": "#FFB3B3",
+            "bg_start": "#FF4757",
+            "bg_end": "#FF6B6B",
+            "card_bg": "linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%)",
+            "text_glow": "#FF6B6B",
+            "particle_color": "#FF8E8E",
+            "aura_name": "Stress Relief Aura",
+            "description": "Calming reds to acknowledge stress while promoting healing"
+        },
+        VibeType.CONFIDENT: {
+            "primary": "#4ECDC4",
+            "secondary": "#45B7D1",
+            "accent": "#96CEB4",
+            "bg_start": "#667eea",
+            "bg_end": "#764ba2",
+            "card_bg": "linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%)",
+            "text_glow": "#4ECDC4",
+            "particle_color": "#45B7D1",
+            "aura_name": "Confidence Power Aura",
+            "description": "Bold blues and teals radiating success energy"
+        },
+        VibeType.CONFUSED: {
+            "primary": "#A8A8A8",
+            "secondary": "#B8B8B8",
+            "accent": "#D3D3D3",
+            "bg_start": "#74b9ff",
+            "bg_end": "#0984e3",
+            "card_bg": "linear-gradient(135deg, #A8A8A8 0%, #74b9ff 100%)",
+            "text_glow": "#74b9ff",
+            "particle_color": "#B8B8B8",
+            "aura_name": "Clarity Seeking Aura",
+            "description": "Cool grays and blues to promote mental clarity"
+        },
+        VibeType.EXCITED: {
+            "primary": "#FFD93D",
+            "secondary": "#FF6B35",
+            "accent": "#FF8B94",
+            "bg_start": "#FFD93D",
+            "bg_end": "#FF6B35",
+            "card_bg": "linear-gradient(135deg, #FFD93D 0%, #FF6B35 100%)",
+            "text_glow": "#FFD93D",
+            "particle_color": "#FF8B94",
+            "aura_name": "High Energy Excitement Aura",
+            "description": "Vibrant yellows and oranges bursting with excitement"
+        },
+        VibeType.CHILL: {
+            "primary": "#96CEB4",
+            "secondary": "#FFEAA7",
+            "accent": "#DDA0DD",
+            "bg_start": "#96CEB4",
+            "bg_end": "#FFEAA7",
+            "card_bg": "linear-gradient(135deg, #96CEB4 0%, #FFEAA7 100%)",
+            "text_glow": "#96CEB4",
+            "particle_color": "#DDA0DD",
+            "aura_name": "Zen Chill Aura",
+            "description": "Peaceful greens and soft yellows for ultimate relaxation"
+        },
+        VibeType.GUILTY: {
+            "primary": "#E17055",
+            "secondary": "#FDCB6E",
+            "accent": "#FD79A8",
+            "bg_start": "#E17055",
+            "bg_end": "#FDCB6E",
+            "card_bg": "linear-gradient(135deg, #E17055 0%, #FDCB6E 100%)",
+            "text_glow": "#E17055",
+            "particle_color": "#FD79A8",
+            "aura_name": "Self-Compassion Aura",
+            "description": "Warm oranges and peaches promoting self-forgiveness"
+        }
+    }
+    
+    current_aura = vibe_auras[current_vibe]
+    
+    # Apply dynamic aura styling
     st.markdown(f"""
-    <div class="glass-card" style="background: white; border-left: 5px solid #7c15e8; margin-top: 1rem;">
-        <h3 style="color: #7c15e8; margin-top:0;">💬 FinAura's Insight</h3>
-        <p style="font-size: 1.2rem; line-height: 1.6;">{response}</p>
+    <style>
+    /* DYNAMIC AURA SYSTEM - MOOD-RESPONSIVE DESIGN */
+    
+    :root {{
+        --aura-primary: {current_aura['primary']};
+        --aura-secondary: {current_aura['secondary']};
+        --aura-accent: {current_aura['accent']};
+        --aura-glow: {current_aura['text_glow']};
+    }}
+    
+    /* Animated background aura effect */
+    .stApp {{
+        background: linear-gradient(45deg, {current_aura['bg_start']}22, {current_aura['bg_end']}22);
+        animation: auraShift 8s ease-in-out infinite alternate;
+    }}
+    
+    @keyframes auraShift {{
+        0% {{ background: linear-gradient(45deg, {current_aura['bg_start']}15, {current_aura['bg_end']}15); }}
+        100% {{ background: linear-gradient(135deg, {current_aura['bg_end']}15, {current_aura['bg_start']}15); }}
+    }}
+    
+    /* Dynamic card styling based on mood */
+    .main-header {{
+        background: {current_aura['card_bg']} !important;
+        box-shadow: 0 10px 30px {current_aura['primary']}40 !important;
+        animation: cardGlow 3s ease-in-out infinite alternate;
+    }}
+    
+    @keyframes cardGlow {{
+        0% {{ box-shadow: 0 10px 30px {current_aura['primary']}40; }}
+        100% {{ box-shadow: 0 15px 40px {current_aura['primary']}60, 0 0 20px {current_aura['text_glow']}30; }}
+    }}
+    
+    .vibe-card {{
+        background: {current_aura['card_bg']} !important;
+        box-shadow: 0 8px 25px {current_aura['primary']}35 !important;
+    }}
+    
+    .money-card {{
+        background: {current_aura['card_bg']} !important;
+        border: 2px solid {current_aura['accent']}60;
+        box-shadow: 0 5px 20px {current_aura['primary']}30;
+    }}
+    
+    .budget-card {{
+        background: linear-gradient(135deg, {current_aura['accent']}80, {current_aura['secondary']}60) !important;
+        border: 1px solid {current_aura['primary']}40;
+    }}
+    
+    .investment-card {{
+        background: linear-gradient(135deg, {current_aura['secondary']}70, {current_aura['accent']}50) !important;
+        border-left: 4px solid {current_aura['primary']};
+    }}
+    
+    .financial-goal-card {{
+        background: {current_aura['card_bg']} !important;
+        box-shadow: 0 6px 20px {current_aura['primary']}35;
+    }}
+    
+    /* Mood-responsive text effects */
+    h1, h2, h3 {{
+        text-shadow: 0 0 10px {current_aura['text_glow']}50 !important;
+        animation: textGlow 2s ease-in-out infinite alternate;
+    }}
+    
+    @keyframes textGlow {{
+        0% {{ text-shadow: 0 0 10px {current_aura['text_glow']}50; }}
+        100% {{ text-shadow: 0 0 15px {current_aura['text_glow']}70, 0 0 25px {current_aura['text_glow']}30; }}
+    }}
+    
+    /* Button styling matches mood */
+    .stButton > button {{
+        background: {current_aura['card_bg']} !important;
+        border: 2px solid {current_aura['primary']} !important;
+        box-shadow: 0 4px 15px {current_aura['primary']}40 !important;
+        transition: all 0.3s ease !important;
+    }}
+    
+    .stButton > button:hover {{
+        box-shadow: 0 8px 25px {current_aura['primary']}60, 0 0 20px {current_aura['text_glow']}50 !important;
+        transform: translateY(-3px) !important;
+    }}
+    
+    /* Progress bars match the aura */
+    .progress-fill {{
+        background: {current_aura['card_bg']} !important;
+        box-shadow: inset 0 0 10px {current_aura['text_glow']}30;
+    }}
+    
+    /* Sidebar matches mood */
+    .sidebar .sidebar-content {{
+        background: linear-gradient(180deg, {current_aura['primary']}, {current_aura['secondary']}) !important;
+    }}
+    
+    /* Floating particles for extra aura effect */
+    .aura-particles {{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }}
+    
+    .particle {{
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: {current_aura['particle_color']};
+        border-radius: 50%;
+        animation: float 15s infinite linear;
+        opacity: 0.6;
+    }}
+    
+    @keyframes float {{
+        0% {{ transform: translateY(100vh) rotate(0deg); }}
+        100% {{ transform: translateY(-100px) rotate(360deg); }}
+    }}
+    
+    /* Create multiple particles with different delays */
+    .particle:nth-child(1) {{ left: 10%; animation-delay: 0s; }}
+    .particle:nth-child(2) {{ left: 20%; animation-delay: 2s; }}
+    .particle:nth-child(3) {{ left: 30%; animation-delay: 4s; }}
+    .particle:nth-child(4) {{ left: 40%; animation-delay: 6s; }}
+    .particle:nth-child(5) {{ left: 50%; animation-delay: 8s; }}
+    .particle:nth-child(6) {{ left: 60%; animation-delay: 10s; }}
+    .particle:nth-child(7) {{ left: 70%; animation-delay: 12s; }}
+    .particle:nth-child(8) {{ left: 80%; animation-delay: 14s; }}
+    .particle:nth-child(9) {{ left: 90%; animation-delay: 16s; }}
+    
+    </style>
+    
+    <!-- Floating particles for aura effect -->
+    <div class="aura-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    
+    <!-- Aura notification -->
+    <div style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: {current_aura['card_bg']};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 0.9em;
+        font-weight: 600;
+        box-shadow: 0 8px 25px {current_aura['primary']}50;
+        z-index: 1000;
+        animation: auraNotification 4s ease-out;
+    ">
+        ✨ {current_aura['aura_name']} Activated ✨
+    </div>
+    
+    
+    
+    """, unsafe_allow_html=True)
+    
+    st.session_state.current_vibe = current_vibe
+
+with stress_col:
+    stress_level = st.slider("Money stress level", 1, 10, 5, key="hero_stress_slider")
+
+with conf_col:
+    confidence_level = st.slider("Financial confidence", 1, 10, 6, key="hero_conf_slider")
+
+# AI Response based on vibe (big, animated card) with dynamic aura
+current_aura = vibe_auras[current_vibe]
+vibe_response = st.session_state.agent.get_vibe_response(current_vibe)
+
+# Enhanced response card with aura integration
+st.markdown(f"""
+<div style='
+    background: {current_aura['card_bg']};
+    padding: 2rem;
+    border-radius: 20px;
+    margin: 1.5rem 0 2.5rem 0;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 10px 30px {current_aura['primary']}40, 0 0 40px {current_aura['text_glow']}20;
+    transition: all 0.3s;
+    animation: heroFadeIn 1s, auraGlow 3s ease-in-out infinite alternate;
+    border: 2px solid {current_aura['accent']}60;
+'>
+   
+
+<style>
+@keyframes heroFadeIn {{
+    from {{ opacity: 0; transform: translateY(0); }}
+    to {{ opacity: 1; transform: translateY(0); }}
+}}
+
+@keyframes auraGlow {{
+    0% {{ 
+        box-shadow: 0 10px 30px {current_aura['primary']}40, 0 0 40px {current_aura['text_glow']}20;
+        transform: scale(1);
+    }}
+    100% {{ 
+        box-shadow: 0 15px 40px {current_aura['primary']}60, 0 0 60px {current_aura['text_glow']}40;
+        transform: scale(1.02);
+    }}
+}}
+</style>
+""", unsafe_allow_html=True)
+
+# =============================================================================
+# ENHANCED MONEY DASHBOARD
+# =============================================================================
+
+st.markdown("## 💰 Your Money Mood Board")
+
+# Safe calculations with error handling
+def calculate_dashboard_metrics():
+    try:
+        transactions = st.session_state.transactions or []
+        total_spent = sum(t.amount for t in transactions if hasattr(t, 'amount') and t.amount)
+        avg_daily = handle_calculation_error(lambda: total_spent / 7, 0)
+        joy_spending = sum(t.amount for t in transactions if hasattr(t, 'category') and t.category == SpendingCategory.JOY and t.amount)
+        essential_spending = sum(t.amount for t in transactions if hasattr(t, 'category') and t.category == SpendingCategory.ESSENTIAL and t.amount)
+        return total_spent, avg_daily, joy_spending, essential_spending
+    except Exception as e:
+        logger.error(f"Dashboard calculation error: {str(e)}")
+        st.session_state.error_count += 1
+        st.session_state.last_error = str(e)
+        return 0, 0, 0, 0
+
+total_spent, avg_daily, joy_spending, essential_spending = calculate_dashboard_metrics()
+
+# Get monthly_income safely
+monthly_income = st.session_state.financial_profile.get('monthly_income', 0) if st.session_state.financial_profile else 0
+current_savings = st.session_state.financial_profile.get('current_savings', 0) if st.session_state.financial_profile else 0
+
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.markdown(f"""
+    <div class="money-card">
+        <h3>💸 Total Spent</h3>
+        <h2>{format_currency(total_spent, 2)}</h2>
+        <p>Last 7 days</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f"""
+    <div class="money-card">
+        <h3>📅 Daily Average</h3>
+        <h2>{format_currency(avg_daily, 2)}</h2>
+        <p>Per day</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    joy_ratio = (joy_spending / total_spent * 100) if total_spent > 0 else 0
+    st.markdown(f"""
+    <div class="money-card">
+        <h3>😊 Joy Ratio</h3>
+        <h2>{joy_ratio:.1f}%</h2>
+        <p>Happiness spending</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col4:
+    if monthly_income > 0:
+        monthly_projected = total_spent * 4.33
+        budget_remaining = monthly_income - monthly_projected
+        st.markdown(f"""
+        <div class="money-card">
+            <h3>💰 Budget Left</h3>
+            <h2>{format_currency(budget_remaining, 0)}</h2>
+            <p>This month</p>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+        <div class="money-card">
+            <h3>✨ Joy Spending</h3>
+            <h2>{format_currency(joy_spending, 2)}</h2>
+            <p>Self-care investments</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+# Add a fifth column for savings/essentials if needed
+col5 = None
+if current_savings > 0 or essential_spending > 0:
+    cols = st.columns(5)
+    col5 = cols[4]
+    with col5:
+        if current_savings > 0:
+            savings_growth = current_savings
+            st.markdown(f"""
+            <div class="money-card">
+                <h3>📈 Savings</h3>
+                <h2>{format_currency(savings_growth, 0)}</h2>
+                <p>Total saved</p>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div class="money-card">
+                <h3>🏠 Essentials</h3>
+                <h2>{format_currency(essential_spending, 2)}</h2>
+                <p>Responsible spending</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+# Budget vs Reality Check
+if monthly_income > 0:
+    st.markdown("### 📊 Budget vs Reality Check")
+    # Remove planner reference and use budget_plan if available
+    if st.session_state.budget_plan:
+        budget = {
+            'needs': st.session_state.budget_plan.needs_amount,
+            'wants': st.session_state.budget_plan.wants_amount
+        }
+    else:
+        budget = {'needs': 0, 'wants': 0}
+
+    current_month_spending = total_spent * 4.33
+    needs_budget = budget['needs']
+    wants_budget = budget['wants']
+
+    current_needs = essential_spending * 4.33
+    current_wants = joy_spending * 4.33
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        needs_progress = (current_needs / needs_budget * 100) if needs_budget > 0 else 0
+        st.markdown(f"**🏠 Needs: {format_currency(current_needs, 0)} / {format_currency(needs_budget, 0)}**")
+        st.progress(min(needs_progress / 100, 1.0))
+        if needs_progress > 100:
+            st.markdown('<div class="warning-card">⚠️ Over budget on needs!</div>', unsafe_allow_html=True)
+
+    with col2:
+        wants_progress = (current_wants / wants_budget * 100) if wants_budget > 0 else 0
+        st.markdown(f"**✨ Wants: {format_currency(current_wants, 0)} / {format_currency(wants_budget, 0)}**")
+        st.progress(min(wants_progress / 100, 1.0))
+        if wants_progress > 100:
+            st.markdown('<div class="warning-card">⚠️ Over budget on wants!</div>', unsafe_allow_html=True)
+
+    with col3:
+        total_budget = needs_budget + wants_budget
+        total_spent_month = current_needs + current_wants
+        overall_progress = (total_spent_month / total_budget * 100) if total_budget > 0 else 0
+        st.markdown(f"**💰 Overall: {format_currency(total_spent_month, 0)} / {format_currency(total_budget, 0)}**")
+        st.progress(min(overall_progress / 100, 1.0))
+        if overall_progress < 80:
+            st.markdown('<div class="success-card">🎉 Under budget! Great job!</div>', unsafe_allow_html=True)
+
+# =============================================================================
+# TRANSACTION INPUT & INTERACTIVE FEATURES
+# =============================================================================
+
+st.markdown("## 💳 Add New Transaction")
+
+# Transaction input form with error handling
+with st.expander("➕ Add a New Transaction", expanded=False):
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        new_amount = st.number_input("💰 Amount", min_value=0.01, value=10.0, step=0.5)
+        new_description = st.text_input("📝 Description", placeholder="What did you spend on?")
+    
+    with col2:
+        new_category = st.selectbox("📂 Category", list(SpendingCategory))
+        new_merchant = st.text_input("🏪 Merchant", placeholder="Where did you spend?")
+    
+    with col3:
+        new_vibe_impact = st.slider("😊 Vibe Impact", -1.0, 1.0, 0.0, 0.1, 
+                                   help="How did this purchase make you feel?")
+        
+        if st.button("✅ Add Transaction", type="primary", use_container_width=True):
+            try:
+                if new_description.strip():
+                    new_transaction = Transaction(
+                        date=datetime.now(),
+                        amount=float(new_amount),
+                        description=new_description.strip(),
+                        category=new_category,
+                        merchant=new_merchant.strip(),
+                        vibe_impact=float(new_vibe_impact)
+                    )
+                    st.session_state.transactions.append(new_transaction)
+                    st.success(f"✅ Added: {new_description} - {format_currency(new_amount)}")
+                    st.rerun()
+                else:
+                    st.warning("Please enter a description for your transaction!")
+            except Exception as e:
+                st.error(f"Error adding transaction: {str(e)}")
+                st.session_state.error_count += 1
+                st.session_state.last_error = str(e)
+
+# =============================================================================
+# TRANSACTION LOG & DISPLAY
+# =============================================================================
+
+st.markdown("## 🧾 Recent Spending Tea ☕")
+
+# Safe transaction display with error handling
+def create_transaction_dataframe():
+    try:
+        transactions = st.session_state.transactions or []
+        if not transactions:
+            return pd.DataFrame({'Message': ['No transactions yet! Add your first transaction above. 💸']})
+        
+        transaction_data = []
+        for t in sorted(transactions, key=lambda x: getattr(x, 'date', datetime.now()), reverse=True):
+            try:
+                transaction_data.append({
+                    'Date': getattr(t, 'date', datetime.now()).strftime('%m/%d'),
+                    'Vibe': getattr(t, 'category', SpendingCategory.ESSENTIAL).value,
+                    'Amount': format_currency(getattr(t, 'amount', 0)),
+                    'Description': getattr(t, 'description', 'Unknown'),
+                    'Merchant': getattr(t, 'merchant', 'Unknown'),
+                    'Mood Impact': '😊' if getattr(t, 'vibe_impact', 0) > 0 else '😐' if getattr(t, 'vibe_impact', 0) == 0 else '😔'
+                })
+            except Exception as e:
+                logger.warning(f"Error processing transaction: {str(e)}")
+                continue
+        
+        return pd.DataFrame(transaction_data)
+    except Exception as e:
+        logger.error(f"Error creating transaction dataframe: {str(e)}")
+        st.session_state.error_count += 1
+        st.session_state.last_error = str(e)
+        return pd.DataFrame({'Error': ['Unable to load transactions. Please try refreshing.']})
+
+df_transactions = create_transaction_dataframe()
+st.dataframe(df_transactions, use_container_width=True)
+
+# Transaction analytics
+if len(st.session_state.transactions) > 0:
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        try:
+            avg_transaction = handle_calculation_error(
+                lambda: sum(t.amount for t in st.session_state.transactions) / len(st.session_state.transactions),
+                0
+            )
+            st.metric("💰 Avg Transaction", format_currency(avg_transaction))
+        except:
+            st.metric("💰 Avg Transaction", "N/A")
+    
+    with col2:
+        try:
+            positive_vibes = len([t for t in st.session_state.transactions if getattr(t, 'vibe_impact', 0) > 0])
+            st.metric("😊 Positive Purchases", f"{positive_vibes}")
+        except:
+            st.metric("😊 Positive Purchases", "N/A")
+    
+    with col3:
+        try:
+            most_category = max(SpendingCategory, key=lambda cat: len([t for t in st.session_state.transactions if getattr(t, 'category', None) == cat]))
+            st.metric("🔥 Top Category", most_category.value)
+        except:
+            st.metric("🔥 Top Category", "N/A")
+
+# =============================================================================
+# ENHANCED SALARY INPUT & FINANCIAL PLANNING CALCULATOR
+# =============================================================================
+
+st.markdown("## 💰 Complete Financial Planning Calculator")
+
+st.markdown("""
+<div class="financial-setup-card">
+    <h3>💸 Enter Your Financial Details</h3>
+    <p>Let's create your personalized Gen Z survival & slay financial blueprint!</p>
+</div>
+""", unsafe_allow_html=True)
+
+# Main salary input section
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("### 💵 Income Details")
+    monthly_salary = st.number_input(
+        "Monthly Salary/Income (After Tax)",
+        min_value=0.0,
+        value=4500.0,
+        step=100.0,
+        help="Your take-home pay per month"
+    )
+    
+    additional_income = st.number_input(
+        "Side Hustle/Additional Income",
+        min_value=0.0,
+        value=0.0,
+        step=50.0,
+        help="Freelance, part-time, passive income"
+    )
+    
+    total_monthly_income = monthly_salary + additional_income
+    annual_income = total_monthly_income * 12
+
+with col2:
+    st.markdown("### 🎯 Current Financial Status")
+    current_debt = st.number_input(
+        "Total Debt Amount",
+        min_value=0.0,
+        value=0.0,
+        step=100.0,
+        help="Credit cards, student loans, personal loans"
+    )
+    
+    current_savings_amount = st.number_input(
+        "Current Savings Balance",
+        min_value=0.0,
+        value=1000.0,
+        step=100.0,
+        help="Emergency fund + other savings accounts"
+    )
+    
+    monthly_debt_payment = st.number_input(
+        "Current Monthly Debt Payments",
+        min_value=0.0,
+        value=0.0,
+        step=25.0,
+        help="Minimum payments on all debts"
+    )
+
+with col3:
+    st.markdown("### 🚀 Your Financial Goals")
+    financial_priority = st.selectbox(
+        "Primary Financial Priority",
+        [
+            "🛡️ Build Emergency Fund",
+            "💳 Pay Off Debt",
+            "📈 Start Investing",
+            "🏠 Save for Big Purchase",
+            "👑 Maximize Wealth Building"
+        ]
+    )
+    
+    lifestyle_mode = st.selectbox(
+        "Current Lifestyle Mode",
+        [
+            "😩 Survival Mode (Minimize expenses)",
+            "😌 Comfort Mode (Balanced approach)", 
+            "👑 Slay Mode (Aggressive wealth building)"
+        ]
+    )
+    
+    investment_risk = st.selectbox(
+        "Investment Risk Tolerance",
+        ["Conservative (Safety first)", "Moderate (Balanced)", "Aggressive (High growth)"]
+    )
+
+# =============================================================================
+# ADVANCED FINANCIAL BREAKDOWN CALCULATOR
+# =============================================================================
+
+if total_monthly_income > 0:
+    st.markdown("## 📊 Your Personalized Financial Blueprint")
+    
+    # Determine budget allocation based on lifestyle mode
+    if "Survival" in lifestyle_mode:
+        needs_percent = 70
+        wants_percent = 15
+        savings_percent = 15
+        mode_emoji = "🛡️"
+        mode_description = "Focus on stability and emergency fund"
+    elif "Comfort" in lifestyle_mode:
+        needs_percent = 50
+        wants_percent = 30
+        savings_percent = 20
+        mode_emoji = "😌"
+        mode_description = "Balanced living with room for fun"
+    else:  # Slay mode
+        needs_percent = 45
+        wants_percent = 25
+        savings_percent = 30
+        mode_emoji = "👑"
+        mode_description = "Aggressive wealth building for financial freedom"
+    
+    # Calculate allocations
+    needs_amount = total_monthly_income * (needs_percent / 100)
+    wants_amount = total_monthly_income * (wants_percent / 100)
+    savings_amount = total_monthly_income * (savings_percent / 100)
+    
+    # Adjust for existing debt payments
+    adjusted_savings = max(0, savings_amount - monthly_debt_payment)
+    debt_payoff_extra = savings_amount - adjusted_savings
+    
+    # Display budget breakdown
+    st.markdown(f"""
+    <div class="main-header">
+        <h2>{mode_emoji} {lifestyle_mode.split('(')[0]} Budget Breakdown</h2>
+        <p><em>{mode_description}</em></p>
+        <h3>Total Monthly Income: {format_currency(total_monthly_income, 2)}</h3>
     </div>
     """, unsafe_allow_html=True)
     
-    # Provide specific advice based on the sliders
-    if money_stress > 7:
-        st.warning("💜 **Tip:** High stress detected? Let's pause big purchases for 24 hours.")
-    if confidence_level < 5:
-        st.info("🌈 **Tip:** Low confidence is normal. Focus on one small financial win today!")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown(f"""
+        <div class="survival-card">
+            <h3>🏠 NEEDS ({needs_percent}%)</h3>
+            <h2>{format_currency(needs_amount, 0)}</h2>
+            <div style="font-size: 0.9em; margin-top: 10px;">
+                <strong>Includes:</strong><br>
+                • Rent/Mortgage<br>
+                • Groceries & Utilities<br>
+                • Transportation<br>
+                • Insurance & Phone<br>
+                • Minimum Debt Payments
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown(f"""
+        <div class="comfort-card">
+            <h3>✨ WANTS ({wants_percent}%)</h3>
+            <h2>{format_currency(wants_amount, 0)}</h2>
+            <div style="font-size: 0.9em; margin-top: 10px;">
+                <strong>Includes:</strong><br>
+                • Dining Out & Entertainment<br>
+                • Shopping & Hobbies<br>
+                • Subscriptions<br>
+                • Travel & Fun<br>
+                • Personal Care
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown(f"""
+        <div class="slay-card">
+            <h3>💰 SAVINGS ({savings_percent}%)</h3>
+            <h2>{format_currency(adjusted_savings, 0)}</h2>
+            <div style="font-size: 0.9em; margin-top: 10px;">
+                <strong>Breakdown:</strong><br>
+                • Emergency Fund<br>
+                • Investment Accounts<br>
+                • Goal Savings<br>
+                • Extra Debt Payment<br>
+                • Future Planning
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        if monthly_debt_payment > 0:
+            total_debt_focus = monthly_debt_payment + debt_payoff_extra
+            st.markdown(f"""
+            <div class="investment-card">
+                <h3>💳 DEBT PAYOFF</h3>
+                <h2>{format_currency(total_debt_focus, 0)}</h2>
+                <div style="font-size: 0.9em; margin-top: 10px;">
+                    <strong>Strategy:</strong><br>
+                    • Minimum: {format_currency(monthly_debt_payment, 0)}<br>
+                    • Extra: {format_currency(debt_payoff_extra, 0)}<br>
+                    • Total Focus<br>
+                    • Avalanche Method
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div class="investment-card">
+                <h3>🚀 BONUS POWER</h3>
+                <h2>{format_currency(adjusted_savings, 0)}</h2>
+                <div style="font-size: 0.9em; margin-top: 10px;">
+                    <strong>Opportunity:</strong><br>
+                    • Full Savings Potential<br>
+                    • Investment Ready<br>
+                    • Wealth Building<br>
+                    • Financial Freedom
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
-# Footer
-st.markdown("---")
+    # =============================================================================
+    # EMERGENCY FUND CALCULATOR
+    # =============================================================================
+    
+    st.markdown("### 🛡️ Emergency Fund Strategy")
+    
+    emergency_months = st.slider("Target Emergency Fund (Months of Expenses)", 3, 12, 6)
+    emergency_target = needs_amount * emergency_months
+    emergency_progress = (current_savings_amount / emergency_target * 100) if emergency_target > 0 else 0
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown(f"""
+        <div class="goal-tracker">
+            <h4>🎯 Emergency Fund Goal</h4>
+            <h2>{format_currency(emergency_target, 0)}</h2>
+            <p>{emergency_months} months of expenses</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown(f"""
+        <div class="goal-tracker">
+            <h4>💰 Current Progress</h4>
+            <h2>{format_currency(current_savings_amount, 0)}</h2>
+            <p>{emergency_progress:.1f}% Complete</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        months_to_goal = max(0, (emergency_target - current_savings_amount) / (adjusted_savings * 0.5)) if adjusted_savings > 0 else 0
+        st.markdown(f"""
+        <div class="goal-tracker">
+            <h4>⏰ Time to Goal</h4>
+            <h2>{months_to_goal:.1f} months</h2>
+            <p>At 50% savings allocation</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Progress bar
+    st.markdown(f"""
+    <div class="progress-container">
+        <div class="progress-fill" style="width: {min(emergency_progress, 100)}%;">
+            Emergency Fund: {emergency_progress:.1f}% Complete
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # =============================================================================
+    # INVESTMENT ALLOCATION STRATEGY
+    # =============================================================================
+    
+    st.markdown("### 📈 Investment Allocation Strategy")
+    
+    # Calculate investment amount (portion of savings after emergency fund priority)
+    emergency_monthly_need = max(0, (emergency_target - current_savings_amount) / 12)
+    available_for_investment = max(0, adjusted_savings - emergency_monthly_need)
+    
+    if available_for_investment > 0:
+        # Age-based investment allocation
+        user_age = st.slider("Your Age", 18, 35, 25)
+        
+        # Determine allocation based on age and risk tolerance
+        if "Conservative" in investment_risk:
+            stock_percent = max(20, 60 - user_age)
+            bond_percent = min(50, 40 + (user_age - 20))
+        elif "Aggressive" in investment_risk:
+            stock_percent = min(95, 80 + (35 - user_age))
+            bond_percent = max(5, 20 - (35 - user_age))
+        else:  # Moderate
+            stock_percent = max(40, 70 - (user_age - 20))
+            bond_percent = min(40, 30 + (user_age - 20))
+        
+        cash_percent = 100 - stock_percent - bond_percent
+        
+        # Calculate dollar amounts
+        stock_amount = available_for_investment * (stock_percent / 100)
+        bond_amount = available_for_investment * (bond_percent / 100)
+        cash_amount = available_for_investment * (cash_percent / 100)
+        
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.markdown(f"""
+            <div class="investment-card">
+                <h4>📊 Total Monthly Investment</h4>
+                <h2>{format_currency(available_for_investment, 0)}</h2>
+                <p>Available after emergency fund</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown(f"""
+            <div class="investment-card">
+                <h4>📈 Stocks/ETFs ({stock_percent}%)</h4>
+                <h2>{format_currency(stock_amount, 0)}</h2>
+                <p>VTI, VXUS, Growth funds</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown(f"""
+            <div class="investment-card">
+                <h4>🏛️ Bonds ({bond_percent}%)</h4>
+                <h2>{format_currency(bond_amount, 0)}</h2>
+                <p>BND, Treasury bonds</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col4:
+            st.markdown(f"""
+            <div class="investment-card">
+                <h4>💵 Cash/HYSA ({cash_percent}%)</h4>
+                <h2>{format_currency(cash_amount, 0)}</h2>
+                <p>High-yield savings, CDs</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Specific investment recommendations
+        st.markdown("#### 🎯 Specific Investment Recommendations")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("""
+            <div class="financial-tip">
+                <h4>🚀 Gen Z Investment Essentials</h4>
+                <strong>Core Holdings:</strong><br>
+                • VTI (Total Stock Market) - 40%<br>
+                • VXUS (International) - 20%<br>
+                • BND (Total Bond Market) - 20%<br>
+                • HYSA (Emergency Buffer) - 20%<br><br>
+                <strong>Advanced Options:</strong><br>
+                • QQQ (Tech Growth)<br>
+                • SCHD (Dividend Growth)<br>
+                • REITs (Real Estate)<br>
+                • Small allocation to crypto (5% max)
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown(f"""
+            <div class="financial-tip">
+                <h4>💡 Investment Platform Suggestions</h4>
+                <strong>Best for Beginners:</strong><br>
+                • Fidelity (No fees, great funds)<br>
+                • Vanguard (Low-cost leader)<br>
+                • Schwab (Excellent customer service)<br><br>
+                <strong>Robo-Advisors:</strong><br>
+                • Betterment (Auto-rebalancing)<br>
+                • Wealthfront (Tax-loss harvesting)<br>
+                • M1 Finance (Pie investing)<br><br>
+                <strong>Monthly Investment:</strong> {format_currency(available_for_investment, 0)}
+            </div>
+            """, unsafe_allow_html=True)
+    
+    else:
+        st.markdown("""
+        <div class="warning-card">
+            <h4>⚠️ Focus on Emergency Fund First</h4>
+            <p>Prioritize building your emergency fund before investing. Once you have 3-6 months of expenses saved, redirect funds to investments!</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # =============================================================================
+    # DEBT PAYOFF STRATEGY
+    # =============================================================================
+    
+    if current_debt > 0:
+        st.markdown("### 💳 Debt Elimination Strategy")
+        
+        # Debt payoff calculators
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("#### 🔥 Avalanche Method (Recommended)")
+            # Assuming average 18% APR for credit cards
+            avg_apr = st.slider("Average Debt Interest Rate (%)", 3.0, 29.9, 18.0)
+            
+            total_debt_payment = monthly_debt_payment + debt_payoff_extra
+            
+            # Calculate payoff time
+            if total_debt_payment > 0 and avg_apr > 0:
+                monthly_rate = (avg_apr / 100) / 12
+                if monthly_rate * current_debt < total_debt_payment:
+                    months_to_payoff = -(1/12) * (math.log(1 - (monthly_rate * current_debt / total_debt_payment)) / math.log(1 + monthly_rate))
+                    total_interest = (total_debt_payment * months_to_payoff) - current_debt
+                else:
+                    months_to_payoff = float('inf')
+                    total_interest = float('inf')
+            else:
+                months_to_payoff = current_debt / total_debt_payment if total_debt_payment > 0 else float('inf')
+                total_interest = 0
+            
+            if months_to_payoff != float('inf'):
+                st.markdown(f"""
+                <div class="goal-tracker">
+                    <h4>⏰ Payoff Timeline</h4>
+                    <h2>{months_to_payoff:.1f} months</h2>
+                    <p>Total Payment: {format_currency(total_debt_payment, 0)}/month</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                st.markdown(f"""
+                <div class="survival-card">
+                    <h4>💰 Total Interest Saved</h4>
+                    <p>By paying {format_currency(total_debt_payment, 0)}/month instead of minimums:</p>
+                    <h3>Interest: {format_currency(total_interest, 0)}</h3>
+                    <p>vs paying minimums for years!</p>
+                </div>
+                """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown("#### 🎯 Debt Freedom Goals")
+            
+            debt_free_date = datetime.now() + timedelta(days=months_to_payoff * 30) if months_to_payoff != float('inf') else None
+            
+            if debt_free_date:
+                st.markdown(f"""
+                <div class="slay-card">
+                    <h4>🎉 Debt Freedom Date</h4>
+                    <h2>{debt_free_date.strftime('%B %Y')}</h2>
+                    <p>Your financial independence day!</p>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            # Monthly savings after debt payoff
+            future_monthly_boost = total_debt_payment
+            annual_boost = future_monthly_boost * 12
+            
+            st.markdown(f"""
+            <div class="investment-card">
+                <h4>🚀 Post-Debt Monthly Boost</h4>
+                <h2>{format_currency(future_monthly_boost, 0)}</h2>
+                <p>Extra for investments/goals</p>
+                <small>Annual boost: {format_currency(annual_boost, 0)}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # =============================================================================
+    # GOAL-BASED SAVINGS CALCULATOR
+    # =============================================================================
+    
+    st.markdown("### 🎯 Goal-Based Savings Planner")
+    
+    # Pre-defined common goals
+    common_goals = {
+        "🏖️ Dream Vacation": 3000,
+        "🚗 Car Down Payment": 5000,  
+        "🏠 House Down Payment": 40000,
+        "💻 New Laptop/Setup": 2000,
+        "📚 Education/Certification": 5000,
+        "💍 Wedding Fund": 20000,
+        "🎂 Custom Goal": 0
+    }
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        selected_goal = st.selectbox("Choose Your Goal", list(common_goals.keys()))
+        if selected_goal == "🎂 Custom Goal":
+            goal_amount = st.number_input("Custom Goal Amount", min_value=100.0, value=5000.0, step=100.0)
+            goal_name = st.text_input("Goal Name", value="My Custom Goal")
+        else:
+            goal_amount = common_goals[selected_goal]
+            goal_name = selected_goal
+    
+    with col2:
+        goal_timeline = st.selectbox(
+            "Target Timeline",
+            ["3 months", "6 months", "1 year", "2 years", "3 years", "5 years"]
+        )
+        timeline_months = {"3 months": 3, "6 months": 6, "1 year": 12, "2 years": 24, "3 years": 36, "5 years": 60}
+        months = timeline_months[goal_timeline]
+    
+    with col3:
+        goal_priority = st.selectbox(
+            "Priority Level",
+            ["🔥 High Priority", "⚡ Medium Priority", "💫 Low Priority"]
+        )
+    
+    # Calculate required monthly savings
+    if goal_amount > 0 and months > 0:
+        required_monthly = goal_amount / months
+        available_for_goal = adjusted_savings * 0.3  # 30% of savings can go to goals
+        
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown(f"""
+            <div class="goal-tracker">
+                <h4>🎯 {goal_name}</h4>
+                <h2>{format_currency(goal_amount, 0)}</h2>
+                <p>Target in {goal_timeline}</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown(f"""
+            <div class="goal-tracker">
+                <h4>💰 Required Monthly</h4>
+                <h2>{format_currency(required_monthly, 0)}</h2>
+                <p>To reach your goal</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            feasibility = "✅ Totally Doable!" if required_monthly <= available_for_goal else "⚠️ Needs Adjustment"
+            st.markdown(f"""
+            <div class="goal-tracker">
+                <h4>📊 Feasibility</h4>
+                <h2>{feasibility}</h2>
+                <p>Available: {format_currency(available_for_goal, 0)}</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Goal progress tracking
+        if required_monthly <= available_for_goal:
+            st.markdown(f"""
+            <div class="success-card">
+                <h4>🎉 Goal Strategy Approved!</h4>
+                <p><strong>Monthly Allocation:</strong> {format_currency(required_monthly, 0)} from your {format_currency(adjusted_savings, 0)} savings budget</p>
+                <p><strong>Timeline:</strong> {goal_timeline} | <strong>Achievement Date:</strong> {(datetime.now() + timedelta(days=months*30)).strftime('%B %Y')}</p>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            # Alternative suggestions
+            realistic_timeline = goal_amount / available_for_goal
+            st.markdown(f"""
+            <div class="warning-card">
+                <h4>💡 Alternative Suggestions</h4>
+                <p><strong>Option 1:</strong> Extend timeline to {realistic_timeline:.1f} months</p>
+                <p><strong>Option 2:</strong> Reduce goal to {format_currency(available_for_goal * months, 0)}</p>
+                <p><strong>Option 3:</strong> Increase income or reduce other expenses</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # =============================================================================
+    # WEALTH BUILDING PROJECTIONS
+    # =============================================================================
+    
+    st.markdown("### 🚀 Long-Term Wealth Building Projections")
+    
+    # 10, 20, 30 year projections
+    investment_return = 0.07  # 7% average annual return
+    years_projections = [10, 20, 30]
+    
+    if available_for_investment > 0:
+        st.markdown("#### 📈 Investment Growth Projections (7% Annual Return)")
+        
+        cols = st.columns(len(years_projections))
+        
+        for i, years in enumerate(years_projections):
+            # Future value calculation: FV = PMT * [((1+r)^n - 1) / r]
+            monthly_investment = available_for_investment
+            monthly_rate = investment_return / 12
+            months = years * 12
+            
+            future_value = monthly_investment * (((1 + monthly_rate) ** months - 1) / monthly_rate)
+            total_contributions = monthly_investment * months
+            investment_growth = future_value - total_contributions
+            
+            with cols[i]:
+                st.markdown(f"""
+                <div class="slay-card">
+                    <h4>💰 {years} Year Projection</h4>
+                    <h2>{format_currency(future_value, 0)}</h2>
+                    <div style="font-size: 0.8em; margin-top: 10px;">
+                        <p>Contributions: {format_currency(total_contributions, 0)}</p>
+                        <p>Growth: {format_currency(investment_growth, 0)}</p>
+                        <p>Monthly: {format_currency(monthly_investment, 0)}</p>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+    
+    # Net worth milestones
+    st.markdown("#### 🎯 Net Worth Milestones by Age")
+    
+    user_age = 25  # Default, can be adjusted above
+    current_age = user_age
+    target_ages = [30, 35, 40]
+    
+    # Rule of thumb: net worth should be 1x annual income by 30, 3x by 40
+    milestone_multipliers = {30: 1, 35: 3, 40: 5}
+    
+    cols = st.columns(len(target_ages))
+    
+    for i, target_age in enumerate(target_ages):
+        years_to_age = target_age - current_age
+        target_multiplier = milestone_multipliers.get(target_age, target_age - 25)
+        target_net_worth = annual_income * target_multiplier
+        
+        # Calculate if current savings rate will achieve this
+        if years_to_age > 0 and adjusted_savings > 0:
+            projected_savings = current_savings_amount + (adjusted_savings * 12 * years_to_age)
+            # Assuming some investment growth
+            projected_investments = available_for_investment * 12 * years_to_age * (1 + investment_return) ** years_to_age if available_for_investment > 0 else 0
+            projected_net_worth = projected_savings + projected_investments
+            
+            achievement_status = "✅ On Track" if projected_net_worth >= target_net_worth else "⚠️ Need Boost"
+        else:
+            achievement_status = "🎯 Future Goal"
+            projected_net_worth = 0
+        
+        with cols[i]:
+            st.markdown(f"""
+            <div class="milestone-badge" style="display: block; margin: 10px 0; padding: 15px;">
+                <h4>Age {target_age} Goal</h4>
+                <h3>{format_currency(target_net_worth, 0)}</h3>
+                <p>{target_multiplier}x Annual Income</p>
+                <small>{achievement_status}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # =============================================================================
+    # ACTIONABLE NEXT STEPS & RECOMMENDATIONS
+    # =============================================================================
+    
+    st.markdown("### ✅ Your Personalized Action Plan")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("#### 🚨 Immediate Actions (This Week)")
+        immediate_actions = []
+        
+        if current_savings_amount < 1000:
+            immediate_actions.append("🏦 Open high-yield savings account (Marcus, Ally, Capital One)")
+            immediate_actions.append("💰 Set up automatic transfer of $50-100/week to savings")
+        
+        if monthly_debt_payment > 0 and debt_payoff_extra > 0:
+            immediate_actions.append("📞 Call credit card companies to negotiate lower rates")
+            immediate_actions.append("💳 Set up automatic extra payments to highest interest debt")
+        
+        if available_for_investment > 100:
+            immediate_actions.append("📊 Open investment account (Fidelity, Vanguard, or Schwab)")
+            immediate_actions.append("🤖 Set up automatic investing in index funds")
+        
+        immediate_actions.append("📱 Download budgeting app (Mint, YNAB, or PocketGuard)")
+        immediate_actions.append("🔍 Review and cancel unused subscriptions")
+        
+        for action in immediate_actions[:5]:
+            st.markdown(f"• {action}")
+    
+    with col2:
+        st.markdown("#### 📅 30-Day Goals")
+        monthly_goals = []
+        
+        if emergency_progress < 100:
+            monthly_goals.append(f"🛡️ Save {format_currency(emergency_monthly_need, 0)} for emergency fund")
+        
+        monthly_goals.append(f"📊 Track all expenses and stay within {format_currency(wants_amount, 0)} fun budget")
+        monthly_goals.append(f"💰 Automate {format_currency(adjusted_savings, 0)} monthly savings")
+        
+        if current_debt > 0:
+            monthly_goals.append(f"💳 Pay {format_currency(total_debt_payment, 0)} toward debt elimination")
+        
+        monthly_goals.append("📚 Read one personal finance book or take online course")
+        monthly_goals.append("🎯 Set up goal tracking for your biggest financial priority")
+        
+        for goal in monthly_goals:
+            st.markdown(f"• {goal}")
+
+# Quick Win Tips
+st.markdown("""
+<div class="vibe-card">
+    <h3>💡 Quick Wins for This Week</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+            <h4>🏦 Banking Hack</h4>
+            <p>Switch to a high-yield savings account earning 4%+ instead of 0.01% at big banks</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+            <h4>🤖 Automation</h4>
+            <p>Set up automatic transfers on payday - pay yourself first before you can spend it</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+            <h4>💳 Credit Boost</h4>
+            <p>Pay credit cards twice monthly instead of once to lower utilization and boost score</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+            <h4>📊 Track Everything</h4>
+            <p>Use apps like Mint or YNAB to see where every dollar goes - awareness = control</p>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# 🚨 MAIN ERROR: format_currency function is not defined
+# FIX: Replace format_currency with standard Python formatting
+
+# ❌ ORIGINAL (BROKEN):
+# Your {lifestyle_mode.split('(')[0]} approach with {format_currency(total_monthly_income, 0)} monthly income
+
+# ✅ FIXED VERSION:
+
+
+# Motivational closing - FIXED
 st.markdown(f"""
-<div style='text-align: center; color: #718096; font-size: 0.8rem; padding: 1rem;'>
-    <p>FinAura © 2026 | Built for Gen Z by Gen Z</p>
+<div class="success-card">
+    <h3>✨ You're Already Winning!</h3>
+    <p>Just by using this calculator and thinking about your financial future, you're ahead of 70% of people your age. 
+    Your {lifestyle_mode.split('(')[0]} approach with PKR {total_monthly_income:,.0f} monthly income puts you on track for 
+    serious wealth building. Remember: every dollar you save in your 20s becomes $10+ in your future. 
+    You've got this! 🚀</p>
+</div>
+""", unsafe_allow_html=True)
+
+# =============================================================================
+# FOOTER SECTION
+# =============================================================================
+
+st.markdown("""
+<div style="text-align:center; margin-top:60px; padding:40px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+  <h2 style="margin-bottom: 10px; background: linear-gradient(45deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">💸 FinAura: Where Gen Z Vibes Meet Financial Freedom</h2>
+  
+  <p style="font-size:1.1em; margin-bottom: 18px; opacity:0.95;">Revolutionizing financial wellness through AI-driven stress management and secure wealth building.</p>
+  
+  <div style="font-size:1.2em; margin-bottom: 20px; font-weight: 500;">🧠 Built to tackle Gen Z financial stress with intelligent insights, bulletproof security, and a fully automated companion that grows with your financial journey.</div>
+  
+  <div style="background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 25px; margin: 25px auto; max-width: 600px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
+    <div style="color: #FFD700; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">🏆 Why FinAura Stands Out</div>
+    <div style="text-align: left; font-size: 0.95em; line-height: 1.6;">
+      🔒 AI-powered financial stress detection and personalized wellness strategies<br>
+      🔒 Bank-grade encryption with multi-layer security protocols<br>
+      🔒 Behavioral analytics to combat Gen Z financial anxiety and decision paralysis<br>
+      🔒 Gamified savings with real-time progress tracking and achievement systems<br>
+      🔒 Zero-knowledge architecture ensuring complete data privacy<br>
+      🔒 Smart budgeting algorithms designed for irregular income patterns
+    </div>
+    <div style="background: linear-gradient(45deg, #00C851, #007E33); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 500; margin-top: 15px; display: inline-block; border: 1px solid rgba(255, 255, 255, 0.3);">
+      🛡️ Enterprise-Grade Security & Privacy Guaranteed
+    </div>
+  </div>
+  
+  <div style="margin: 25px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+    <a href="https://github.com/codewithEshaYoutube" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; background: rgba(255, 255, 255, 0.2); border-radius: 25px; text-decoration: none; color: white; font-size: 0.9em; transition: all 0.3s ease;" target="_blank">
+      🐙 GitHub
+    </a>
+    <a href="https://www.linkedin.com/in/esha-tariqdev/" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; background: rgba(255, 255, 255, 0.2); border-radius: 25px; text-decoration: none; color: white; font-size: 0.9em; transition: all 0.3s ease;" target="_blank">
+      💼 LinkedIn
+    </a>
+  </div>
+  
+  <div style="margin: 20px 0; font-size:1.2em; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 20px;">
+    Made with <span style="font-size:1.5em;">💖</span> by <b style="color: #FFD700;">Esha Tariq</b>
+  </div>
+  
+  <div style="font-size:0.95em; opacity:0.9; margin: 15px 0; font-style: italic;">
+    Empowering the next generation to conquer financial stress and build lasting wealth.<br>
+    Every smart decision today creates the freedom you deserve tomorrow.
+  </div>
+  
+  <div style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 500; margin-top: 15px; display: inline-block;">
+    For DevPost Girlies Hackathon  - Innovation in FinTech
+  </div>
 </div>
 """, unsafe_allow_html=True)
